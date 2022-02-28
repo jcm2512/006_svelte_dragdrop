@@ -25,6 +25,8 @@
 </main>
 
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=Fredoka&family=Nunito:wght@300;400;600;700&display=swap");
+
   main {
     text-align: center;
     padding: 1em;
@@ -48,8 +50,8 @@
     width: 25%;
     min-height: 6.5em;
     margin: 1rem 0 0 1rem;
-    background-color: #29e;
-    color: white;
+    background-color: #fff89a;
+    color: #ff8aae;
     border-radius: 0.75em;
     padding: 4%;
     touch-action: none;
