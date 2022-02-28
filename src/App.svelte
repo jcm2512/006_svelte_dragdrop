@@ -4,24 +4,39 @@
 
   const position = { x: 0, y: 0 };
 
-  interact(".draggable").draggable({
-    listeners: {
-      start(event) {
-        console.log(event.type, event.target);
-      },
-      move(event) {
-        position.x += event.dx;
-        position.y += event.dy;
+  // target elements with the "draggable" class
+  interact(".draggable").draggable(
+    // options
+    {
+      inertia: false,
+      onmove: dragMoveListener,
+    }
+  );
+  function dragMoveListener(event) {
+    var target = event.target,
+      // keep the dragged position in the data-x/data-y attributes
+      x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx,
+      y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
 
-        event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
-      },
-    },
-  });
+    // translate the element
+    target.style.webkitTransform = target.style.transform =
+      "translate(" + x + "px, " + y + "px)";
+
+    // update the posiion attributes
+    target.setAttribute("data-x", x);
+    target.setAttribute("data-y", y);
+
+    // update the z-index
+  }
 </script>
 
 <main>
   <h1>{title}!</h1>
-  <div class="draggable">Draggable Element</div>
+  <section class="drag-container">
+    <div class="draggable">a</div>
+    <div class="draggable">b</div>
+    <div class="draggable">c</div>
+  </section>
 </main>
 
 <style>
@@ -35,7 +50,7 @@
   }
 
   h1 {
-    color: #9adcff;
+    color: #17c3b2;
     font-size: 2em;
     font-weight: 100;
   }
@@ -46,12 +61,21 @@
     }
   }
 
+  .drag-container {
+    display: flex;
+    flex-direction: row;
+  }
+
   .draggable {
-    width: 25%;
-    min-height: 6.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4em;
+    width: 1.5em;
+    height: 1.5em;
     margin: 1rem 0 0 1rem;
-    background-color: #fff89a;
-    color: #ff8aae;
+    background-color: #fe6d73;
+    color: #fef9ef;
     border-radius: 0.75em;
     padding: 4%;
     touch-action: none;
