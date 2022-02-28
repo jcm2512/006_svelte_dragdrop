@@ -72,11 +72,11 @@
   <div class="transition" style="display: none">d</div>
 
   <h1>{title}!</h1>
-  <section class="drag-container">
-    <div class="draggable">a</div>
-    <div class="draggable">b</div>
-    <div class="draggable">c</div>
-  </section>
+  <container id="container" class="drag-container">
+    {#each word as letter}
+      <div class="draggable">{letter}</div>
+    {/each}
+  </container>
 </main>
 
 <style>
