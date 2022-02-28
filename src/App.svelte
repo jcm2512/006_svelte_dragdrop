@@ -110,7 +110,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4em;
+    font-size: 2em;
     width: 1.5em;
     height: 1.5em;
     margin: 1rem 0 0 1rem;
