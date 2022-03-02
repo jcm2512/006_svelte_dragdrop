@@ -70,7 +70,7 @@
 
   // enable draggables to be dropped into this
   interact(".dropzone").dropzone({
-    overlap: 0.3,
+    overlap: "center",
 
     // listen for drop related events:
     ondropactivate: function (event) {
@@ -92,7 +92,7 @@
     },
     ondrop: function (event) {
       event.relatedTarget.classList.add("originalPosition");
-      event.relatedTarget.classList.add("dropped");
+      event.target.classList.add("dropped");
       //   event.relatedTarget.style.transform = "translate(0px, 0px)";
     },
     ondropdeactivate: function (event) {
@@ -116,11 +116,14 @@
 </script>
 
 <main>
-  <div class="transition drop-target originalPosition" style="display: none">
+  <div
+    class="transition drop-target originalPosition dropped"
+    style="display: none"
+  >
     Preloaded CSS styles
   </div>
 
-  <h1>{title}!</h1>
+  <!-- <h1>{title}!</h1> -->
 
   <div id="gameboard">
     <container id="container" class="drop-container">
@@ -140,12 +143,15 @@
 </main>
 
 <style>
-  @import url("https://fonts.googleapis.com/css2?family=Fredoka&family=Nunito:wght@300;400;600;700&display=swap");
-
+  @import url("https://fonts.googleapis.com/css2?family=Fredoka&family=Londrina+Outline&family=Londrina+Solid:wght@400&family=Nunito:wght@300;400;600;700&display=swap");
   .originalPosition {
     transform: translate(0px, 0px) !important;
-    background-color: #ffcb77 !important;
-    transition: transform 0.2s ease-out;
+    color: #ffcb77 !important;
+    transition: transform 0.3s ease-out;
+  }
+
+  .dropped {
+    color: #ffcb77 !important;
   }
 
   main {
@@ -161,10 +167,10 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 600px;
-    height: 400px;
+    width: 300px;
+    height: 200px;
     margin: 0 auto;
-    border: 1px solid #227c9d;
+    /* border: 1px solid #227c9d; */
   }
 
   h1 {
@@ -192,25 +198,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4em;
-    width: 1.5em;
-    height: 1.5em;
-    margin: 0.5rem;
+    font-family: "Londrina Outline";
+    font-size: 6em;
+
+    margin: 0rem;
     color: #fef9ef;
     border-radius: 0.4em;
-    padding: 4%;
+    /* padding: 4%; */
     touch-action: none;
     user-select: none;
   }
   .draggable {
-    background-color: #fe6d73;
+    /* background-color: #fe6d73; */
+    font-family: "Londrina Solid";
+
+    color: #fe6d73;
   }
   .dropzone {
-    background-color: #17c3b2;
+    /* background-color: #17c3b2; */
+    font-family: "Londrina Outline";
+    color: #17c3b2;
   }
 
   .drop-target {
-    background-color: #29e;
+    font-family: "Londrina Solid";
   }
 
   .transition {
