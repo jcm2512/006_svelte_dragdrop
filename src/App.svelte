@@ -91,8 +91,16 @@
       event.relatedTarget.classList.remove("can-drop");
     },
     ondrop: function (event) {
-      console.log(event.relatedTarget.id, "dropped onto", event.target.id);
-      console.log(event.relatedTarget.getAttribute("x"));
+      //   let dropPos = event.target.getBoundingClientRect();
+      //   let dragPos = event.relatedTarget.getBoundingClientRect();
+      //   console.log(dropPos.x, dropPos.y);
+      //   console.log(dropPos.x - dragPos.x, dropPos.y - dragPos.y);
+
+      //   event.relatedTarget.style.transform = `translate(
+      // 	  ${dropPos.x - dragPos.x}px,
+      // 	  ${dropPos.y - dragPos.y}px)`;
+      // event.relatedTarget.setAttribute("x", rect.x);
+      // event.relatedTarget.setAttribute("y", rect.y);
       event.relatedTarget.classList.add("dropped");
     },
     ondropdeactivate: function (event) {
@@ -109,27 +117,10 @@
       draggable, // draggable Interactable
       draggableElement // draggable element
     ) {
-      // only allow drops into empty dropzone elements
-      //   console.log(dropzoneElement.id);
+      // only allow drops into matching id
       return dropped && dropzoneElement.id == draggableElement.id;
     },
   });
-
-  //   interact(".dropzone").dropzone({
-  //     checker: function (
-  //       dragEvent, // related dragmove or dragend
-  //       event, // Touch, Pointer or Mouse Event
-  //       dropped, // bool default checker result
-  //       dropzone, // dropzone Interactable
-  //       dropzoneElement, // dropzone element
-  //       draggable, // draggable Interactable
-  //       draggableElement // draggable element
-  //     ) {
-  //       // only allow drops into empty dropzone elements
-  //       //   console.log(dropzoneElement.id);
-  //       return dropzoneElement.id;
-  //     },
-  //   });
 </script>
 
 <main>
