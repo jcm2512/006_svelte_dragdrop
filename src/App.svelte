@@ -82,7 +82,7 @@
       let dropzoneElement = event.target;
 
       // feeback the posibility of a drop
-      console.log("Drag Enter");
+
       dropzoneElement.classList.add("drop-target");
       draggableElement.classList.add("can-drop");
     },
@@ -92,6 +92,7 @@
       event.relatedTarget.classList.remove("can-drop");
     },
     ondrop: function (event) {
+      console.log(event.relatedTarget.id, "dropped onto", event.target.id);
       event.relatedTarget.classList.add("dropped");
     },
     ondropdeactivate: function (event) {
