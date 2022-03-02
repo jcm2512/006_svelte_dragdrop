@@ -47,7 +47,9 @@
   }
 
   // enable draggables to be dropped into this
-  interact(".dropzone").dropzone({
+  let letterDrop = interact(".dropzone");
+
+  letterDrop.dropzone({
     overlap: "center",
 
     // listen for drop related events:
@@ -69,9 +71,37 @@
       event.relatedTarget.classList.remove("can-drop");
     },
     ondrop: function (event) {
+      // Get CSS translate values
+      const computedStyle = window.getComputedStyle(event.relatedTarget);
+      const matrix =
+        computedStyle.transform ||
+        computedStyle.webkitTransform ||
+        computedStyle.mozTransform;
+      const matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(", ");
+
+      // Extract x and y values from the 2d matrix
+      let currentTransform = {
+        x: parseInt(matrixValues[4]),
+        y: parseInt(matrixValues[5]),
+      };
+
       event.relatedTarget.classList.add("originalPosition");
       event.target.classList.add("dropped");
-      //   event.relatedTarget.style.transform = "translate(0px, 0px)";
+
+      let xOffset =
+        event.target.getBoundingClientRect().x -
+        event.relatedTarget.getBoundingClientRect().x;
+      let yOffset =
+        event.target.getBoundingClientRect().y -
+        event.relatedTarget.getBoundingClientRect().y;
+
+      // Move element to dropzone
+      event.relatedTarget.style.transform = `translate(
+		${currentTransform.x + xOffset}px, 
+		${currentTransform.y + yOffset}px)`;
+
+      interact().draggable(false);
+      console.log(interact(event.relatedTarget).draggable());
     },
     ondropdeactivate: function (event) {
       // remove active dropzone feedback
@@ -108,7 +138,6 @@
       {#each word as letter}
         <div id={letter} class="tile dropzone">
           {letter}
-          <div class="position">text</div>
         </div>
       {/each}
     </container>
@@ -126,15 +155,10 @@
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Fredoka&family=Londrina+Outline&family=Londrina+Solid:wght@400&family=Nunito:wght@300;400;600;700&display=swap");
   .originalPosition {
-    transform: translate(0px, 0px) !important;
     color: #ffcb77 !important;
     transition: transform 0.3s ease-out;
   }
 
-  .position {
-    font-family: monospace;
-    font-size: 0.15em;
-  }
   .dropped {
     color: #ffcb77 !important;
   }
@@ -195,6 +219,7 @@
     user-select: none;
   }
   .draggable {
+    position: relative;
     /* background-color: #fe6d73; */
     font-family: "Londrina Solid";
 
