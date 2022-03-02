@@ -70,8 +70,6 @@
 
   // enable draggables to be dropped into this
   interact(".dropzone").dropzone({
-    // only accept elements matching this CSS selector
-    // accept: "#available",
     overlap: 0.5,
 
     // listen for drop related events:
@@ -103,17 +101,33 @@
     },
   });
 
-  interact(".drag-drop").draggable({
-    inertia: true,
-    modifiers: [
-      interact.modifiers.restrictRect({
-        restriction: "parent",
-        endOnly: true,
-      }),
-    ],
-    autoScroll: true,
-    listeners: { move: dragMoveListener },
-  });
+  //   interact(".drag-drop").draggable({
+  //     inertia: true,
+  //     modifiers: [
+  //       interact.modifiers.restrictRect({
+  //         restriction: "parent",
+  //         endOnly: true,
+  //       }),
+  //     ],
+  //     autoScroll: true,
+  //     listeners: { move: dragMoveListener },
+  //   });
+
+  //   interact(".dropzone").dropzone({
+  //     checker: function (
+  //       dragEvent, // related dragmove or dragend
+  //       event, // Touch, Pointer or Mouse Event
+  //       dropped, // bool default checker result
+  //       dropzone, // dropzone Interactable
+  //       dropzoneElement, // dropzone element
+  //       draggable, // draggable Interactable
+  //       draggableElement // draggable element
+  //     ) {
+  //       // only allow drops into empty dropzone elements
+  //       //   console.log(dropzoneElement.id);
+  //       return dropzoneElement.id;
+  //     },
+  //   });
 </script>
 
 <main>
@@ -124,12 +138,12 @@
   <h1>{title}!</h1>
   <container id="container" class="drag-container">
     {#each word as letter}
-      <div class="draggable">{letter}</div>
+      <div id={letter} class="draggable">{letter}</div>
     {/each}
   </container>
   <container id="container" class="drop-container">
     {#each word as letter}
-      <div class="dropzone" id="available">{letter}</div>
+      <div id={letter} class="dropzone">{letter}</div>
     {/each}
   </container>
 </main>
