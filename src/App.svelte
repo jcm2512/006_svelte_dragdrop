@@ -13,9 +13,7 @@
     onend: dragEndListener,
   });
 
-  function dragEndListener(event) {
-    const object = event.target;
-
+  function revertPosition(object) {
     // return object to previous location
     if (object.getAttribute("count") > 0) {
       // get start position
@@ -35,6 +33,11 @@
         object.classList.remove("transition");
       });
     }
+  }
+
+  function dragEndListener(event) {
+    const object = event.target;
+    // revertPosition(object);
   }
 
   function dragStartListener(event) {
@@ -63,18 +66,70 @@
     // update the position attributes
     target.setAttribute("x", x);
     target.setAttribute("y", y);
-
-    // update the z-index
   }
+
+  // enable draggables to be dropped into this
+  interact(".dropzone").dropzone({
+    // only accept elements matching this CSS selector
+    // accept: "#available",
+    overlap: 0.5,
+
+    // listen for drop related events:
+    ondropactivate: function (event) {
+      // add active target dropzone feedback
+      event.target.classList.add("drop-active");
+    },
+    ondragenter: function (event) {
+      let draggableElement = event.relatedTarget;
+      let dropzoneElement = event.target;
+
+      // feeback the posibility of a drop
+      console.log("Drag Enter");
+      dropzoneElement.classList.add("drop-target");
+      draggableElement.classList.add("can-drop");
+    },
+    ondragleave: function (event) {
+      // remove the feedback style
+      event.target.classList.remove("drop-target");
+      event.relatedTarget.classList.remove("can-drop");
+    },
+    ondrop: function (event) {
+      event.relatedTarget.classList.add("dropped");
+    },
+    ondropdeactivate: function (event) {
+      // remove active dropzone feedback
+      event.target.classList.remove("drop-active");
+      event.target.classList.remove("drop-target");
+    },
+  });
+
+  interact(".drag-drop").draggable({
+    inertia: true,
+    modifiers: [
+      interact.modifiers.restrictRect({
+        restriction: "parent",
+        endOnly: true,
+      }),
+    ],
+    autoScroll: true,
+    listeners: { move: dragMoveListener },
+  });
 </script>
 
 <main>
-  <div class="transition" style="display: none">d</div>
+  <div class="transition drop-target" style="display: none">
+    Preloaded CSS styles
+  </div>
 
   <h1>{title}!</h1>
   <container id="container" class="drag-container">
     {#each word as letter}
       <div class="draggable">{letter}</div>
+    {/each}
+  </container>
+  <container id="container" class="drop-container">
+    {#each word as letter}
+      <div class="dropzone" id="available">{letter}</div>
     {/each}
   </container>
 </main>
@@ -106,6 +161,10 @@
     flex-direction: row;
   }
 
+  .drop-container {
+    display: flex;
+    flex-direction: row;
+  }
   .draggable {
     display: flex;
     align-items: center;
@@ -120,6 +179,25 @@
     padding: 4%;
     touch-action: none;
     user-select: none;
+  }
+  .dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    width: 1.5em;
+    height: 1.5em;
+    margin: 1rem 0 0 1rem;
+    background-color: #17c3b2;
+    color: #fef9ef;
+    border-radius: 0.75em;
+    padding: 4%;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .drop-target {
+    background-color: #29e;
   }
 
   .transition {
