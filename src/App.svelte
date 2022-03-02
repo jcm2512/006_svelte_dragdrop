@@ -1,8 +1,8 @@
 <script>
   import interact from "interactjs";
+  import shuffle from "./functions";
   export let title;
   export let word;
-
   const position = { x: 0, y: 0 };
 
   // target elements with the "draggable" class
@@ -13,8 +13,8 @@
     onend: dragEndListener,
   });
 
+  // return object to previous location
   function revertPosition(object) {
-    // return object to previous location
     if (object.getAttribute("count") > 0) {
       // get start position
       let sx = object.getAttribute("start-x");
@@ -70,7 +70,7 @@
 
   // enable draggables to be dropped into this
   interact(".dropzone").dropzone({
-    overlap: 0.5,
+    overlap: 0.3,
 
     // listen for drop related events:
     ondropactivate: function (event) {
@@ -82,7 +82,6 @@
       let dropzoneElement = event.target;
 
       // feeback the posibility of a drop
-
       dropzoneElement.classList.add("drop-target");
       draggableElement.classList.add("can-drop");
     },
@@ -93,6 +92,7 @@
     },
     ondrop: function (event) {
       console.log(event.relatedTarget.id, "dropped onto", event.target.id);
+      console.log(event.relatedTarget.getAttribute("x"));
       event.relatedTarget.classList.add("dropped");
     },
     ondropdeactivate: function (event) {
@@ -100,19 +100,20 @@
       event.target.classList.remove("drop-active");
       event.target.classList.remove("drop-target");
     },
+    checker: function (
+      dragEvent, // related dragmove or dragend
+      event, // Touch, Pointer or Mouse Event
+      dropped, // bool default checker result
+      dropzone, // dropzone Interactable
+      dropzoneElement, // dropzone element
+      draggable, // draggable Interactable
+      draggableElement // draggable element
+    ) {
+      // only allow drops into empty dropzone elements
+      //   console.log(dropzoneElement.id);
+      return dropped && dropzoneElement.id == draggableElement.id;
+    },
   });
-
-  //   interact(".drag-drop").draggable({
-  //     inertia: true,
-  //     modifiers: [
-  //       interact.modifiers.restrictRect({
-  //         restriction: "parent",
-  //         endOnly: true,
-  //       }),
-  //     ],
-  //     autoScroll: true,
-  //     listeners: { move: dragMoveListener },
-  //   });
 
   //   interact(".dropzone").dropzone({
   //     checker: function (
@@ -137,11 +138,13 @@
   </div>
 
   <h1>{title}!</h1>
+
   <container id="container" class="drag-container">
-    {#each word as letter}
+    {#each shuffle(word) as letter}
       <div id={letter} class="draggable">{letter}</div>
     {/each}
   </container>
+
   <container id="container" class="drop-container">
     {#each word as letter}
       <div id={letter} class="dropzone">{letter}</div>
