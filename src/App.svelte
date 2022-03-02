@@ -13,28 +13,6 @@
     onend: dragEndListener,
   });
 
-  // return object to previous location
-  function revertPosition(object) {
-    if (object.getAttribute("count") > 0) {
-      // get start position
-      let sx = object.getAttribute("start-x");
-      let sy = object.getAttribute("start-x");
-
-      // translate object and update position attributes
-      object.style.transform = `translate(${sx}px, ${sy}px)`;
-      object.setAttribute("x", sx);
-      object.setAttribute("y", sy);
-
-      // add transition class
-      object.classList.add("transition");
-
-      // remove transition when complete
-      object.addEventListener("transitionend", () => {
-        object.classList.remove("transition");
-      });
-    }
-  }
-
   function dragEndListener(event) {
     const object = event.target;
     // revertPosition(object);
@@ -128,7 +106,10 @@
   <div id="gameboard">
     <container id="container" class="drop-container">
       {#each word as letter}
-        <div id={letter} class="tile dropzone">{letter}</div>
+        <div id={letter} class="tile dropzone">
+          {letter}
+          <div class="position">text</div>
+        </div>
       {/each}
     </container>
 
@@ -150,6 +131,10 @@
     transition: transform 0.3s ease-out;
   }
 
+  .position {
+    font-family: monospace;
+    font-size: 0.15em;
+  }
   .dropped {
     color: #ffcb77 !important;
   }
@@ -196,10 +181,11 @@
 
   .tile {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     font-family: "Londrina Outline";
-    font-size: 6em;
+    font-size: 10em;
 
     margin: 0rem;
     color: #fef9ef;
