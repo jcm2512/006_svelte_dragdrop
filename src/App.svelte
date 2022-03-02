@@ -91,17 +91,9 @@
       event.relatedTarget.classList.remove("can-drop");
     },
     ondrop: function (event) {
-      //   let dropPos = event.target.getBoundingClientRect();
-      //   let dragPos = event.relatedTarget.getBoundingClientRect();
-      //   console.log(dropPos.x, dropPos.y);
-      //   console.log(dropPos.x - dragPos.x, dropPos.y - dragPos.y);
-
-      //   event.relatedTarget.style.transform = `translate(
-      // 	  ${dropPos.x - dragPos.x}px,
-      // 	  ${dropPos.y - dragPos.y}px)`;
-      // event.relatedTarget.setAttribute("x", rect.x);
-      // event.relatedTarget.setAttribute("y", rect.y);
+      event.relatedTarget.classList.add("originalPosition");
       event.relatedTarget.classList.add("dropped");
+      //   event.relatedTarget.style.transform = "translate(0px, 0px)";
     },
     ondropdeactivate: function (event) {
       // remove active dropzone feedback
@@ -124,7 +116,7 @@
 </script>
 
 <main>
-  <div class="transition drop-target" style="display: none">
+  <div class="transition drop-target originalPosition" style="display: none">
     Preloaded CSS styles
   </div>
 
@@ -139,13 +131,7 @@
 
     <container id="container" class="drag-container">
       {#each word as letter}
-        <div
-          id={letter}
-          class="tile draggable"
-          style="transform: translate(
-			{Math.floor(Math.random() * 400) - 400 / 2}px, 
-			{Math.floor(Math.random() * 250) - 250 / 2}px)"
-        >
+        <div id={letter} class="tile draggable">
           {letter}
         </div>
       {/each}
@@ -155,6 +141,12 @@
 
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Fredoka&family=Nunito:wght@300;400;600;700&display=swap");
+
+  .originalPosition {
+    transform: translate(0px, 0px) !important;
+    background-color: #ffcb77 !important;
+    transition: transform 0.2s ease-out;
+  }
 
   main {
     text-align: center;
@@ -170,7 +162,7 @@
     align-items: center;
     justify-content: center;
     width: 600px;
-    height: 350px;
+    height: 400px;
     margin: 0 auto;
     border: 1px solid #227c9d;
   }
