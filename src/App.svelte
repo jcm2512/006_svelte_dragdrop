@@ -1,6 +1,6 @@
 <script>
   import interact from "interactjs";
-  import shuffle from "./functions";
+  import explode from "./functions";
   export let title;
   export let word;
   const position = { x: 0, y: 0 };
@@ -130,17 +130,27 @@
 
   <h1>{title}!</h1>
 
-  <container id="container" class="drag-container">
-    {#each shuffle(word) as letter}
-      <div id={letter} class="draggable">{letter}</div>
-    {/each}
-  </container>
+  <div id="gameboard">
+    <container id="container" class="drop-container">
+      {#each word as letter}
+        <div id={letter} class="tile dropzone">{letter}</div>
+      {/each}
+    </container>
 
-  <container id="container" class="drop-container">
-    {#each word as letter}
-      <div id={letter} class="dropzone">{letter}</div>
-    {/each}
-  </container>
+    <container id="container" class="drag-container">
+      {#each word as letter}
+        <div
+          id={letter}
+          class="tile draggable"
+          style="transform: translate(
+			{Math.floor(Math.random() * 400) - 400 / 2}px, 
+			{Math.floor(Math.random() * 250) - 250 / 2}px)"
+        >
+          {letter}
+        </div>
+      {/each}
+    </container>
+  </div>
 </main>
 
 <style>
@@ -151,6 +161,18 @@
     padding: 1em;
     max-width: 240px;
     margin: 0 auto;
+  }
+
+  #gameboard {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 600px;
+    height: 350px;
+    margin: 0 auto;
+    border: 1px solid #227c9d;
   }
 
   h1 {
@@ -165,44 +187,34 @@
     }
   }
 
-  .drag-container {
+  .drag-container,
+  .drop-container {
+    position: absolute;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
 
-  .drop-container {
+  .tile {
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 4em;
+    width: 1.5em;
+    height: 1.5em;
+    margin: 0.5rem;
+    color: #fef9ef;
+    border-radius: 0.4em;
+    padding: 4%;
+    touch-action: none;
+    user-select: none;
   }
   .draggable {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2em;
-    width: 1.5em;
-    height: 1.5em;
-    margin: 1rem 0 0 1rem;
     background-color: #fe6d73;
-    color: #fef9ef;
-    border-radius: 0.75em;
-    padding: 4%;
-    touch-action: none;
-    user-select: none;
   }
   .dropzone {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2em;
-    width: 1.5em;
-    height: 1.5em;
-    margin: 1rem 0 0 1rem;
     background-color: #17c3b2;
-    color: #fef9ef;
-    border-radius: 0.75em;
-    padding: 4%;
-    touch-action: none;
-    user-select: none;
   }
 
   .drop-target {

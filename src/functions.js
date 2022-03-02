@@ -11,4 +11,9 @@ function shuffle(word) {
   return array.join("");
 }
 
-export default shuffle;
+function explode(maxHeight, maxWidth) {
+  let h = Math.floor(Math.random() * maxHeight) - maxHeight / 2;
+  let w = Math.floor(Math.random() * maxWidth) - maxWidth / 2;
+  return { h: h, w: w };
+}
+export default { shuffle, explode };
