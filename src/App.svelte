@@ -1,10 +1,12 @@
 <script>
   import interact from "interactjs";
   import explode from "./functions";
-  export let title;
   export let word;
   const position = { x: 0, y: 0 };
 
+  const width = 300;
+  const height = 200;
+  console.log(explode);
   // target elements with the "draggable" class
   interact(".draggable").draggable({
     inertia: false,
@@ -50,7 +52,7 @@
   let letterDrop = interact(".dropzone");
 
   letterDrop.dropzone({
-    overlap: "center",
+    overlap: 0.3,
 
     // listen for drop related events:
     ondropactivate: function (event) {
@@ -100,8 +102,7 @@
 		${currentTransform.x + xOffset}px, 
 		${currentTransform.y + yOffset}px)`;
 
-      interact().draggable(false);
-      console.log(interact(event.relatedTarget).draggable());
+      event.relatedTarget.style.pointerEvents = "none";
     },
     ondropdeactivate: function (event) {
       // remove active dropzone feedback
