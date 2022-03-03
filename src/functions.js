@@ -16,4 +16,4 @@ function explode(maxHeight, maxWidth) {
   let w = Math.floor(Math.random() * maxWidth) - maxWidth / 2;
   return { h: h, w: w };
 }
-export default explode;
+export default shuffle;

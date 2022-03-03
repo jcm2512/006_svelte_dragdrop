@@ -1,12 +1,19 @@
 <script>
   import interact from "interactjs";
-  import explode from "./functions";
+  import shuffle from "./functions";
   export let word;
+  let wordUpper = [],
+    wordLower = [];
   const position = { x: 0, y: 0 };
 
   const width = 300;
-  const height = 200;
-  console.log(explode);
+  const height = 300;
+  console.log(word);
+  for (let i of word) {
+    let r = Math.floor(Math.random() * 2);
+    r == 0 ? wordUpper.push(i) : wordLower.push(i);
+  }
+
   // target elements with the "draggable" class
   interact(".draggable").draggable({
     inertia: false,
@@ -144,8 +151,15 @@
     </container>
 
     <container id="container" class="drag-container">
-      {#each word as letter}
-        <div id={letter} class="tile draggable">
+      {#each shuffle(wordUpper) as letter}
+        <div id={letter} class="tile draggable upper">
+          {letter}
+        </div>
+      {/each}
+    </container>
+    <container id="container" class="drag-container">
+      {#each shuffle(wordLower) as letter}
+        <div id={letter} class="tile draggable lower">
           {letter}
         </div>
       {/each}
@@ -179,7 +193,7 @@
     align-items: center;
     justify-content: center;
     width: 300px;
-    height: 200px;
+    height: 300px;
     margin: 0 auto;
     /* border: 1px solid #227c9d; */
   }
@@ -205,13 +219,18 @@
     justify-content: center;
   }
 
+  .drag-container {
+    justify-content: center;
+  }
+
   .tile {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-family: "Londrina Outline";
-    font-size: 10em;
+    font-size: 7em;
 
     margin: 0rem;
     color: #fef9ef;
@@ -220,8 +239,15 @@
     touch-action: none;
     user-select: none;
   }
+
+  .upper {
+    top: -1em;
+  }
+
+  .lower {
+    top: 1em;
+  }
   .draggable {
-    position: relative;
     /* background-color: #fe6d73; */
     font-family: "Londrina Solid";
 
