@@ -158,6 +158,7 @@
   .originalPosition {
     color: #ffcb77 !important;
     transition: transform 0.3s ease-out;
+    pointer-events: none;
   }
 
   .dropped {
