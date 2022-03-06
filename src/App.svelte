@@ -157,8 +157,8 @@
     },
   });
 
-  const upperEm = { limit: 16 };
-  const lowerEm = { limit: 16 };
+  const upperEm = { limit: 12 };
+  const lowerEm = { limit: 12 };
 
   const getLimit = function (obj) {
     let em = Math.floor(Math.random() * obj.limit) + 2;
@@ -236,7 +236,6 @@
   .originalPosition {
     color: #ffcb77 !important;
     transition: transform 0.3s ease-out;
-    /* pointer-events: none; */
   }
 
   .playButton {
@@ -251,6 +250,7 @@
   .transition {
     transition: transform 0.3s ease-out;
     opacity: 1;
+    pointer-events: none;
   }
 
   .dropped {
