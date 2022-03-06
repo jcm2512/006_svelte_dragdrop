@@ -3,7 +3,7 @@
   import shuffle from "./functions";
   export let words;
 
-  const version = "v0.1.2";
+  const version = "v0.1.3";
 
   const prevWord = localStorage.getItem("HappyHippoWord") || "firstWord";
 
@@ -130,7 +130,6 @@
       event.relatedTarget.style.pointerEvents = "none";
       event.relatedTarget.style.zIndex = "5";
       event.relatedTarget.classList.add("transition");
-      event.relatedTarget.classList.add("nondraggable");
       event.relatedTarget.classList.remove("draggable");
 
       event.target.classList.remove("can-drop");
@@ -205,7 +204,7 @@
       {#each shuffle(wordUpper) as letter}
         <div
           id={letter}
-          class="tile draggable upper"
+          class="tile draggable upper translate"
           style="margin-right:{getLimit(upperEm)}rem;"
         >
           {letter}
@@ -220,7 +219,7 @@
       {#each shuffle(wordLower) as letter}
         <div
           id={letter}
-          class="tile draggable lower"
+          class="tile draggable lower translate"
           style="margin-right:{getLimit(upperEm)}rem;"
         >
           {letter}
@@ -336,13 +335,8 @@
     color: #fe6d73;
   }
 
-  .draggable {
+  .translate {
     color: rgba(255, 255, 255, 0);
-    z-index: 10;
-  }
-
-  .nonDraggable {
-    color: rgba(255, 255, 255, 0) !important;
     z-index: 10;
   }
 
