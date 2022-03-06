@@ -3,7 +3,7 @@ import App from "./App.svelte";
 const app = new App({
   target: document.body,
   props: {
-    word: "magalotti",
+    words: ["magalotti", "haruka", "tokky", "manju", "nuts", "sherlock"],
   },
 });
 
