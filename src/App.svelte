@@ -72,16 +72,23 @@
 
       // feeback the posibility of a drop
       dropzoneElement.classList.add("drop-target");
-      draggableElement.classList.add("can-drop");
     },
     ondragleave: function (event) {
+      let target = event.target,
+        relatedTarget = event.relatedTarget;
+
       // remove the feedback style
-      event.target.classList.remove("drop-target");
-      event.relatedTarget.classList.remove("can-drop");
+      target.classList.remove("drop-target");
     },
     ondrop: function (event) {
+      let target = event.target,
+        relatedTarget = event.relatedTarget;
+      relatedTarget.classList.add("originalPosition");
+      target.classList.add("dropped");
+      target.classList.remove("can-drop");
+
       // Get CSS translate values
-      const computedStyle = window.getComputedStyle(event.relatedTarget);
+      const computedStyle = window.getComputedStyle(relatedTarget);
       const matrix =
         computedStyle.transform ||
         computedStyle.webkitTransform ||
@@ -94,22 +101,19 @@
         y: parseInt(matrixValues[5]),
       };
 
-      event.relatedTarget.classList.add("originalPosition");
-      event.target.classList.add("dropped");
-
       let xOffset =
-        event.target.getBoundingClientRect().x -
-        event.relatedTarget.getBoundingClientRect().x;
+        target.getBoundingClientRect().x -
+        relatedTarget.getBoundingClientRect().x;
       let yOffset =
-        event.target.getBoundingClientRect().y -
-        event.relatedTarget.getBoundingClientRect().y;
+        target.getBoundingClientRect().y -
+        relatedTarget.getBoundingClientRect().y;
 
       // Move element to dropzone
-      event.relatedTarget.style.transform = `translate(
-		${currentTransform.x + xOffset}px, 
-		${currentTransform.y + yOffset}px)`;
+      relatedTarget.style.transform = `translate(
+		    ${currentTransform.x + xOffset}px, 
+		    ${currentTransform.y + yOffset}px)`;
 
-      event.relatedTarget.style.pointerEvents = "none";
+      relatedTarget.style.pointerEvents = "none";
     },
     ondropdeactivate: function (event) {
       // remove active dropzone feedback
@@ -126,7 +130,11 @@
       draggableElement // draggable element
     ) {
       // only allow drops into matching id
-      return dropped && dropzoneElement.id == draggableElement.id;
+      return (
+        dropped &&
+        dropzoneElement.id == draggableElement.id &&
+        dropzoneElement.classList.contains("can-drop")
+      );
     },
   });
 </script>
@@ -144,7 +152,7 @@
   <div id="gameboard">
     <container id="container" class="drop-container">
       {#each word as letter}
-        <div id={letter} class="tile dropzone">
+        <div id={letter} class="tile dropzone can-drop">
           {letter}
         </div>
       {/each}
@@ -261,6 +269,7 @@
 
   .drop-target {
     font-family: "Londrina Solid";
+    background-color: red;
   }
 
   .transition {
