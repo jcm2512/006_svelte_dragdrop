@@ -9,6 +9,8 @@
 
   let word = wordSet[Math.floor(Math.random() * words.length)];
 
+  let complete = word.length;
+
   let wordUpper = [],
     wordLower = [];
   const position = { x: 0, y: 0 };
@@ -129,6 +131,8 @@
 
       event.target.classList.remove("can-drop");
       event.target.classList.add("dropped");
+
+      complete -= 1;
     },
     ondropdeactivate: function (event) {
       // remove active dropzone feedback
@@ -167,6 +171,10 @@
     let rot = Math.floor(Math.random() * 60) - 30;
     return rot;
   };
+
+  function handlePlayButton(event) {
+    location.reload();
+  }
 </script>
 
 <main>
@@ -218,6 +226,9 @@
       {/each}
     </container>
   </div>
+  {#if complete < 1}
+    <div class="playButton" on:click={handlePlayButton}>play</div>
+  {/if}
 </main>
 
 <style>
@@ -226,6 +237,15 @@
     color: #ffcb77 !important;
     transition: transform 0.3s ease-out;
     /* pointer-events: none; */
+  }
+
+  .playButton {
+    position: relative;
+    top: -3em;
+    font-family: "Londrina Solid";
+    font-size: 2em;
+    color: #17c3b2;
+    cursor: pointer;
   }
 
   .transition {
