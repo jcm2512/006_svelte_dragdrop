@@ -41,33 +41,30 @@
     // store the initial position attributes
     object.setAttribute("start-x", object.getAttribute("x") || 0);
     object.setAttribute("start-y", object.getAttribute("y") || 0);
-
-    // count the times dragged
-    object.setAttribute(
-      "count",
-      parseFloat(object.getAttribute("count")) + 1 || 1
-    );
+    object.setAttribute("rotation", event.target.style.transform);
   }
 
   function dragMoveListener(event) {
     const target = event.target,
       // get the updated dragged position
       x = (parseFloat(target.getAttribute("x")) || 0) + event.dx,
-      y = (parseFloat(target.getAttribute("y")) || 0) + event.dy;
+      y = (parseFloat(target.getAttribute("y")) || 0) + event.dy,
+      rotation = target.getAttribute("rotation");
 
     // translate the element
-    target.style.transform = `translate(${x}px, ${y}px)`;
+    target.style.transform = `translate(${x}px, ${y}px) ${rotation}`;
 
     // update the position attributes
     target.setAttribute("x", x);
     target.setAttribute("y", y);
+    target.setAttribute("rotation", rotation);
   }
 
   // enable draggables to be dropped into this
   let letterDrop = interact(".dropzone");
 
   letterDrop.dropzone({
-    overlap: 0.3,
+    overlap: "pointer",
 
     // listen for drop related events:
     ondropactivate: function (event) {
@@ -80,18 +77,31 @@
 
       // feeback the posibility of a drop
       dropzoneElement.classList.add("drop-target");
-      draggableElement.classList.add("can-drop");
+      event.relatedTarget.setAttribute("rotation", "rotate(0deg)"); // BUG doesn't work with animation
     },
     ondragleave: function (event) {
-      // remove the feedback style
-      event.target.classList.remove("drop-target");
-      event.relatedTarget.classList.remove("can-drop");
+      let target = event.target,
+        relatedTarget = event.relatedTarget;
+
+      // get the updated dragged position
+      const x = parseFloat(target.getAttribute("x")),
+        y = parseFloat(target.getAttribute("y")),
+        rotation = target.getAttribute("rotation");
+
+      // translate the element
+      target.style.transform = `translate(${x}px, ${y}px) ${rotation}`;
     },
     ondrop: function (event) {
-      event.relatedTarget.style.zIndex = "5";
+      let target = event.target,
+        relatedTarget = event.relatedTarget;
+
+      relatedTarget.style.zIndex = "5";
+
+      target.classList.add("dropped");
+      target.classList.remove("can-drop");
 
       // Get CSS translate values
-      const computedStyle = window.getComputedStyle(event.relatedTarget);
+      const computedStyle = window.getComputedStyle(relatedTarget);
       const matrix =
         computedStyle.transform ||
         computedStyle.webkitTransform ||
@@ -104,23 +114,22 @@
         y: parseInt(matrixValues[5]),
       };
 
-      event.relatedTarget.classList.add("originalPosition");
-      event.target.classList.add("dropped");
-
       let xOffset =
-        event.target.getBoundingClientRect().x -
-        event.relatedTarget.getBoundingClientRect().x;
+        target.getBoundingClientRect().x -
+        relatedTarget.getBoundingClientRect().x;
       let yOffset =
-        event.target.getBoundingClientRect().y -
-        event.relatedTarget.getBoundingClientRect().y;
+        target.getBoundingClientRect().y -
+        relatedTarget.getBoundingClientRect().y;
 
+      // wait for transition to end
+
+      relatedTarget.classList.add("originalPosition");
       // Move element to dropzone
-      event.relatedTarget.style.transform = `translate(
-		${currentTransform.x + xOffset}px, 
-		${currentTransform.y + yOffset}px)`;
+      relatedTarget.style.transform = `translate(
+		    ${currentTransform.x + xOffset}px, 
+		    ${currentTransform.y + yOffset}px)`;
 
-      event.relatedTarget.style.pointerEvents = "none";
-      event.target.classList.remove("can-drop");
+      relatedTarget.style.pointerEvents = "none";
     },
     ondropdeactivate: function (event) {
       // remove active dropzone feedback
@@ -144,7 +153,6 @@
       );
     },
   });
-
   const upperEm = { limit: 16 };
   const lowerEm = { limit: 16 };
 
@@ -163,7 +171,7 @@
 
 <main>
   <div
-    class="transition drop-target originalPosition dropped"
+    class="transition drop-target originalPosition dropped animateEntry"
     style="display: none"
   >
     Preloaded CSS styles
@@ -185,7 +193,9 @@
         <div
           id={letter}
           class="tile draggable upper"
-          style="margin-right:{getLimit(upperEm)}rem;"
+          style="margin-right:{getLimit(
+            upperEm
+          )}rem; transform: rotate({getRotation()}deg)"
         >
           {letter}
         </div>
@@ -197,7 +207,9 @@
         <div
           id={letter}
           class="tile draggable lower"
-          style="margin-right:{getLimit(upperEm)}rem;"
+          style="margin-right:{getLimit(
+            lowerEm
+          )}rem; transform: rotate({getRotation()}deg)"
         >
           {letter}
         </div>
@@ -210,8 +222,13 @@
   @import url("https://fonts.googleapis.com/css2?family=Fredoka&family=Londrina+Outline&family=Londrina+Solid:wght@400&family=Nunito:wght@300;400;600;700&display=swap");
   .originalPosition {
     color: #ffcb77 !important;
-    transition: transform 0.3s ease-out;
+    transition: transform 0.3s ease-out !important;
     pointer-events: none;
+  }
+
+  .animateEntry {
+    background-color: red;
+    transition: background-color 0.3s ease-out !important;
   }
 
   .dropped {
@@ -268,7 +285,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: "Londrina Outline";
     font-size: 7em;
 
     margin: 0rem;
