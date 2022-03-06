@@ -3,6 +3,8 @@
   import shuffle from "./functions";
   export let words;
 
+  const version = "v0.1.1";
+
   const prevWord = localStorage.getItem("HappyHippoWord") || "firstWord";
 
   let wordSet = words.filter((elem) => elem != prevWord);
@@ -178,7 +180,7 @@
 </script>
 
 <main>
-  <div>v0.1.0</div>
+  <div>{version}</div>
   <div
     class="transition drop-target originalPosition dropped transition "
     style="display: none"
@@ -252,6 +254,7 @@
     transition: transform 0.3s ease-out;
     opacity: 1;
     pointer-events: none;
+    touch-action: none;
   }
 
   .dropped {
