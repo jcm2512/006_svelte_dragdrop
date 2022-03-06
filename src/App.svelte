@@ -8,10 +8,18 @@
 
   const width = 300;
   const height = 300;
-  console.log(word);
+
+  let wordLimit = Math.ceil(word.length / 2);
+
   for (let i of word) {
     let r = Math.floor(Math.random() * 2);
-    r == 0 ? wordUpper.push(i) : wordLower.push(i);
+    r == 0
+      ? wordUpper.length <= wordLimit
+        ? wordUpper.push(i)
+        : wordLower.push(i)
+      : wordLower.length <= wordLimit
+      ? wordLower.push(i)
+      : wordUpper.push(i);
   }
 
   // target elements with the "draggable" class
@@ -33,12 +41,6 @@
     // store the initial position attributes
     object.setAttribute("start-x", object.getAttribute("x") || 0);
     object.setAttribute("start-y", object.getAttribute("y") || 0);
-
-    // count the times dragged
-    object.setAttribute(
-      "count",
-      parseFloat(object.getAttribute("count")) + 1 || 1
-    );
   }
 
   function dragMoveListener(event) {
@@ -137,11 +139,25 @@
       );
     },
   });
+  const upperEm = { limit: 16 };
+  const lowerEm = { limit: 16 };
+
+  const getLimit = function (obj) {
+    let em = Math.floor(Math.random() * obj.limit) + 2;
+    obj.limit -= em;
+    if (em < 2) em = 2;
+    return em;
+  };
+
+  const getRotation = function () {
+    let rot = Math.floor(Math.random() * 60) - 30;
+    return rot;
+  };
 </script>
 
 <main>
   <div
-    class="transition drop-target originalPosition dropped"
+    class="transition drop-target originalPosition dropped rotate"
     style="display: none"
   >
     Preloaded CSS styles
@@ -160,14 +176,26 @@
 
     <container id="container" class="drag-container">
       {#each shuffle(wordUpper) as letter}
-        <div id={letter} class="tile draggable upper">
+        <div
+          id={letter}
+          class="tile draggable upper"
+          style="margin-right:{getLimit(
+            upperEm
+          )}rem; transform: rotate({getRotation()}deg)"
+        >
           {letter}
         </div>
       {/each}
     </container>
     <container id="container" class="drag-container">
       {#each shuffle(wordLower) as letter}
-        <div id={letter} class="tile draggable lower">
+        <div
+          id={letter}
+          class="tile draggable lower"
+          style="margin-right:{getLimit(
+            lowerEm
+          )}rem; transform: rotate({getRotation()}deg)"
+        >
           {letter}
         </div>
       {/each}
@@ -181,6 +209,10 @@
     color: #ffcb77 !important;
     transition: transform 0.3s ease-out;
     pointer-events: none;
+  }
+
+  .rotate {
+    transition: transform 0.3s ease-out;
   }
 
   .dropped {
