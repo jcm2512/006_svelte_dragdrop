@@ -77,12 +77,16 @@
 
       // feeback the posibility of a drop
       dropzoneElement.classList.add("drop-target");
+<<<<<<< HEAD
       event.relatedTarget.setAttribute("rotation", "rotate(0deg)"); // BUG doesn't work with animation
+=======
+>>>>>>> 7785ef5a6a3cb6f247d798d26d27f6e8d4cd428d
     },
     ondragleave: function (event) {
       let target = event.target,
         relatedTarget = event.relatedTarget;
 
+<<<<<<< HEAD
       // get the updated dragged position
       const x = parseFloat(target.getAttribute("x")),
         y = parseFloat(target.getAttribute("y")),
@@ -90,13 +94,21 @@
 
       // translate the element
       target.style.transform = `translate(${x}px, ${y}px) ${rotation}`;
+=======
+      // remove the feedback style
+      target.classList.remove("drop-target");
+>>>>>>> 7785ef5a6a3cb6f247d798d26d27f6e8d4cd428d
     },
     ondrop: function (event) {
       let target = event.target,
         relatedTarget = event.relatedTarget;
+<<<<<<< HEAD
 
       relatedTarget.style.zIndex = "5";
 
+=======
+      relatedTarget.classList.add("originalPosition");
+>>>>>>> 7785ef5a6a3cb6f247d798d26d27f6e8d4cd428d
       target.classList.add("dropped");
       target.classList.remove("can-drop");
 
@@ -120,8 +132,11 @@
       let yOffset =
         target.getBoundingClientRect().y -
         relatedTarget.getBoundingClientRect().y;
+<<<<<<< HEAD
 
       // wait for transition to end
+=======
+>>>>>>> 7785ef5a6a3cb6f247d798d26d27f6e8d4cd428d
 
       relatedTarget.classList.add("originalPosition");
       // Move element to dropzone
