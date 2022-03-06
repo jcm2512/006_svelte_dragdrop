@@ -30,6 +30,8 @@
     onend: dragEndListener,
   });
 
+  // GIT ISSUES!!!!!!!!!!!!!!!!
+
   function dragEndListener(event) {
     const object = event.target;
     // revertPosition(object);
