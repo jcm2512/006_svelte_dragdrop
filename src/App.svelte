@@ -3,7 +3,7 @@
   import shuffle from "./functions";
   export let words;
 
-  const version = "v0.1.1";
+  const version = "v0.1.2";
 
   const prevWord = localStorage.getItem("HappyHippoWord") || "firstWord";
 
@@ -130,6 +130,8 @@
       event.relatedTarget.style.pointerEvents = "none";
       event.relatedTarget.style.zIndex = "5";
       event.relatedTarget.classList.add("transition");
+      event.relatedTarget.classList.add("nondraggable");
+      event.relatedTarget.classList.remove("draggable");
 
       event.target.classList.remove("can-drop");
       event.target.classList.add("dropped");
@@ -182,7 +184,7 @@
 <main>
   <div>{version}</div>
   <div
-    class="transition drop-target originalPosition dropped transition "
+    class="transition drop-target originalPosition dropped transition nonDraggable"
     style="display: none"
   >
     Preloaded CSS styles
@@ -338,6 +340,12 @@
     color: rgba(255, 255, 255, 0);
     z-index: 10;
   }
+
+  .nonDraggable {
+    color: rgba(255, 255, 255, 0) !important;
+    z-index: 10;
+  }
+
   .dropzone {
     /* background-color: #17c3b2; */
     font-family: "Londrina Outline";
