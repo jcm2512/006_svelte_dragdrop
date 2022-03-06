@@ -75,12 +75,9 @@
       event.target.classList.add("drop-active");
     },
     ondragenter: function (event) {
-      let draggableElement = event.relatedTarget;
-      let dropzoneElement = event.target;
-
       // feeback the posibility of a drop
-      dropzoneElement.classList.add("drop-target");
-      draggableElement.classList.add("can-drop");
+      event.target.classList.add("drop-target");
+      event.relatedTarget.classList.add("can-drop");
     },
     ondragleave: function (event) {
       // remove the feedback style
@@ -88,7 +85,7 @@
       event.relatedTarget.classList.remove("can-drop");
     },
     ondrop: function (event) {
-      event.relatedTarget.style.zIndex = "5";
+      event.relatedTarget.children[0].style.zIndex = "5";
 
       // Get CSS translate values
       const computedStyle = window.getComputedStyle(event.relatedTarget);
@@ -104,9 +101,6 @@
         y: parseInt(matrixValues[5]),
       };
 
-      event.relatedTarget.classList.add("originalPosition");
-      event.target.classList.add("dropped");
-
       let xOffset =
         event.target.getBoundingClientRect().x -
         event.relatedTarget.getBoundingClientRect().x;
@@ -119,8 +113,14 @@
 		${currentTransform.x + xOffset}px, 
 		${currentTransform.y + yOffset}px)`;
 
-      event.relatedTarget.style.pointerEvents = "none";
       event.target.classList.remove("can-drop");
+      event.target.classList.add("dropped");
+
+      event.relatedTarget.style.pointerEvents = "none";
+      event.relatedTarget.classList.add("transition");
+      event.relatedTarget.children[0].style.transform = "rotate(0deg)";
+      event.relatedTarget.children[0].classList.add("transition");
+      event.relatedTarget.children[0].classList.add("originalPosition");
     },
     ondropdeactivate: function (event) {
       // remove active dropzone feedback
@@ -163,7 +163,7 @@
 
 <main>
   <div
-    class="transition drop-target originalPosition dropped"
+    class="transition drop-target originalPosition dropped transition "
     style="display: none"
   >
     Preloaded CSS styles
@@ -188,6 +188,9 @@
           style="margin-right:{getLimit(upperEm)}rem;"
         >
           {letter}
+          <div class="rotation" style="transform:rotate({getRotation()}deg)">
+            {letter}
+          </div>
         </div>
       {/each}
     </container>
@@ -200,6 +203,9 @@
           style="margin-right:{getLimit(upperEm)}rem;"
         >
           {letter}
+          <div class="rotation" style="transform:rotate({getRotation()}deg)">
+            {letter}
+          </div>
         </div>
       {/each}
     </container>
@@ -211,7 +217,12 @@
   .originalPosition {
     color: #ffcb77 !important;
     transition: transform 0.3s ease-out;
-    pointer-events: none;
+    /* pointer-events: none; */
+  }
+
+  .transition {
+    transition: transform 0.3s ease-out;
+    opacity: 1;
   }
 
   .dropped {
@@ -270,11 +281,8 @@
     justify-content: center;
     font-family: "Londrina Outline";
     font-size: 7em;
-
+    padding: 0.02em;
     margin: 0rem;
-    color: #fef9ef;
-    border-radius: 0.4em;
-    /* padding: 4%; */
     touch-action: none;
     user-select: none;
   }
@@ -286,12 +294,17 @@
   .lower {
     top: 1em;
   }
-  .draggable {
-    /* background-color: #fe6d73; */
-    font-family: "Londrina Solid";
 
+  .rotation {
+    position: absolute;
+    transform-origin: center;
+    font-family: "Londrina Solid";
     color: #fe6d73;
     z-index: 10;
+  }
+
+  .draggable {
+    color: rgba(255, 255, 255, 0);
   }
   .dropzone {
     /* background-color: #17c3b2; */
@@ -302,10 +315,5 @@
 
   .drop-target {
     font-family: "Londrina Solid";
-  }
-
-  .transition {
-    opacity: 0.5;
-    transition: transform 0.3s ease-out;
   }
 </style>
