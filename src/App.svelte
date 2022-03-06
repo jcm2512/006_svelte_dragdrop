@@ -178,6 +178,7 @@
 </script>
 
 <main>
+  <div>v0.1.0</div>
   <div
     class="transition drop-target originalPosition dropped transition "
     style="display: none"
