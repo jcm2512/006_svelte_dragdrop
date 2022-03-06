@@ -1,7 +1,14 @@
 <script>
   import interact from "interactjs";
   import shuffle from "./functions";
-  export let word;
+  export let words;
+
+  const prevWord = localStorage.getItem("HappyHippoWord") || "firstWord";
+
+  let wordSet = words.filter((elem) => elem != prevWord);
+
+  let word = wordSet[Math.floor(Math.random() * words.length)];
+
   let wordUpper = [],
     wordLower = [];
   const position = { x: 0, y: 0 };
@@ -85,8 +92,6 @@
       event.relatedTarget.classList.remove("can-drop");
     },
     ondrop: function (event) {
-      event.relatedTarget.children[0].style.zIndex = "5";
-
       // Get CSS translate values
       const computedStyle = window.getComputedStyle(event.relatedTarget);
       const matrix =
@@ -113,14 +118,17 @@
 		${currentTransform.x + xOffset}px, 
 		${currentTransform.y + yOffset}px)`;
 
-      event.target.classList.remove("can-drop");
-      event.target.classList.add("dropped");
-
-      event.relatedTarget.style.pointerEvents = "none";
-      event.relatedTarget.classList.add("transition");
+      event.relatedTarget.children[0].style.zIndex = "5";
       event.relatedTarget.children[0].style.transform = "rotate(0deg)";
       event.relatedTarget.children[0].classList.add("transition");
       event.relatedTarget.children[0].classList.add("originalPosition");
+
+      event.relatedTarget.style.pointerEvents = "none";
+      event.relatedTarget.style.zIndex = "5";
+      event.relatedTarget.classList.add("transition");
+
+      event.target.classList.remove("can-drop");
+      event.target.classList.add("dropped");
     },
     ondropdeactivate: function (event) {
       // remove active dropzone feedback
@@ -300,11 +308,11 @@
     transform-origin: center;
     font-family: "Londrina Solid";
     color: #fe6d73;
-    z-index: 10;
   }
 
   .draggable {
     color: rgba(255, 255, 255, 0);
+    z-index: 10;
   }
   .dropzone {
     /* background-color: #17c3b2; */
@@ -314,6 +322,6 @@
   }
 
   .drop-target {
-    font-family: "Londrina Solid";
+    /* font-family: "Londrina Solid"; */
   }
 </style>
