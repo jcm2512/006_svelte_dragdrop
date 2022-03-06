@@ -237,7 +237,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: "Londrina Outline";
     font-size: 7em;
 
     margin: 0rem;
@@ -260,16 +259,17 @@
     font-family: "Londrina Solid";
 
     color: #fe6d73;
+    z-index: 10;
   }
   .dropzone {
     /* background-color: #17c3b2; */
     font-family: "Londrina Outline";
     color: #17c3b2;
+    z-index: 0;
   }
 
   .drop-target {
     font-family: "Londrina Solid";
-    background-color: red;
   }
 
   .transition {
