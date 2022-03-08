@@ -52,12 +52,6 @@
     // store the initial position attributes
     object.setAttribute("start-x", object.getAttribute("x") || 0);
     object.setAttribute("start-y", object.getAttribute("y") || 0);
-
-    // count the times dragged
-    object.setAttribute(
-      "count",
-      parseFloat(object.getAttribute("count")) + 1 || 1
-    );
   }
 
   function dragMoveListener(event) {
@@ -183,7 +177,7 @@
 <main>
   <div>{version}</div>
   <div
-    class="transition drop-target originalPosition dropped transition nonDraggable"
+    class="transition drop-target originalPosition dropped nonDraggable"
     style="display: none"
   >
     Preloaded CSS styles
@@ -281,12 +275,6 @@
     /* border: 1px solid #227c9d; */
   }
 
-  h1 {
-    color: #17c3b2;
-    font-size: 2em;
-    font-weight: 100;
-  }
-
   @media (min-width: 640px) {
     main {
       max-width: none;
@@ -345,9 +333,5 @@
     font-family: "Londrina Outline";
     color: #17c3b2;
     z-index: 0;
-  }
-
-  .drop-target {
-    /* font-family: "Londrina Solid"; */
   }
 </style>
