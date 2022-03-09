@@ -5,9 +5,24 @@
 
   const version = "v0.1.3";
 
-  const prevWord = localStorage.getItem("HappyHippoWord") || "firstWord";
+  import { writable } from "svelte/store";
 
-  let wordSet = words.filter((elem) => elem != prevWord);
+  const storedPreviousWord = localStorage.getItem("HappyHippoWord");
+  export const previousWord = writable(storedPreviousWord);
+  previousWord.subscribe((value) => {
+    localStorage.setItem(
+      "HappyHippoWord",
+      value === null ? "firstWord" : storedPreviousWord
+    );
+  });
+
+  // localStorage.getItem("HappyHippoWord")
+  //   ? null
+  //   : localstorage.setItem("HappyHippoWord", "firstword");
+
+  let wordSet = words.filter(
+    (elem) => elem != localStorage.getItem("HappyHippoWord")
+  );
 
   let word = wordSet[Math.floor(Math.random() * words.length)];
 
@@ -306,6 +321,7 @@
     margin: 0rem;
     touch-action: none;
     user-select: none;
+    border: 1px solid red;
   }
 
   .upper {
