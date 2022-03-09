@@ -1,4 +1,6 @@
 <script>
+  //TODO #5 fix letter overhang @jcm2512
+
   import interact from "interactjs";
   import shuffle from "./functions";
   import { writable } from "svelte/store";
@@ -300,6 +302,8 @@
   }
 
   .tile {
+    width: fit-content;
+
     position: relative;
     display: flex;
     flex-direction: column;
@@ -314,19 +318,21 @@
     border: 1px solid red;
   }
 
+  .rotation {
+    width: 1em;
+    overflow: hidden;
+    position: absolute;
+    transform-origin: center;
+    font-family: "Londrina Solid";
+    color: #fe6d73;
+  }
+
   .upper {
     top: -1em;
   }
 
   .lower {
     top: 1em;
-  }
-
-  .rotation {
-    position: absolute;
-    transform-origin: center;
-    font-family: "Londrina Solid";
-    color: #fe6d73;
   }
 
   .translate {
