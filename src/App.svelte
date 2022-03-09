@@ -1,26 +1,20 @@
 <script>
   import interact from "interactjs";
   import shuffle from "./functions";
+  import { writable } from "svelte/store";
+
   export let words;
 
   const version = "v0.1.3";
+  const storedPrevious = localStorage.getItem("HelloHippo");
 
-  import { writable } from "svelte/store";
+  const wordSet = words.filter((elem) => elem != storedPrevious),
+    word = wordSet[Math.floor(Math.random() * (words.length - 1))];
 
-  const storedPreviousWord = localStorage.getItem("HappyHippoWord");
-  export const previousWord = writable(storedPreviousWord);
-  previousWord.subscribe((value) => {
-    localStorage.setItem(
-      "HappyHippoWord",
-      value === null ? "firstWord" : storedPreviousWord
-    );
+  export const previous = writable(storedPrevious);
+  previous.subscribe((value) => {
+    localStorage.setItem("HelloHippo", word);
   });
-
-  let wordSet = words.filter(
-    (elem) => elem != localStorage.getItem("HappyHippoWord")
-  );
-
-  let word = wordSet[Math.floor(Math.random() * words.length)];
 
   let complete = word.length;
 
