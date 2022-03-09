@@ -315,7 +315,6 @@
     margin: 0rem;
     touch-action: none;
     user-select: none;
-    border: 1px solid red;
   }
 
   .rotation {
