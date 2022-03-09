@@ -16,10 +16,6 @@
     );
   });
 
-  // localStorage.getItem("HappyHippoWord")
-  //   ? null
-  //   : localstorage.setItem("HappyHippoWord", "firstword");
-
   let wordSet = words.filter(
     (elem) => elem != localStorage.getItem("HappyHippoWord")
   );
