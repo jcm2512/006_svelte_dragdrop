@@ -1,16 +1,15 @@
-import App from "./App.svelte";
-// import Drag from "./Drag.svelte";
+// import App from "./App.svelte";
+import Drag from "./Drag.svelte";
 
-const app = new App({
-  target: document.body,
-  props: {
-    words: ["tokky", "manju", "nuts"],
-  },
-});
-
-// const drag = new Drag({
+// const app = new App({
 //   target: document.body,
-//   props: {},
+//   props: {
+//     words: ["tokky", "manju", "nuts"],
+//   },
 // });
 
-// export default app;
+const drag = new Drag({
+  target: document.body,
+});
+
+// export default dragPath;
