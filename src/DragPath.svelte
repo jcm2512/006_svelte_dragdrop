@@ -1,26 +1,51 @@
 <script>
   import { onMount } from "svelte";
-  import dragElement from "../modules/dragElement";
+  // import dragElement from "../modules/dragElement";
+  import interact from "interactjs";
+  import closestPoint from "../modules/closestPoint";
 
   let divs = []; // store references to DOM elements
   const array = ["h"];
 
-  let drag, path;
-  let draggable;
+  let path;
 
-  onMount(() => {
-    // console.log(path);
-    // gsap.registerPlugin(Draggable);
+  // target elements with the "draggable" class
 
-    divs.forEach((div) => {
-      dragElement({
-        element: div,
-        path: path,
-      });
-    });
-
-    // end
+  let draggable = interact(".draggable");
+  draggable.draggable({
+    inertia: false,
+    onmove: dragMoveListener,
+    onstart: dragStartListener,
+    onend: dragEndListener,
   });
+
+  function dragEndListener(event) {
+    console.log("stopped");
+  }
+  function dragStartListener(event) {
+    const object = event.target;
+
+    // store the initial position attributes
+    object.setAttribute("start-x", object.getAttribute("x") || 0);
+    object.setAttribute("start-y", object.getAttribute("y") || 0);
+  }
+
+  function dragMoveListener(event) {
+    const target = event.target,
+      // get the updated dragged position
+      x = (parseFloat(target.getAttribute("x")) || 0) + event.dx,
+      y = (parseFloat(target.getAttribute("y")) || 0) + event.dy;
+
+    // translate the element
+    // target.style.transform = `translate(${x}px, ${y}px)`;
+    target.style.transform = `translate(${
+      closestPoint(path, [event.clientX, event.clientY])[0]
+    }px, ${closestPoint(path, [event.clientX, event.clientY])[1]}px`;
+
+    // update the position attributes
+    target.setAttribute("x", x);
+    target.setAttribute("y", y);
+  }
 </script>
 
 <main>
@@ -43,12 +68,12 @@
       </g>
     </svg>
   </div>
-  <div class="mydiv" bind:this={drag}>DRAG</div>
 
   {#each array as item, index}
-    <div class="mydiv" bind:this={divs[index]}>
+    <div bind:this={divs[index]}>
       {item}
     </div>
+    <div class="draggable">O</div>
   {/each}
 </main>
 
@@ -66,11 +91,12 @@
     stroke: #979797;
   }
 
-  .mydiv {
+  .draggable {
+    will-change: transform;
     position: absolute;
-    top: 0px;
-    left: 0px;
-    padding: 1em;
+    top: 0;
+    left: 0;
+    padding: 2em;
     z-index: 9;
     background-color: #f1f1f1;
     border: 1px solid #d3d3d3;
