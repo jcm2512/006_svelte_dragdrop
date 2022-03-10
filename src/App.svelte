@@ -301,6 +301,7 @@
     justify-content: center;
   }
 
+  /* TODO #7 text should not be selectable @jcm2512 */
   .tile {
     width: fit-content;
 
