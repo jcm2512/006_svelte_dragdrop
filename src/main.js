@@ -1,5 +1,5 @@
 // import App from "./App.svelte";
-import Drag from "./Drag.svelte";
+import DragPath from "./DragPath.svelte";
 
 // const app = new App({
 //   target: document.body,
@@ -8,8 +8,8 @@ import Drag from "./Drag.svelte";
 //   },
 // });
 
-const drag = new Drag({
+const dragPath = new DragPath({
   target: document.body,
 });
 
-// export default dragPath;
+export default dragPath;
