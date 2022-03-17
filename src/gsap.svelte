@@ -3,6 +3,11 @@
   import gsap from "gsap";
   import { Draggable } from "gsap/Draggable";
   import { DrawSVGPlugin } from "../modules/DrawSVGPlugin";
+
+  export let paths;
+
+  console.log(paths);
+
   onMount(() => {
     // Closest Point on Path
     // https://bl.ocks.org/mbostock/8027637
@@ -129,24 +134,22 @@
 <main>
   <div class="container">
     <svg
-      width="539"
-      height="397"
-      viewBox="0 0 539 397"
+      width="420"
+      height="420"
+      viewBox="-20 -20 440 420"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path
-        id="path"
-        class="path"
-        d="M159 70c-50.386 35.428-74.284 72.547-71.691 111.355 2.592 38.81 31.514 76.92 86.765 114.333L447.7 84.137l-9.812 263.996"
-      />
+      {#each paths as path}
+        <path id="path" class="path" d={path} />
 
-      <path
-        stroke="#88CE02"
-        stroke-width="10"
-        id="drawMe"
-        class="path"
-        d="M159 70c-50.386 35.428-74.284 72.547-71.691 111.355 2.592 38.81 31.514 76.92 86.765 114.333L447.7 84.137l-9.812 263.996"
-      />
+        <path
+          stroke="#88CE02"
+          stroke-width="10"
+          id="drawMe"
+          class="path"
+          d={path}
+        />
+      {/each}
       <g id="drag">
         <circle class="oval" cx="15" cy="15" r="15" />
         <polygon class="arrow" points="10,10 25,15 10,20" />
