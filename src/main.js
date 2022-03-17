@@ -1,5 +1,7 @@
 // import App from "./App.svelte";
-import DragPath from "./DragPath.svelte";
+// import DragPath from "./DragPath.svelte";
+
+import Gsap from "./Gsap.svelte";
 
 // const app = new App({
 //   target: document.body,
@@ -8,8 +10,8 @@ import DragPath from "./DragPath.svelte";
 //   },
 // });
 
-const dragPath = new DragPath({
+const gsapApp = new Gsap({
   target: document.body,
 });
 
-export default dragPath;
+export default gsapApp;
