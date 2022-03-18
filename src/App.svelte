@@ -49,30 +49,30 @@
   });
 
   function dragEndListener(event) {
-    const object = event.target;
+    const draggable = event.target;
     // revertPosition(object);
   }
 
   function dragStartListener(event) {
-    const object = event.target;
+    const draggable = event.target;
 
     // store the initial position attributes
-    object.setAttribute("start-x", object.getAttribute("x") || 0);
-    object.setAttribute("start-y", object.getAttribute("y") || 0);
+    draggable.setAttribute("start-x", draggable.getAttribute("x") || 0);
+    draggable.setAttribute("start-y", draggable.getAttribute("y") || 0);
   }
 
   function dragMoveListener(event) {
-    const target = event.target,
+    const draggable = event.target,
       // get the updated dragged position
-      x = (parseFloat(target.getAttribute("x")) || 0) + event.dx,
-      y = (parseFloat(target.getAttribute("y")) || 0) + event.dy;
+      x = (parseFloat(draggable.getAttribute("x")) || 0) + event.dx,
+      y = (parseFloat(draggable.getAttribute("y")) || 0) + event.dy;
 
     // translate the element
-    target.style.transform = `translate(${x}px, ${y}px)`;
+    draggable.style.transform = `translate(${x}px, ${y}px)`;
 
     // update the position attributes
-    target.setAttribute("x", x);
-    target.setAttribute("y", y);
+    draggable.setAttribute("x", x);
+    draggable.setAttribute("y", y);
   }
 
   // enable draggables to be dropped into this
@@ -83,65 +83,76 @@
 
     // listen for drop related events:
     ondropactivate: function (event) {
+      const dropzone = event.target,
+        draggable = event.relatedTarget;
       // add active target dropzone feedback
-      event.target.classList.add("drop-active");
+      dropzone.classList.add("drop-active");
     },
     ondragenter: function (event) {
+      const dropzone = event.target,
+        draggable = event.relatedTarget;
       // feeback the posibility of a drop
-      event.target.classList.add("drop-target");
-      event.relatedTarget.classList.add("can-drop");
+      dropzone.classList.add("drop-target");
+      draggable.classList.add("can-drop");
     },
     ondragleave: function (event) {
+      const dropzone = event.target,
+        draggable = event.relatedTarget;
       // remove the feedback style
-      event.target.classList.remove("drop-target");
-      event.relatedTarget.classList.remove("can-drop");
+      dropzone.classList.remove("drop-target");
+      draggable.classList.remove("can-drop");
     },
     ondrop: function (event) {
-      // Get CSS translate values
-      const computedStyle = window.getComputedStyle(event.relatedTarget);
-      const matrix =
-        computedStyle.transform ||
-        computedStyle.webkitTransform ||
-        computedStyle.mozTransform;
-      const matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(", ");
+      const dropzone = event.target,
+        draggable = event.relatedTarget,
+        // Get CSS translate values
+        computedStyle = window.getComputedStyle(draggable),
+        matrix =
+          computedStyle.transform ||
+          computedStyle.webkitTransform ||
+          computedStyle.mozTransform,
+        matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(", ");
 
       // Extract x and y values from the 2d matrix
-      let currentTransform = {
+      let pos = {
         x: parseInt(matrixValues[4]),
         y: parseInt(matrixValues[5]),
       };
 
-      let xOffset =
-        event.target.getBoundingClientRect().x -
-        event.relatedTarget.getBoundingClientRect().x;
-      let yOffset =
-        event.target.getBoundingClientRect().y -
-        event.relatedTarget.getBoundingClientRect().y;
+      let offset = {
+        x:
+          dropzone.getBoundingClientRect().x -
+          draggable.getBoundingClientRect().x,
+        y:
+          dropzone.getBoundingClientRect().y -
+          draggable.getBoundingClientRect().y,
+      };
 
       // Move element to dropzone
-      event.relatedTarget.style.transform = `translate(
-		${currentTransform.x + xOffset}px, 
-		${currentTransform.y + yOffset}px)`;
+      draggable.style.transform = `translate(
+        ${pos.x + offset.x}px, ${pos.y + offset.y}px)`;
 
-      event.relatedTarget.children[0].style.zIndex = "5";
-      event.relatedTarget.children[0].style.transform = "rotate(0deg)";
-      event.relatedTarget.children[0].classList.add("transition");
-      event.relatedTarget.children[0].classList.add("originalPosition");
+      draggable.children[0].style.zIndex = "5";
+      draggable.children[0].style.transform = "rotate(0deg)";
+      draggable.children[0].classList.add("transition");
+      draggable.children[0].classList.add("originalPosition");
 
-      event.relatedTarget.style.pointerEvents = "none";
-      event.relatedTarget.style.zIndex = "5";
-      event.relatedTarget.classList.add("transition");
-      event.relatedTarget.classList.remove("draggable");
+      draggable.style.pointerEvents = "none";
+      draggable.style.zIndex = "5";
+      draggable.classList.add("transition");
+      draggable.classList.remove("draggable");
 
-      event.target.classList.remove("can-drop");
-      event.target.classList.add("dropped");
+      dropzone.classList.remove("can-drop");
+      dropzone.classList.add("dropped");
 
       complete -= 1;
     },
     ondropdeactivate: function (event) {
+      const dropzone = event.target,
+        draggable = event.relatedTarget;
       // remove active dropzone feedback
-      event.target.classList.remove("drop-active");
-      event.target.classList.remove("drop-target");
+      dropzone.classList.remove("drop-active");
+      dropzone.classList.remove("drop-target");
     },
     checker: function (
       dragEvent, // related dragmove or dragend
