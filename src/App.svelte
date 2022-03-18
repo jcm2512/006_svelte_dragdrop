@@ -21,6 +21,7 @@
   });
 
   let complete = word.length;
+  let stars = 3;
 
   let wordUpper = [],
     wordLower = [];
@@ -86,6 +87,7 @@
 
   // enable draggables to be dropped into this
   let letterDrop = interact(".dropzone");
+  let score = 0;
 
   letterDrop.dropzone({
     overlap: 0.3,
@@ -112,51 +114,60 @@
       draggable.classList.remove("can-drop");
     },
     ondrop: function (event) {
-      const dropzone = event.target,
-        draggable = event.relatedTarget,
-        // Get CSS translate values
-        computedStyle = window.getComputedStyle(draggable),
-        matrix =
-          computedStyle.transform ||
-          computedStyle.webkitTransform ||
-          computedStyle.mozTransform,
-        matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(", ");
+      if (event.target.id == event.relatedTarget.id) {
+        //     dropzoneElement.id == draggableElement.id &&
+        //     dropzoneElement.classList.contains("can-drop")
+        const dropzone = event.target,
+          draggable = event.relatedTarget,
+          // Get CSS translate values
+          computedStyle = window.getComputedStyle(draggable),
+          matrix =
+            computedStyle.transform ||
+            computedStyle.webkitTransform ||
+            computedStyle.mozTransform,
+          matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(", ");
 
-      // Extract x and y values from the 2d matrix
-      let pos = {
-        x: parseInt(matrixValues[4]),
-        y: parseInt(matrixValues[5]),
-      };
+        // Extract x and y values from the 2d matrix
+        let pos = {
+          x: parseInt(matrixValues[4]),
+          y: parseInt(matrixValues[5]),
+        };
 
-      let offset = {
-        x:
-          dropzone.getBoundingClientRect().x -
-          draggable.getBoundingClientRect().x,
-        y:
-          dropzone.getBoundingClientRect().y -
-          draggable.getBoundingClientRect().y,
-      };
+        let offset = {
+          x:
+            dropzone.getBoundingClientRect().x -
+            draggable.getBoundingClientRect().x,
+          y:
+            dropzone.getBoundingClientRect().y -
+            draggable.getBoundingClientRect().y,
+        };
 
-      // Move element to dropzone
-      draggable.style.transform = `translate(
+        // Move element to dropzone
+        draggable.style.transform = `translate(
         ${pos.x + offset.x}px, ${pos.y + offset.y}px)`;
 
-      const rotatedElement = draggable.children[0];
+        const rotatedElement = draggable.children[0];
 
-      rotatedElement.style.zIndex = "5";
-      rotatedElement.style.transform = "rotate(0deg)";
-      rotatedElement.classList.add("transition");
-      rotatedElement.classList.add("originalPosition");
+        rotatedElement.style.zIndex = "5";
+        rotatedElement.style.transform = "rotate(0deg)";
+        rotatedElement.classList.add("transition");
+        rotatedElement.classList.add("originalPosition");
 
-      draggable.style.pointerEvents = "none";
-      draggable.style.zIndex = "5";
-      draggable.classList.add("transition");
-      draggable.classList.remove("draggable");
+        draggable.style.pointerEvents = "none";
+        draggable.style.zIndex = "5";
+        draggable.classList.add("transition");
+        draggable.classList.remove("draggable");
 
-      dropzone.classList.remove("can-drop");
-      dropzone.classList.add("dropped");
+        dropzone.classList.remove("can-drop");
+        dropzone.classList.add("dropped");
 
-      complete -= 1;
+        complete -= 1;
+      } else {
+        if (stars > 0) {
+          stars -= 1;
+        }
+        console.log(stars);
+      }
     },
     ondropdeactivate: function (event) {
       const dropzone = event.target,
@@ -164,22 +175,6 @@
       // remove active dropzone feedback
       dropzone.classList.remove("drop-active");
       dropzone.classList.remove("drop-target");
-    },
-    checker: function (
-      dragEvent, // related dragmove or dragend
-      event, // Touch, Pointer or Mouse Event
-      dropped, // bool default checker result
-      dropzone, // dropzone Interactable
-      dropzoneElement, // dropzone element
-      draggable, // draggable Interactable
-      draggableElement // draggable element
-    ) {
-      // only allow drops into matching id
-      return (
-        dropped &&
-        dropzoneElement.id == draggableElement.id &&
-        dropzoneElement.classList.contains("can-drop")
-      );
     },
   });
 
@@ -254,7 +249,8 @@
     </container>
   </div>
   {#if complete < 1}
-    <div class="playButton" on:click={handlePlayButton}>play</div>
+    <div class="playButton" on:click={handlePlayButton}>play again</div>
+    <div class="stars">{stars} points</div>
   {/if}
 </main>
 
@@ -265,9 +261,14 @@
     transition: transform 0.3s ease-out;
   }
 
+  .stars {
+    position: relative;
+    top: -4em;
+  }
+
   .playButton {
     position: relative;
-    top: -3em;
+    top: -2em;
     font-family: "Londrina Solid";
     font-size: 2em;
     color: #17c3b2;
