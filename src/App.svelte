@@ -132,10 +132,12 @@
       draggable.style.transform = `translate(
         ${pos.x + offset.x}px, ${pos.y + offset.y}px)`;
 
-      draggable.children[0].style.zIndex = "5";
-      draggable.children[0].style.transform = "rotate(0deg)";
-      draggable.children[0].classList.add("transition");
-      draggable.children[0].classList.add("originalPosition");
+      const rotatedElement = draggable.children[0];
+
+      rotatedElement.style.zIndex = "5";
+      rotatedElement.style.transform = "rotate(0deg)";
+      rotatedElement.classList.add("transition");
+      rotatedElement.classList.add("originalPosition");
 
       draggable.style.pointerEvents = "none";
       draggable.style.zIndex = "5";
