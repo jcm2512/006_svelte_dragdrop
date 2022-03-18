@@ -1,13 +1,15 @@
 <script>
   //TODO #5 fix letter overhang @jcm2512
 
+  import { onMount } from "svelte";
   import interact from "interactjs";
   import shuffle from "./functions";
   import { writable } from "svelte/store";
 
   export let words;
+  export let gameboard;
 
-  const version = "v0.1.3";
+  const version = "v0.1.41";
   const storedPrevious = localStorage.getItem("HelloHippo");
 
   const wordSet = words.filter((elem) => elem != storedPrevious),
@@ -39,6 +41,12 @@
       ? wordLower.push(i)
       : wordUpper.push(i);
   }
+
+  onMount(() => {
+    gameboard.addEventListener("touchstart", function (event) {
+      event.preventDefault();
+    });
+  });
 
   // target elements with the "draggable" class
   interact(".draggable").draggable({
@@ -205,7 +213,7 @@
 
   <!-- <h1>{title}!</h1> -->
 
-  <div id="gameboard">
+  <div id="gameboard" bind:this={gameboard}>
     <container id="container" class="drop-container">
       {#each word as letter}
         <div id={letter} class="tile dropzone can-drop">
