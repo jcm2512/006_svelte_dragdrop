@@ -43,6 +43,7 @@
   }
 
   onMount(() => {
+    // prevent text from being seletable on iOS
     gameboard.addEventListener("touchstart", function (event) {
       event.preventDefault();
     });
