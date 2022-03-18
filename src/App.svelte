@@ -42,6 +42,7 @@
       : wordUpper.push(i);
   }
 
+  // deploy preview
   onMount(() => {
     gameboard.addEventListener("touchstart", function (event) {
       event.preventDefault();
