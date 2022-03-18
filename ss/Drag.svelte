@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import dragElement from "../modules/dragElement";
+  import dragElement from "./modules/dragElement";
 
   let divs = []; // store references to DOM elements
   const array = ["h", "e", "y"];
