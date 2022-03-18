@@ -21,7 +21,8 @@
   });
 
   let complete = word.length;
-  let stars = 3;
+  let stars = ["s", "s", "s"],
+    blank = [];
 
   let wordUpper = [],
     wordLower = [];
@@ -114,13 +115,19 @@
       draggable.classList.remove("can-drop");
     },
     ondrop: function (event) {
-      if (event.target.id == event.relatedTarget.id) {
-        //     dropzoneElement.id == draggableElement.id &&
-        //     dropzoneElement.classList.contains("can-drop")
-        const dropzone = event.target,
-          draggable = event.relatedTarget,
-          // Get CSS translate values
-          computedStyle = window.getComputedStyle(draggable),
+      const dropzone = event.target,
+        draggable = event.relatedTarget;
+
+      // If target is invalid, reduce score
+      if (dropzone.id != draggable.id) {
+        {
+          if (stars.length > 0) {
+            blank.push(stars.pop());
+          }
+        }
+      } else {
+        // Get CSS translate values
+        const computedStyle = window.getComputedStyle(draggable),
           matrix =
             computedStyle.transform ||
             computedStyle.webkitTransform ||
@@ -162,12 +169,8 @@
         dropzone.classList.add("dropped");
 
         complete -= 1;
-      } else {
-        if (stars > 0) {
-          stars -= 1;
-        }
-        console.log(stars);
       }
+      console.log(stars, blank);
     },
     ondropdeactivate: function (event) {
       const dropzone = event.target,
@@ -250,7 +253,14 @@
   </div>
   {#if complete < 1}
     <div class="playButton" on:click={handlePlayButton}>play again</div>
-    <div class="stars">{stars} points</div>
+    <div class="stars">
+      {#each stars as index}
+        <i class="fa-solid fa-star fa-fw" />
+      {/each}
+      {#each blank as index}
+        <i class="fa-regular fa-star fa-fw" />
+      {/each}
+    </div>
   {/if}
 </main>
 
@@ -264,6 +274,10 @@
   .stars {
     position: relative;
     top: -4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1bem;
   }
 
   .playButton {
