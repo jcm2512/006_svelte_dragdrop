@@ -264,11 +264,22 @@
   {/if}
 </main>
 
+<svelte:head>
+  <style>
+    :root {
+      --bg-color: hsl(0, 83%, 73%); /* var(--bg-color)  */
+      --dropped-color: hsl(0, 60%, 25%);
+      --main-color: #fce38a; /* var(--main-color)  */
+      --sub-color: #f38181; /* var(--sub-color)  */
+      --fg-color: black; /* #95e1d3; /* var(--fg-color)  */
+    }
+  </style>
+</svelte:head>
+
 <style>
-  /* TODO #10 Fix CSS styling */
   @import url("https://fonts.googleapis.com/css2?family=Fredoka&family=Londrina+Outline&family=Londrina+Solid:wght@400&family=Nunito:wght@300;400;600;700&display=swap");
   .originalPosition {
-    color: #ffcb77 !important;
+    color: var(--sub-color) !important;
     transition: transform 0.3s ease-out;
   }
 
@@ -280,7 +291,7 @@
   }
 
   .dropped {
-    color: #ffcb77 !important;
+    color: var(--dropped-color) !important;
   }
 
   main {
@@ -290,6 +301,8 @@
     grid-template-rows: repeat(5, 1fr);
     width: 100vw;
     height: 100vh;
+    background-image: url("/assets/bg-tile-red.png");
+    /* https://patternico.com/#YlesRX3CBrgbu9cv */
   }
 
   #gameboard {
@@ -325,7 +338,7 @@
     justify-content: center;
     font-family: "Londrina Solid";
     font-size: 2em;
-    color: #17c3b2;
+    color: var(--dropped-color);
     cursor: pointer;
   }
 
@@ -376,7 +389,7 @@
     position: absolute;
     transform-origin: center;
     font-family: "Londrina Solid";
-    color: #fe6d73;
+    color: var(--main-color);
   }
 
   .upper {
@@ -395,7 +408,7 @@
   .dropzone {
     /* background-color: #17c3b2; */
     font-family: "Londrina Outline";
-    color: #17c3b2;
+    color: var(--fg-color);
     z-index: 0;
   }
 </style>
