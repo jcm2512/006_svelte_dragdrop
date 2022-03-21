@@ -202,7 +202,7 @@
 </script>
 
 <main>
-  <div>{version}</div>
+  <!-- <div>{version}</div> -->
   <div
     class="transition drop-target originalPosition dropped nonDraggable"
     style="display: none"
@@ -265,28 +265,11 @@
 </main>
 
 <style>
+  /* TODO #10 Fix CSS styling */
   @import url("https://fonts.googleapis.com/css2?family=Fredoka&family=Londrina+Outline&family=Londrina+Solid:wght@400&family=Nunito:wght@300;400;600;700&display=swap");
   .originalPosition {
     color: #ffcb77 !important;
     transition: transform 0.3s ease-out;
-  }
-
-  .stars {
-    position: relative;
-    top: -4em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1bem;
-  }
-
-  .playButton {
-    position: relative;
-    top: -2em;
-    font-family: "Londrina Solid";
-    font-size: 2em;
-    color: #17c3b2;
-    cursor: pointer;
   }
 
   .transition {
@@ -301,23 +284,56 @@
   }
 
   main {
+    display: grid;
     text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    width: 100vw;
+    height: 100vh;
   }
 
   #gameboard {
+    grid-column: 1/-1;
+    grid-row: 3/4;
     position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 300px;
-    height: 300px;
+    /* width: 300px;
+    height: 300px; */
     margin: 0 auto;
     /* border: 1px solid #227c9d; */
   }
+
+  .stars {
+    grid-column: 1/-1;
+    position: relative;
+    /* top: -4em; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1bem;
+  }
+
+  .playButton {
+    grid-column: 2/5;
+    grid-row: 5;
+    position: relative;
+    /* top: -2em; */
+    align-items: center;
+    justify-content: center;
+    font-family: "Londrina Solid";
+    font-size: 2em;
+    color: #17c3b2;
+    cursor: pointer;
+  }
+
+  /* #gameboard,
+  .stars,
+  .playButton {
+    grid-row: 1/2;
+  } */
 
   @media (min-width: 640px) {
     main {
