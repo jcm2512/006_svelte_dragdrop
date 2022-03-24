@@ -51,6 +51,7 @@
   });
 
   function gameEnd() {
+    interact(".draggable").unset();
     count.update((value) => !value);
   }
 
