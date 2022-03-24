@@ -4,14 +4,14 @@
   import shuffle from "./functions";
   import { writable } from "svelte/store";
 
-  export let words;
+  export let word; // previous version was a "words" array
   export let gameboard;
 
   const version = "v0.1.41";
   const storedPrevious = localStorage.getItem("HelloHippo");
 
-  const wordSet = words.filter((elem) => elem != storedPrevious),
-    word = wordSet[Math.floor(Math.random() * (words.length - 1))];
+  // const wordSet = words.filter((elem) => elem != storedPrevious),
+  // word = wordSet[Math.floor(Math.random() * (words.length - 1))];
 
   export const previous = writable(storedPrevious);
   previous.subscribe((value) => {
@@ -275,9 +275,8 @@
 </svelte:head>
 
 <style>
-  @import url("https://fonts.googleapis.com/css2?family=Fredoka&family=Londrina+Outline&family=Londrina+Solid:wght@400&family=Nunito:wght@300;400;600;700&display=swap");
   .originalPosition {
-    color: var(--sub-color) !important;
+    color: var(--fg-color) !important;
     transition: transform 0.3s ease-out;
   }
 
@@ -289,7 +288,9 @@
   }
 
   .dropped {
-    color: var(--dropped-color) !important;
+    /* color: var(--fg-color) !important; */
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
   }
 
   main {

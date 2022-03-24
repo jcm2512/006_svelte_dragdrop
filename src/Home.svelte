@@ -1,16 +1,30 @@
 <script>
+  import MatchingGame from "./matching-game.svelte";
   export let tiles;
+  export let word;
+  let play = false;
 
   function handleClick(event) {
-    console.log(event);
+    play = true;
+    word = event.word;
+    console.log(event.word);
   }
 </script>
 
-<div class="tiles-main">
-  {#each tiles as tile}
-    <div class="tile" on:click={() => handleClick(tile.vowel)}>{tile.word}</div>
-  {/each}
-</div>
+<main>
+  {#if play == false}
+    <div class="tiles-main">
+      {#each tiles as tile}
+        <div class="tile" on:click={() => handleClick(tile)}>
+          {tile.word}
+        </div>
+      {/each}
+    </div>
+  {/if}
+  {#if play == true}
+    <MatchingGame bind:word />
+  {/if}
+</main>
 
 <style>
   .tiles-main {
