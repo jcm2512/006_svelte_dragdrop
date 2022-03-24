@@ -1,5 +1,5 @@
 <script>
-  import { gameLoaded } from "./store.js";
+  import { gameLoaderWordId, gameLoaded } from "./store.js";
   import GameLoader from "./GameLoader.svelte";
   import { writable } from "svelte/store";
   export let tiles;
@@ -18,6 +18,11 @@
     play = value;
   });
 
+  let wordId;
+  gameLoaderWordId.subscribe((value) => {
+    wordId = value;
+  });
+
   let words = tiles.map((item) => {
     return item.word;
   });
@@ -26,6 +31,7 @@
     const wordSet = words.filter((elem) => elem != storedPrevious);
     word = wordSet[Math.floor(Math.random() * (words.length - 1))];
     gameLoaded.update((value) => !value);
+    gameLoaderWordId.update((value) => 0);
   }
 </script>
 

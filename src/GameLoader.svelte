@@ -10,21 +10,35 @@
     gameLoaded.update((value) => !value);
   }
 
-  console.log(tiles[0].word);
+  function shuffle(word) {
+    let array = [...word];
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  }
+
+  let words = tiles.map((item) => {
+    return item.word;
+  });
+  words = shuffle(words);
 </script>
 
 <main>
   <div class="tiles-main">
     {#if wordId == 0}
-      <MatchingGame word={tiles[0].word} />
+      <MatchingGame word={words[0]} />
     {:else if wordId == 1}
-      <MatchingGame word={tiles[1].word} />
+      <MatchingGame word={words[1]} />
     {:else if wordId == 2}
-      <MatchingGame word={tiles[2].word} />
+      <MatchingGame word={words[2]} />
     {:else if wordId == 3}
-      <MatchingGame word={tiles[3].word} />
+      <MatchingGame word={words[3]} />
     {:else if wordId == 4}
-      <MatchingGame word={tiles[4].word} />
+      <MatchingGame word={words[4]} />
     {:else if wordId == 5}
       <div class="back" on:click={() => handleClick()}>back</div>
     {/if}

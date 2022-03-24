@@ -15,10 +15,15 @@ const home = new Home({
   props: {
     tiles: [
       { word: "cat", vowel: "a" },
+      { word: "hat", vowel: "a" },
       { word: "bed", vowel: "e" },
+      { word: "jet", vowel: "e" },
       { word: "pin", vowel: "i" },
+      { word: "dig", vowel: "i" },
       { word: "dog", vowel: "o" },
+      { word: "hot", vowel: "o" },
       { word: "sun", vowel: "u" },
+      { word: "nut", vowel: "u" },
     ],
   },
 });
