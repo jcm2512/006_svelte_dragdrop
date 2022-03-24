@@ -5,7 +5,7 @@
   export let tiles;
   export let word;
 
-  const version = "v0.2.0";
+  const version = "v0.2.1";
   const storedPrevious = localStorage.getItem("HelloHippo");
 
   export const previous = writable(storedPrevious);
