@@ -1,6 +1,6 @@
 <script>
-  import { count } from "./store.js";
-  import MatchingGame from "./matching-game.svelte";
+  import { gameLoaded } from "./store.js";
+  import GameLoader from "./GameLoader.svelte";
   import { writable } from "svelte/store";
   export let tiles;
   export let word;
@@ -14,36 +14,27 @@
   });
 
   let play;
-  count.subscribe((value) => {
+  gameLoaded.subscribe((value) => {
     play = value;
   });
 
-  const words = tiles.map((item) => {
+  let words = tiles.map((item) => {
     return item.word;
   });
 
   function handleClick() {
     const wordSet = words.filter((elem) => elem != storedPrevious);
     word = wordSet[Math.floor(Math.random() * (words.length - 1))];
-    count.update((value) => !value);
+    gameLoaded.update((value) => !value);
   }
 </script>
 
 <main>
-  {#if play == false}
-    <div class="tiles-main">
-      {#each tiles as tile}
-        <div class="tile" on:click={() => handleClick(tile)}>
-          {tile.word}
-        </div>
-      {/each}
-    </div>
-  {/if}
   {#if play == true}
-    <div>he</div>
-    <MatchingGame bind:word />
+    <GameLoader bind:tiles />
+  {:else}
+    <div class="play" on:click={() => handleClick()}>play</div>
   {/if}
-  <div class="play" on:click={() => handleClick()}>play</div>
 </main>
 
 <style>

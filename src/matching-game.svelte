@@ -1,14 +1,23 @@
 <script>
+  import { gameLoaderWordId } from "./store.js";
   import { onMount } from "svelte";
   import interact from "interactjs";
   import shuffle from "./functions";
 
-  import { count } from "./store.js";
+  import { gameLoaded } from "./store.js";
 
   export let word; // previous version was a "words" array
   export let gameboard;
 
-  console.log(word);
+  let wordId;
+  gameLoaderWordId.subscribe((value) => {
+    wordId = value;
+  });
+
+  function handleClick() {
+    interact(".draggable").unset();
+    gameLoaderWordId.update((value) => value + 1);
+  }
 
   let complete = word.length;
   let stars = ["s", "s", "s"],
@@ -41,10 +50,10 @@
     });
   });
 
-  function gameEnd() {
-    interact(".draggable").unset();
-    count.update((value) => !value);
-  }
+  // function gameEnd() {
+  //   interact(".draggable").unset();
+  //   gameLoaded.update((value) => !value);
+  // }
 
   // target elements with the "draggable" class
   interact(".draggable").draggable({
@@ -247,7 +256,7 @@
     </container>
   </div>
   {#if complete < 1}
-    <div class="playButton" on:click={handlePlayButton}>play again</div>
+    <div class="playButton" on:click={handleClick}>next</div>
     <div class="stars">
       {#each stars as index}
         <i class="fa-solid fa-star fa-fw" />

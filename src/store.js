@@ -1,3 +1,4 @@
 import { writable } from "svelte/store";
 
-export const count = writable(false);
+export const gameLoaded = writable(false);
+export const gameLoaderWordId = writable(0);
