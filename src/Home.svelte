@@ -1,19 +1,31 @@
 <script>
   import { count } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
+  import { writable } from "svelte/store";
   export let tiles;
   export let word;
+
+  const version = "v0.2.0";
+  const storedPrevious = localStorage.getItem("HelloHippo");
+
+  export const previous = writable(storedPrevious);
+  previous.subscribe((value) => {
+    localStorage.setItem("HelloHippo", word);
+  });
 
   let play;
   count.subscribe((value) => {
     play = value;
   });
 
-  function handleClick(event) {
+  const words = tiles.map((item) => {
+    return item.word;
+  });
+
+  function handleClick() {
+    const wordSet = words.filter((elem) => elem != storedPrevious);
+    word = wordSet[Math.floor(Math.random() * (words.length - 1))];
     count.update((value) => !value);
-    word = event.word;
-    console.log(event.word);
-    console.log(play);
   }
 </script>
 
@@ -28,8 +40,10 @@
     </div>
   {/if}
   {#if play == true}
+    <div>he</div>
     <MatchingGame bind:word />
   {/if}
+  <div class="play" on:click={() => handleClick()}>play</div>
 </main>
 
 <style>

@@ -2,22 +2,13 @@
   import { onMount } from "svelte";
   import interact from "interactjs";
   import shuffle from "./functions";
-  import { writable } from "svelte/store";
+
   import { count } from "./store.js";
 
   export let word; // previous version was a "words" array
   export let gameboard;
 
-  const version = "v0.2.0";
-  const storedPrevious = localStorage.getItem("HelloHippo");
-
-  // const wordSet = words.filter((elem) => elem != storedPrevious),
-  // word = wordSet[Math.floor(Math.random() * (words.length - 1))];
-
-  export const previous = writable(storedPrevious);
-  previous.subscribe((value) => {
-    localStorage.setItem("HelloHippo", word);
-  });
+  console.log(word);
 
   let complete = word.length;
   let stars = ["s", "s", "s"],
