@@ -1,10 +1,8 @@
 <script>
-  import { gameLoaderWordId } from "./store.js";
+  import { gameLoaderWordId, gameLoaded } from "./store.js";
   import { onMount } from "svelte";
   import interact from "interactjs";
   import shuffle from "./functions";
-
-  import { gameLoaded } from "./store.js";
 
   export let word; // previous version was a "words" array
   export let gameboard;
@@ -14,9 +12,14 @@
     wordId = value;
   });
 
-  function handleClick() {
+  function handleClickNext() {
     interact(".draggable").unset();
     gameLoaderWordId.update((value) => value + 1);
+  }
+
+  function handleClickBack() {
+    interact(".draggable").unset();
+    gameLoaded.update((value) => !value); // set to false
   }
 
   let complete = word.length;
@@ -49,11 +52,6 @@
       event.preventDefault();
     });
   });
-
-  // function gameEnd() {
-  //   interact(".draggable").unset();
-  //   gameLoaded.update((value) => !value);
-  // }
 
   // target elements with the "draggable" class
   interact(".draggable").draggable({
@@ -198,11 +196,6 @@
     let rot = Math.floor(Math.random() * 60) - 30;
     return rot;
   };
-
-  function handlePlayButton(event) {
-    // location.reload();
-    gameEnd();
-  }
 </script>
 
 <main>
@@ -256,7 +249,13 @@
     </container>
   </div>
   {#if complete < 1}
-    <div class="playButton" on:click={handleClick}>next</div>
+    {#if wordId < 5 - 1}
+      <!-- TODO: #12 Need to use store value  -->
+      <div class="nextButton" on:click={handleClickNext}>next {wordId}</div>
+      <!-- TODO: #13 handleClick function should take a "back" or "next" value -->
+    {:else}
+      <div class="nextButton" on:click={handleClickBack}>back</div>
+    {/if}
     <div class="stars">
       {#each stars as index}
         <i class="fa-solid fa-star fa-fw" />
@@ -334,7 +333,7 @@
     gap: 1bem;
   }
 
-  .playButton {
+  .nextButton {
     grid-column: 2/5;
     grid-row: 5;
     position: relative;
@@ -346,12 +345,6 @@
     color: var(--dropped-color);
     cursor: pointer;
   }
-
-  /* #gameboard,
-  .stars,
-  .playButton {
-    grid-row: 1/2;
-  } */
 
   @media (min-width: 640px) {
     main {
