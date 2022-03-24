@@ -3,6 +3,7 @@
   import interact from "interactjs";
   import shuffle from "./functions";
   import { writable } from "svelte/store";
+  import { count } from "./store.js";
 
   export let word; // previous version was a "words" array
   export let gameboard;
@@ -48,6 +49,10 @@
       event.preventDefault();
     });
   });
+
+  function gameEnd() {
+    count.update((value) => !value);
+  }
 
   // target elements with the "draggable" class
   interact(".draggable").draggable({
@@ -168,7 +173,6 @@
 
         complete -= 1;
       }
-      console.log(stars, blank);
     },
     ondropdeactivate: function (event) {
       const dropzone = event.target,
@@ -195,7 +199,8 @@
   };
 
   function handlePlayButton(event) {
-    location.reload();
+    // location.reload();
+    gameEnd();
   }
 </script>
 

@@ -1,13 +1,19 @@
 <script>
+  import { count } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
   export let tiles;
   export let word;
-  let play = false;
+
+  let play;
+  count.subscribe((value) => {
+    play = value;
+  });
 
   function handleClick(event) {
-    play = true;
+    count.update((value) => !value);
     word = event.word;
     console.log(event.word);
+    console.log(play);
   }
 </script>
 
