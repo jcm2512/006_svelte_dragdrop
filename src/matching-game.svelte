@@ -251,7 +251,7 @@
   {#if complete < 1}
     {#if wordId < 5 - 1}
       <!-- TODO: #12 Need to use store value  -->
-      <div class="nextButton" on:click={handleClickNext}>next {wordId}</div>
+      <div class="nextButton" on:click={handleClickNext}>next</div>
       <!-- TODO: #13 handleClick function should take a "back" or "next" value -->
     {:else}
       <div class="nextButton" on:click={handleClickBack}>back</div>
