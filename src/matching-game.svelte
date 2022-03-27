@@ -7,11 +7,6 @@
   export let word; // previous version was a "words" array
   export let gameboard;
 
-  let wordId;
-  gameLoaderWordId.subscribe((value) => {
-    wordId = value;
-  });
-
   function handleClickNext() {
     interact(".draggable").unset();
     gameLoaderWordId.update((value) => value + 1);
@@ -249,7 +244,7 @@
     </container>
   </div>
   {#if complete < 1}
-    {#if wordId < 5 - 1}
+    {#if $gameLoaderWordId < 5 - 1}
       <!-- TODO: #12 Need to use store value  -->
       <div class="nextButton" on:click={handleClickNext}>next</div>
       <!-- TODO: #13 handleClick function should take a "back" or "next" value -->

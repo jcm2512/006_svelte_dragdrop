@@ -13,33 +13,33 @@
     localStorage.setItem("HelloHippo", word);
   });
 
-  let play;
-  gameLoaded.subscribe((value) => {
-    play = value;
-  });
+  // let play;
+  // gameLoaded.subscribe((value) => {
+  //   play = value;
+  // });
 
-  let wordId;
-  gameLoaderWordId.subscribe((value) => {
-    wordId = value;
-  });
+  // let wordId;
+  // gameLoaderWordId.subscribe((value) => {
+  //   wordId = value;
+  // });
 
   let words = tiles.map((item) => {
     return item.word;
   });
 
-  function handleClick() {
+  function handlePlay() {
     const wordSet = words.filter((elem) => elem != storedPrevious);
     word = wordSet[Math.floor(Math.random() * (words.length - 1))];
     gameLoaded.update((value) => !value);
-    gameLoaderWordId.update((value) => 0);
+    gameLoaderWordId.update((value) => 0); // reset word ID to 0
   }
 </script>
 
 <main>
-  {#if play == true}
+  {#if $gameLoaded == true}
     <GameLoader bind:tiles />
   {:else}
-    <div class="play" on:click={() => handleClick()}>play</div>
+    <div class="play" on:click={() => handlePlay()}>play</div>
   {/if}
 </main>
 
