@@ -13,16 +13,6 @@
     localStorage.setItem("HelloHippo", word);
   });
 
-  // let play;
-  // gameLoaded.subscribe((value) => {
-  //   play = value;
-  // });
-
-  // let wordId;
-  // gameLoaderWordId.subscribe((value) => {
-  //   wordId = value;
-  // });
-
   let words = tiles.map((item) => {
     return item.word;
   });
