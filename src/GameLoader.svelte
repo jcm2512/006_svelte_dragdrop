@@ -1,8 +1,15 @@
 <script>
-  import { gameLoaderWordId, gameLoaded } from "./store.js";
+  import { gameLoaderWordId, gameLoaded, gameWordLimit } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
   export let tiles;
 
+  let limit = [];
+
+  for (let i = 0; i < $gameWordLimit; i++) {
+    limit.push(i);
+  }
+
+  console.log(limit);
   function handleClick() {
     gameLoaded.update((value) => !value);
   }
@@ -18,26 +25,30 @@
     return array;
   }
 
-  let words = tiles.map((item) => {
-    return item.word;
-  });
+  let words = tiles
+    .filter((t) => t.unlocked == true) // only show unlocked cvcs
+    .map((item) => {
+      return item.word;
+    });
   words = shuffle(words);
 </script>
 
 <main>
   <div class="tiles-main">
-    {#if $gameLoaderWordId == 0}
-      <MatchingGame word={words[0]} />
-    {:else if $gameLoaderWordId == 1}
-      <MatchingGame word={words[1]} />
-    {:else if $gameLoaderWordId == 2}
-      <MatchingGame word={words[2]} />
-    {:else if $gameLoaderWordId == 3}
+    {#each limit as index}
+      {#if $gameLoaderWordId == index}
+        <MatchingGame word={words[index]} />
+        <!-- {:else if $gameLoaderWordId == 1}
+        <MatchingGame word={words[1]} />
+      {:else if $gameLoaderWordId == 2}
+        <MatchingGame word={words[2]} /> -->
+        <!-- {:else if $gameLoaderWordId == 3}
       <MatchingGame word={words[3]} />
     {:else if $gameLoaderWordId == 4}
-      <MatchingGame word={words[4]} />
-    {:else if $gameLoaderWordId == 5}
-      <div class="back" on:click={() => handleClick()}>back</div>
-    {/if}
+      <MatchingGame word={words[4]} /> -->
+      {/if}
+    {/each}
+
+    <div class="back" on:click={() => handleClick()}>back</div>
   </div>
 </main>

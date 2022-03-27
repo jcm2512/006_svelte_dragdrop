@@ -1,10 +1,15 @@
 <script>
-  import { gameLoaderWordId, gameLoaded } from "./store.js";
+  import {
+    gameLoaderWordId,
+    gameLoaded,
+    cvcObject,
+    gameWordLimit,
+  } from "./store.js";
   import { onMount } from "svelte";
   import interact from "interactjs";
   import shuffle from "./functions";
 
-  export let word; // previous version was a "words" array
+  export let word;
   export let gameboard;
 
   function handleClick(event) {
@@ -180,6 +185,10 @@
 
         complete -= 1;
       }
+
+      if (complete == 0) {
+        $cvcObject[word].exp = 100;
+      }
     },
     ondropdeactivate: function (event) {
       const dropzone = event.target,
@@ -257,7 +266,7 @@
     </container>
   </div>
   {#if complete < 1}
-    {#if $gameLoaderWordId < 5 - 1}
+    {#if $gameLoaderWordId < $gameWordLimit - 1}
       <div class="nextButton" on:click={() => handleClick("next")}>next</div>
     {:else}
       <div class="nextButton" on:click={() => handleClick("back")}>back</div>
