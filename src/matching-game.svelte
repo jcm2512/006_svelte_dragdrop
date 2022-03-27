@@ -7,15 +7,28 @@
   export let word; // previous version was a "words" array
   export let gameboard;
 
-  function handleClickNext() {
+  function handleClick(event) {
     interact(".draggable").unset();
-    gameLoaderWordId.update((value) => value + 1);
+    switch (event) {
+      case "next":
+        gameLoaderWordId.update((value) => value + 1);
+        break;
+      case "back":
+        console.log("back");
+        gameLoaded.update((value) => !value); // set to false
+        break;
+    }
   }
 
-  function handleClickBack() {
-    interact(".draggable").unset();
-    gameLoaded.update((value) => !value); // set to false
-  }
+  // function handleClickNext() {
+  //   interact(".draggable").unset();
+  //   gameLoaderWordId.update((value) => value + 1);
+  // }
+
+  // function handleClickBack() {
+  //   interact(".draggable").unset();
+  //   gameLoaded.update((value) => !value); // set to false
+  // }
 
   let complete = word.length;
   let stars = ["s", "s", "s"],
@@ -245,10 +258,9 @@
   </div>
   {#if complete < 1}
     {#if $gameLoaderWordId < 5 - 1}
-      <div class="nextButton" on:click={handleClickNext}>next</div>
-      <!-- TODO: #13 handleClick function should take a "back" or "next" value -->
+      <div class="nextButton" on:click={() => handleClick("next")}>next</div>
     {:else}
-      <div class="nextButton" on:click={handleClickBack}>back</div>
+      <div class="nextButton" on:click={() => handleClick("back")}>back</div>
     {/if}
     <div class="stars">
       {#each stars as index}
