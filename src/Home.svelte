@@ -43,14 +43,11 @@
     <div class="tiles-main">
       {#each words as tile}
         {#if $cvcObject[tile].unlocked}
-          <div
-            class="button"
-            style="--variable: {($cvcObject[tile].exp + 40) / 100}"
-          >
+          <div class="button" style="--exp: {`${$cvcObject[tile].exp}%`}">
             <img src={$cvcObject[tile].img} width="80" height="80" />
           </div>
         {:else}
-          <div class="tile">
+          <div class="button" style="--exp: {`${$cvcObject[tile].exp}%`}">
             <img src={$cvcObject[tile].img} width="80" height="80" />
           </div>
         {/if}
@@ -61,6 +58,10 @@
 </main>
 
 <style>
+  :root {
+    --tile: 220;
+  }
+
   .tiles-main {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -99,9 +100,9 @@
     font-size: inherit;
     font-family: inherit;
 
-    color: hsl(0, 0%, 18%);
-    background: hsl(0, 0%, 97%);
-    border: 2px solid hsl(0, 0%, 61%);
+    color: hsl(var(--tile), 0%, 18%);
+    background: hsl(var(--tile), 0%, 97%);
+    border: 2px solid hsl(var(--tile), 0%, 61%);
     border-radius: 0.75em;
     transform-style: preserve-3d;
     transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
@@ -117,28 +118,41 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: hsl(0, 0%, 87%);
+    background: hsl(var(--tile), var(--exp), 75%);
     border-radius: inherit;
-    box-shadow: 0 0 0 2px hsl(0, 0%, 61%), 0 0.625em 0 0 hsl(0, 0%, 94%);
+    box-shadow: 0 0 0 2px hsl(var(--tile), 0%, 61%),
+      0 0.625em 0 0 hsl(var(--tile), 0%, 94%);
     transform: translate3d(0, 0.75em, -1em);
     transition: transform 150ms cubic-bezier(0, 0, 0.58, 1),
       box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
   }
 
   .button:hover {
-    background: hsl(0, 0%, 96%);
+    background: hsl(var(--tile), 0%, 96%);
     transform: translate(0, 0.25em);
   }
   .button:hover::before {
-    box-shadow: 0 0 0 2px hsl(0, 0%, 61%), 0 0.5em 0 0 hsl(0, 0%, 94%);
+    box-shadow: 0 0 0 2px hsl(var(--tile), 0%, 61%),
+      0 0.5em 0 0 hsl(var(--tile), 0%, 94%);
     transform: translate3d(0, 0.5em, -1em);
   }
   .button:active {
-    background: hsl(0, 0%, 96%);
+    background: hsl(var(--tile), 0%, 96%);
     transform: translate(0em, 0.75em);
   }
   .button:active::before {
-    box-shadow: 0 0 0 2px hsl(0, 0%, 61%), 0 0 hsl(0, 0%, 94%);
+    box-shadow: 0 0 0 2px hsl(var(--tile), 0%, 61%),
+      0 0 hsl(var(--tile), 0%, 94%);
     transform: translate3d(0, 0, -1em);
+  }
+
+  .play {
+    position: relative;
+    background-color: hsl(var(--tile), 50%, 80%);
+    width: 5em;
+    padding: 0.5em;
+    text-align: center;
+    cursor: pointer;
+    margin: auto;
   }
 </style>

@@ -187,7 +187,7 @@
       }
 
       if (complete == 0) {
-        $cvcObject[word].exp = 100;
+        $cvcObject[word].exp += 25;
       }
     },
     ondropdeactivate: function (event) {

@@ -49,6 +49,6 @@
       {/if}
     {/each}
 
-    <div class="back" on:click={() => handleClick()}>back</div>
+    <!-- <div class="back" on:click={() => handleClick()}>back</div> -->
   </div>
 </main>
