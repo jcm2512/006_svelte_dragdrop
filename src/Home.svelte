@@ -43,12 +43,20 @@
     <div class="tiles-main">
       {#each words as tile}
         {#if $cvcObject[tile].unlocked}
-          <div class="button" style="--exp: {`${$cvcObject[tile].exp}%`}">
+          <div
+            class="button nonselectable"
+            style="--exp: {`${$cvcObject[tile].exp}%`}"
+          >
             <img src={$cvcObject[tile].img} width="80" height="80" />
           </div>
         {:else}
           <div class="button" style="--exp: {`${$cvcObject[tile].exp}%`}">
-            <img src={$cvcObject[tile].img} width="80" height="80" />
+            <img
+              class="nonselectable"
+              src={$cvcObject[tile].img}
+              width="80"
+              height="80"
+            />
           </div>
         {/if}
       {/each}
@@ -58,6 +66,11 @@
 </main>
 
 <style>
+  .nonselectable {
+    touch-action: none;
+    user-select: none;
+  }
+
   :root {
     --tile: 220;
   }
@@ -84,8 +97,6 @@
   }
 
   .button {
-    touch-action: none;
-    user-select: none;
     padding-top: 10px;
     height: 90px;
     width: 100px;
