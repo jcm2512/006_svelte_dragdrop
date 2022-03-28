@@ -84,6 +84,8 @@
   }
 
   .button {
+    touch-action: none;
+    user-select: none;
     padding-top: 10px;
     height: 90px;
     width: 100px;
