@@ -4,6 +4,7 @@
     gameLoaded,
     cvcObject,
     gameWordLimit,
+    exp,
   } from "./store.js";
   import { onMount } from "svelte";
   import interact from "interactjs";
@@ -19,10 +20,13 @@
         gameLoaderWordId.update((value) => value + 1);
         break;
       case "back":
-        console.log("back");
         gameLoaded.update((value) => !value); // set to false
         break;
     }
+  }
+
+  function destroy() {
+    console.log("complete", complete, $exp);
   }
 
   // function handleClickNext() {
@@ -135,10 +139,9 @@
 
       // If target is invalid, reduce score
       if (dropzone.id != draggable.id) {
-        {
-          if (stars.length > 0) {
-            blank.push(stars.pop());
-          }
+        console.log("mistake", complete, $exp);
+        if ($exp > 10) {
+          $exp -= 10;
         }
       } else {
         // Get CSS translate values
@@ -184,9 +187,12 @@
         dropzone.classList.add("dropped");
 
         complete -= 1;
+        $exp += 5;
+        console.log("succes", complete, $exp);
       }
 
       if (complete == 0) {
+        destroy();
         $cvcObject[word].exp += 25;
       }
     },
@@ -225,6 +231,12 @@
   </div>
 
   <!-- <h1>{title}!</h1> -->
+  <div id="exp">
+    <div id="exp_bar_bg" />
+    <img src="/assets/ui/exp_bolt.png" alt="EXP" />
+    <div id="exp_bar_fill" style="--exp: {`${$exp}vw`}" />
+    <div id="exp_bar" />
+  </div>
 
   <div id="gameboard" bind:this={gameboard}>
     <container id="container" class="drop-container">
@@ -295,6 +307,69 @@
 </svelte:head>
 
 <style>
+  * {
+    box-sizing: border-box;
+  }
+  #exp {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* position: relative; */
+    grid-column: 2/-2;
+    grid-row: 1/3;
+  }
+
+  #exp img {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    width: 100%;
+    height: auto;
+    /* transform: translateY(1rem); */
+    z-index: 1;
+  }
+
+  #exp_bar_fill {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    position: relative;
+    top: 4vw;
+    left: 15vw;
+    background-color: #ff61aa;
+    height: 9vw;
+    border-radius: 2.5vw;
+    width: var(--exp);
+    max-width: 40vw;
+    min-width: 4.5vw;
+    transition: width 0.5s ease;
+    z-index: 10;
+  }
+
+  #exp_bar {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    position: relative;
+    top: 4vw;
+    left: 15vw;
+    background-color: #d5d5d5;
+    height: 9vw;
+    border-radius: 2.5vw;
+    width: 40vw;
+    z-index: 5;
+  }
+
+  #exp_bar_bg {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    position: relative;
+    top: 3vw;
+    left: 5vw;
+    background-color: #ffffff;
+    height: 9vw;
+    border-radius: 2.5vw;
+    width: 51vw;
+    z-index: 0;
+    border: 5.5vw solid white;
+  }
+
   .originalPosition {
     color: var(--fg-color) !important;
     transition: transform 0.3s ease-out;
@@ -316,17 +391,16 @@
   main {
     display: grid;
     text-align: center;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
     width: 100vw;
     height: 100vh;
-    background-image: url("/assets/bg-tile-red.png");
-    /* https://patternico.com/#YlesRX3CBrgbu9cv */
+    background-image: url("/assets/bg-tile-blue-stars.png");
   }
 
   #gameboard {
     grid-column: 1/-1;
-    grid-row: 3/4;
+    grid-row: 4/-4;
     position: relative;
     display: flex;
     flex-direction: row;

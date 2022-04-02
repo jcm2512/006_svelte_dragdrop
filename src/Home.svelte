@@ -16,6 +16,9 @@
   let words;
   let cvcs = Object.keys($cvcObject);
 
+  // DEV
+  $gameLoaded = true;
+
   words = [];
   let wordObjects = [];
 
@@ -66,6 +69,9 @@
 </main>
 
 <style>
+  main {
+    position: fixed;
+  }
   .nonselectable {
     touch-action: none;
     user-select: none;

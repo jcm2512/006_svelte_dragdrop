@@ -9,7 +9,6 @@
     limit.push(i);
   }
 
-  console.log(limit);
   function handleClick() {
     gameLoaded.update((value) => !value);
   }
