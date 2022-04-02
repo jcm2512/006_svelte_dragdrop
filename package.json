@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "interactjs": "^1.10.11",
+    "phaser": "^3.55.2",
     "sirv-cli": "^2.0.0"
   }
 }
