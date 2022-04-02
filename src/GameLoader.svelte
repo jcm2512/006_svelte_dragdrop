@@ -37,14 +37,6 @@
     {#each limit as index}
       {#if $gameLoaderWordId == index}
         <MatchingGame word={words[index]} />
-        <!-- {:else if $gameLoaderWordId == 1}
-        <MatchingGame word={words[1]} />
-      {:else if $gameLoaderWordId == 2}
-        <MatchingGame word={words[2]} /> -->
-        <!-- {:else if $gameLoaderWordId == 3}
-      <MatchingGame word={words[3]} />
-    {:else if $gameLoaderWordId == 4}
-      <MatchingGame word={words[4]} /> -->
       {/if}
     {/each}
 
