@@ -5,43 +5,30 @@
     cvcObject,
     gameWordLimit,
     exp,
+    currentWordProgress,
   } from "./store.js";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import interact from "interactjs";
   import shuffle from "./functions";
 
   export let word;
-  export let gameboard;
+  let gameboard;
 
   function handleClick(event) {
     interact(".draggable").unset();
+    $currentWordProgress = 0;
     switch (event) {
       case "next":
-        gameLoaderWordId.update((value) => value + 1);
+        $gameLoaderWordId += 1;
         break;
       case "back":
-        gameLoaded.update((value) => !value); // set to false
+        $gameLoaded = false;
         break;
     }
   }
 
-  function destroy() {
-    console.log("complete", complete, $exp);
-  }
-
-  // function handleClickNext() {
-  //   interact(".draggable").unset();
-  //   gameLoaderWordId.update((value) => value + 1);
-  // }
-
-  // function handleClickBack() {
-  //   interact(".draggable").unset();
-  //   gameLoaded.update((value) => !value); // set to false
-  // }
-
-  let complete = word.length;
-  let stars = ["s", "s", "s"],
-    blank = [];
+  // let stars = ["s", "s", "s"],
+  //   blank = [];
 
   let wordUpper = [],
     wordLower = [];
@@ -68,15 +55,19 @@
     gameboard.addEventListener("touchstart", function (event) {
       event.preventDefault();
     });
+    interact(".draggable").draggable({
+      inertia: false,
+      onmove: dragMoveListener,
+      onstart: dragStartListener,
+      onend: dragEndListener,
+    });
+  });
+
+  onDestroy(() => {
+    console.log("destroyed");
   });
 
   // target elements with the "draggable" class
-  interact(".draggable").draggable({
-    inertia: false,
-    onmove: dragMoveListener,
-    onstart: dragStartListener,
-    onend: dragEndListener,
-  });
 
   function dragEndListener(event) {
     const draggable = event.target;
@@ -107,7 +98,6 @@
 
   // enable draggables to be dropped into this
   let letterDrop = interact(".dropzone");
-  let score = 0;
 
   letterDrop.dropzone({
     overlap: 0.3,
@@ -139,7 +129,6 @@
 
       // If target is invalid, reduce score
       if (dropzone.id != draggable.id) {
-        console.log("mistake", complete, $exp);
         if ($exp > 10) {
           $exp -= 10;
         }
@@ -186,14 +175,13 @@
         dropzone.classList.remove("can-drop");
         dropzone.classList.add("dropped");
 
-        complete -= 1;
+        $currentWordProgress += 1;
         $exp += 5;
-        console.log("succes", complete, $exp);
+        console.log(`${$currentWordProgress}:${$exp}`);
       }
 
-      if (complete == 0) {
-        destroy();
-        $cvcObject[word].exp += 25;
+      if ($currentWordProgress == word.length) {
+        $cvcObject[word].exp += 5;
       }
     },
     ondropdeactivate: function (event) {
@@ -277,20 +265,20 @@
       {/each}
     </container>
   </div>
-  {#if complete < 1}
+  {#if $currentWordProgress == word.length}
     {#if $gameLoaderWordId < $gameWordLimit - 1}
       <div class="nextButton" on:click={() => handleClick("next")}>next</div>
     {:else}
       <div class="nextButton" on:click={() => handleClick("back")}>back</div>
     {/if}
-    <div class="stars">
+    <!-- <div class="stars">
       {#each stars as index}
         <i class="fa-solid fa-star fa-fw" />
       {/each}
       {#each blank as index}
         <i class="fa-regular fa-star fa-fw" />
       {/each}
-    </div>
+    </div> -->
   {/if}
 </main>
 
@@ -412,15 +400,14 @@
     /* border: 1px solid #227c9d; */
   }
 
-  .stars {
+  /* .stars {
     grid-column: 1/-1;
     position: relative;
-    /* top: -4em; */
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1bem;
-  }
+  } */
 
   .nextButton {
     grid-column: 2/5;

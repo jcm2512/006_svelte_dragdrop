@@ -1,23 +1,19 @@
 <script>
-  import { gameLoaderWordId, gameLoaded, cvcList, cvcObject } from "./store.js";
+  import {
+    gameLoaderWordId,
+    gameLoaded,
+    cvcObject,
+    currentWordProgress,
+  } from "./store.js";
   import GameLoader from "./GameLoader.svelte";
-  import { writable } from "svelte/store";
-  // export let tiles;
-  // export let word;
 
   const version = "v0.2.1";
-  // const storedPrevious = localStorage.getItem("HelloHippo");
-
-  // export const previous = writable(storedPrevious);
-  // previous.subscribe((value) => {
-  //   localStorage.setItem("HelloHippo", word);
-  // });
 
   let words;
   let cvcs = Object.keys($cvcObject);
 
   // DEV
-  $gameLoaded = true;
+  // $gameLoaded = true;
 
   words = [];
   let wordObjects = [];
@@ -27,15 +23,10 @@
     wordObjects.push($cvcObject[value]);
   });
 
-  // words = $cvcList.map((item) => {
-  //   return item.word;
-  // });
-
   function handlePlay() {
-    // const wordSet = words.filter((elem) => elem != storedPrevious);
-    // word = wordSet[Math.floor(Math.random() * (words.length - 1))];
-    gameLoaded.update((value) => !value);
-    gameLoaderWordId.update((value) => 0); // reset word ID to 0
+    $gameLoaded = true;
+    $gameLoaderWordId = 0; // reset word ID to 0
+    $currentWordProgress = 0;
   }
 </script>
 
