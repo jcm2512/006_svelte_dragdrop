@@ -1,6 +1,7 @@
 // import App from "./App.svelte";
 // import Drag from "./Drag.svelte";
 import Home from "./Home.svelte";
+import PhaserGame from "./PhaserGame.svelte";
 
 // const app = new App({
 //   target: document.body,
@@ -10,7 +11,11 @@ import Home from "./Home.svelte";
 //   },
 // });
 
-const home = new Home({
+// const home = new Home({
+//   target: document.body,
+// });
+
+const phaserGame = new PhaserGame({
   target: document.body,
 });
 
