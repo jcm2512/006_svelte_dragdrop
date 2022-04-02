@@ -254,7 +254,7 @@
     box-sizing: border-box;
   }
   #exp {
-    top: -2em;
+    top: 1em;
     display: grid;
     grid-template-columns: 1fr;
     position: relative;
@@ -349,16 +349,19 @@
   }
 
   .nextButton {
-    grid-column: 2/5;
-    grid-row: 5;
+    grid-column: 5/9;
+    grid-row: 10;
     position: relative;
     /* top: -2em; */
     align-items: center;
     justify-content: center;
     font-family: var(--main-font);
     font-size: 2em;
-    color: var(--dropped-color);
+    color: #ff61aa;
     cursor: pointer;
+    background-color: white;
+    border-radius: 3em;
+    width: 50%;
   }
 
   @media (min-width: 640px) {
