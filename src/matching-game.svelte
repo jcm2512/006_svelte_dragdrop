@@ -61,7 +61,6 @@
       rotatedElement.style.zIndex = "5";
       rotatedElement.style.transform = "rotate(0deg)";
       rotatedElement.classList.add("transition");
-      rotatedElement.classList.add("originalPosition");
 
       draggable.style.pointerEvents = "none";
       draggable.style.zIndex = "5";
@@ -170,10 +169,7 @@
 
 <main>
   <!-- <div>{version}</div> -->
-  <div
-    class="transition drop-target originalPosition dropped nonDraggable"
-    style="display: none"
-  >
+  <div class="transition dropped" style="display: none">
     Preloaded CSS styles
   </div>
 
@@ -203,7 +199,7 @@
         <div
           bind:this={upper[index]}
           id={letter}
-          class="tile draggable upper translate"
+          class="tile draggable upper hidden"
           style="margin-right:{getLimit(upperEm)}rem;"
         >
           {letter}
@@ -219,7 +215,7 @@
         <div
           bind:this={lower[index]}
           id={letter}
-          class="tile draggable lower translate"
+          class="tile draggable lower hidden"
           style="margin-right:{getLimit(upperEm)}rem;"
         >
           {letter}
@@ -246,7 +242,9 @@
       --dropped-color: hsl(0, 60%, 25%);
       --main-color: #fce38a; /* var(--main-color)  */
       --sub-color: #f38181; /* var(--sub-color)  */
-      --fg-color: black; /* #95e1d3; /* var(--fg-color)  */
+      --fg-color: #f4d042; /* #95e1d3; /* var(--fg-color)  */
+      --main-font: "Londrina Solid";
+      --large: 10em;
     }
   </style>
 </svelte:head>
@@ -256,9 +254,10 @@
     box-sizing: border-box;
   }
   #exp {
+    top: -2em;
     display: grid;
     grid-template-columns: 1fr;
-    /* position: relative; */
+    position: relative;
     grid-column: 2/-2;
     grid-row: 1/3;
   }
@@ -306,7 +305,7 @@
     position: relative;
     top: 3vw;
     left: 5vw;
-    background-color: #ffffff;
+    background-color: white;
     height: 9vw;
     border-radius: 2.5vw;
     width: 51vw;
@@ -314,13 +313,9 @@
     border: 5.5vw solid white;
   }
 
-  .originalPosition {
-    color: var(--fg-color) !important;
-    transition: transform 0.3s ease-out;
-  }
-
   .transition {
-    transition: transform 0.3s ease-out;
+    transition: transform 0.3s ease-out, color 0.3s ease-out;
+    color: #f4d042 !important;
     opacity: 1;
     pointer-events: none;
     touch-action: none;
@@ -350,10 +345,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    /* width: 300px;
-    height: 300px; */
     margin: 0 auto;
-    /* border: 1px solid #227c9d; */
   }
 
   .nextButton {
@@ -363,7 +355,7 @@
     /* top: -2em; */
     align-items: center;
     justify-content: center;
-    font-family: "Londrina Solid";
+    font-family: var(--main-font);
     font-size: 2em;
     color: var(--dropped-color);
     cursor: pointer;
@@ -384,10 +376,6 @@
     justify-content: center;
   }
 
-  .drag-container {
-    justify-content: center;
-  }
-
   .tile {
     width: fit-content;
 
@@ -396,8 +384,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: "Londrina Outline";
-    font-size: 7em;
+    font-family: var(--main-font);
+    font-size: var(--large);
     padding: 0.02em;
     margin: 0rem;
     touch-action: none;
@@ -409,8 +397,9 @@
     overflow: hidden;
     position: absolute;
     transform-origin: center;
-    font-family: "Londrina Solid";
-    color: var(--main-color);
+    font-family: var(--main-font);
+    color: hsla(215, 55%, 21%, 1);
+    -webkit-text-stroke: 4px white;
   }
 
   .upper {
@@ -421,15 +410,16 @@
     top: 1em;
   }
 
-  .translate {
+  .hidden {
     color: rgba(255, 255, 255, 0);
     z-index: 10;
   }
 
   .dropzone {
     /* background-color: #17c3b2; */
-    font-family: "Londrina Outline";
-    color: var(--fg-color);
+    font-family: var(--main-font);
+    -webkit-text-stroke: 4px white;
+    color: hsla(215, 55%, 21%, 0.3);
     z-index: 0;
   }
 </style>
