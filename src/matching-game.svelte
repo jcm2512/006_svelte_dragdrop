@@ -7,12 +7,114 @@
     exp,
     currentWordProgress,
   } from "./store.js";
-  import { onMount, onDestroy } from "svelte";
+  import { onMount } from "svelte";
   import interact from "interactjs";
   import shuffle from "./functions";
+  import { gsap } from "gsap";
+  import { Draggable } from "gsap/draggable";
 
   export let word;
   let gameboard;
+  let draggable;
+
+  let upper = [],
+    lower = [],
+    droppables = []; // store references to DOM elements
+
+  var overlapThreshold = "40%";
+
+  function onDrop(draggable, dropzone) {
+    if (dropzone.id != draggable.id) {
+      if ($exp > 10) {
+        $exp -= 10;
+      }
+    } else {
+      // Get CSS translate values
+      const computedStyle = window.getComputedStyle(draggable),
+        matrix =
+          computedStyle.transform ||
+          computedStyle.webkitTransform ||
+          computedStyle.mozTransform,
+        matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(", ");
+
+      // Extract x and y values from the 2d matrix
+      let pos = {
+        x: parseInt(matrixValues[4]),
+        y: parseInt(matrixValues[5]),
+      };
+
+      let offset = {
+        x:
+          dropzone.getBoundingClientRect().x -
+          draggable.getBoundingClientRect().x,
+        y:
+          dropzone.getBoundingClientRect().y -
+          draggable.getBoundingClientRect().y,
+      };
+
+      // Move element to dropzone
+      draggable.style.transform = `translate(
+        ${pos.x + offset.x}px, ${pos.y + offset.y}px)`;
+
+      const rotatedElement = draggable.children[0];
+
+      rotatedElement.style.zIndex = "5";
+      rotatedElement.style.transform = "rotate(0deg)";
+      rotatedElement.classList.add("transition");
+      rotatedElement.classList.add("originalPosition");
+
+      draggable.style.pointerEvents = "none";
+      draggable.style.zIndex = "5";
+      draggable.classList.add("transition");
+      draggable.classList.remove("draggable");
+
+      dropzone.classList.remove("can-drop");
+      dropzone.classList.add("dropped");
+
+      $currentWordProgress += 1;
+      $exp += 5;
+      console.log(`${$currentWordProgress}:${$exp}`);
+    }
+    if ($currentWordProgress == word.length) {
+      $cvcObject[word].exp += 5;
+    }
+  }
+
+  onMount(() => {
+    // prevent text from being seletable on iOS
+    gameboard.addEventListener("touchstart", function (event) {
+      event.preventDefault();
+    });
+    gsap.registerPlugin(Draggable);
+
+    upper.forEach((div) => {
+      Draggable.create(div, {
+        bounds: window,
+        onDragEnd: function (e) {
+          var i = droppables.length;
+          while (--i > -1) {
+            if (this.hitTest(droppables[i], overlapThreshold)) {
+              onDrop(this.target, droppables[i]);
+            }
+          }
+        },
+      });
+    });
+
+    lower.forEach((div) => {
+      Draggable.create(div, {
+        bounds: window,
+        onDragEnd: function (e) {
+          var i = droppables.length;
+          while (--i > -1) {
+            if (this.hitTest(droppables[i], overlapThreshold)) {
+              onDrop(this.target, droppables[i]);
+            }
+          }
+        },
+      });
+    });
+  });
 
   function handleClick(event) {
     interact(".draggable").unset();
@@ -50,149 +152,6 @@
       : wordUpper.push(i);
   }
 
-  onMount(() => {
-    // prevent text from being seletable on iOS
-    gameboard.addEventListener("touchstart", function (event) {
-      event.preventDefault();
-    });
-    interact(".draggable").draggable({
-      inertia: false,
-      onmove: dragMoveListener,
-      onstart: dragStartListener,
-      onend: dragEndListener,
-    });
-  });
-
-  onDestroy(() => {
-    console.log("destroyed");
-  });
-
-  // target elements with the "draggable" class
-
-  function dragEndListener(event) {
-    const draggable = event.target;
-    // revertPosition(object);
-  }
-
-  function dragStartListener(event) {
-    const draggable = event.target;
-
-    // store the initial position attributes
-    draggable.setAttribute("start-x", draggable.getAttribute("x") || 0);
-    draggable.setAttribute("start-y", draggable.getAttribute("y") || 0);
-  }
-
-  function dragMoveListener(event) {
-    const draggable = event.target,
-      // get the updated dragged position
-      x = (parseFloat(draggable.getAttribute("x")) || 0) + event.dx,
-      y = (parseFloat(draggable.getAttribute("y")) || 0) + event.dy;
-
-    // translate the element
-    draggable.style.transform = `translate(${x}px, ${y}px)`;
-
-    // update the position attributes
-    draggable.setAttribute("x", x);
-    draggable.setAttribute("y", y);
-  }
-
-  // enable draggables to be dropped into this
-  let letterDrop = interact(".dropzone");
-
-  letterDrop.dropzone({
-    overlap: 0.3,
-
-    // listen for drop related events:
-    ondropactivate: function (event) {
-      const dropzone = event.target,
-        draggable = event.relatedTarget;
-      // add active target dropzone feedback
-      dropzone.classList.add("drop-active");
-    },
-    ondragenter: function (event) {
-      const dropzone = event.target,
-        draggable = event.relatedTarget;
-      // feeback the posibility of a drop
-      dropzone.classList.add("drop-target");
-      draggable.classList.add("can-drop");
-    },
-    ondragleave: function (event) {
-      const dropzone = event.target,
-        draggable = event.relatedTarget;
-      // remove the feedback style
-      dropzone.classList.remove("drop-target");
-      draggable.classList.remove("can-drop");
-    },
-    ondrop: function (event) {
-      const dropzone = event.target,
-        draggable = event.relatedTarget;
-
-      // If target is invalid, reduce score
-      if (dropzone.id != draggable.id) {
-        if ($exp > 10) {
-          $exp -= 10;
-        }
-      } else {
-        // Get CSS translate values
-        const computedStyle = window.getComputedStyle(draggable),
-          matrix =
-            computedStyle.transform ||
-            computedStyle.webkitTransform ||
-            computedStyle.mozTransform,
-          matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(", ");
-
-        // Extract x and y values from the 2d matrix
-        let pos = {
-          x: parseInt(matrixValues[4]),
-          y: parseInt(matrixValues[5]),
-        };
-
-        let offset = {
-          x:
-            dropzone.getBoundingClientRect().x -
-            draggable.getBoundingClientRect().x,
-          y:
-            dropzone.getBoundingClientRect().y -
-            draggable.getBoundingClientRect().y,
-        };
-
-        // Move element to dropzone
-        draggable.style.transform = `translate(
-        ${pos.x + offset.x}px, ${pos.y + offset.y}px)`;
-
-        const rotatedElement = draggable.children[0];
-
-        rotatedElement.style.zIndex = "5";
-        rotatedElement.style.transform = "rotate(0deg)";
-        rotatedElement.classList.add("transition");
-        rotatedElement.classList.add("originalPosition");
-
-        draggable.style.pointerEvents = "none";
-        draggable.style.zIndex = "5";
-        draggable.classList.add("transition");
-        draggable.classList.remove("draggable");
-
-        dropzone.classList.remove("can-drop");
-        dropzone.classList.add("dropped");
-
-        $currentWordProgress += 1;
-        $exp += 5;
-        console.log(`${$currentWordProgress}:${$exp}`);
-      }
-
-      if ($currentWordProgress == word.length) {
-        $cvcObject[word].exp += 5;
-      }
-    },
-    ondropdeactivate: function (event) {
-      const dropzone = event.target,
-        draggable = event.relatedTarget;
-      // remove active dropzone feedback
-      dropzone.classList.remove("drop-active");
-      dropzone.classList.remove("drop-target");
-    },
-  });
-
   const upperEm = { limit: 12 };
   const lowerEm = { limit: 12 };
 
@@ -228,16 +187,21 @@
 
   <div id="gameboard" bind:this={gameboard}>
     <container id="container" class="drop-container">
-      {#each word as letter}
-        <div id={letter} class="tile dropzone can-drop">
+      {#each word as letter, index}
+        <div
+          id={letter}
+          bind:this={droppables[index]}
+          class="tile dropzone can-drop"
+        >
           {letter}
         </div>
       {/each}
     </container>
 
     <container id="container" class="drag-container">
-      {#each shuffle(wordUpper) as letter}
+      {#each shuffle(wordUpper) as letter, index}
         <div
+          bind:this={upper[index]}
           id={letter}
           class="tile draggable upper translate"
           style="margin-right:{getLimit(upperEm)}rem;"
@@ -251,8 +215,9 @@
     </container>
 
     <container id="container" class="drag-container">
-      {#each shuffle(wordLower) as letter}
+      {#each shuffle(wordLower) as letter, index}
         <div
+          bind:this={lower[index]}
           id={letter}
           class="tile draggable lower translate"
           style="margin-right:{getLimit(upperEm)}rem;"
@@ -271,14 +236,6 @@
     {:else}
       <div class="nextButton" on:click={() => handleClick("back")}>back</div>
     {/if}
-    <!-- <div class="stars">
-      {#each stars as index}
-        <i class="fa-solid fa-star fa-fw" />
-      {/each}
-      {#each blank as index}
-        <i class="fa-regular fa-star fa-fw" />
-      {/each}
-    </div> -->
   {/if}
 </main>
 
@@ -311,7 +268,6 @@
     grid-row: 1/2;
     width: 100%;
     height: auto;
-    /* transform: translateY(1rem); */
     z-index: 1;
   }
 
@@ -327,7 +283,7 @@
     width: var(--exp);
     max-width: 40vw;
     min-width: 4.5vw;
-    transition: width 0.5s ease;
+    transition: width 1s ease-out;
     z-index: 10;
   }
 
@@ -399,15 +355,6 @@
     margin: 0 auto;
     /* border: 1px solid #227c9d; */
   }
-
-  /* .stars {
-    grid-column: 1/-1;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1bem;
-  } */
 
   .nextButton {
     grid-column: 2/5;
