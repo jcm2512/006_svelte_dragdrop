@@ -13,6 +13,8 @@
   import { gsap } from "gsap";
   import { Draggable } from "gsap/draggable";
 
+  gsap.registerPlugin(Draggable);
+
   export let word;
   let gameboard;
 
