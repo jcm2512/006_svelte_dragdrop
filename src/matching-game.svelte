@@ -17,7 +17,7 @@
 
   export let word;
   let gameboard;
-
+  let expBar;
   let upper = [],
     lower = [],
     droppables = []; // store references to DOM elements
@@ -28,6 +28,11 @@
     if (dropzone.id != draggable.id) {
       if ($exp > 10) {
         $exp -= 10;
+        gsap.fromTo(
+          expBar,
+          { color: "#FF0000" },
+          { duration: 0.1, opacity: 0, repeat: 3, yoyo: true }
+        );
       }
     } else {
       // Get CSS translate values
@@ -178,7 +183,7 @@
   <div id="exp">
     <div id="exp_bar_bg" />
     <img src="/assets/ui/exp_bolt.png" alt="EXP" />
-    <div id="exp_bar_fill" style="--exp: {`${$exp}vw`}" />
+    <div bind:this={expBar} id="exp_bar_fill" style="--exp: {`${$exp}vw`}" />
     <div id="exp_bar" />
   </div>
 
