@@ -2,7 +2,7 @@ import { writable } from "svelte/store";
 
 export const gameLoaded = writable(false);
 export const gameLoaderWordId = writable(0);
-export const gameWordLimit = writable(6);
+export const gameWordLimit = writable(4);
 export const exp = writable(5);
 export const currentWordProgress = writable(0);
 

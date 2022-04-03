@@ -361,7 +361,8 @@
     cursor: pointer;
     background-color: white;
     border-radius: 3em;
-    width: 50%;
+    width: 100%;
+    height: 1.4em;
   }
 
   @media (min-width: 640px) {
