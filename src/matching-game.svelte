@@ -15,7 +15,6 @@
 
   export let word;
   let gameboard;
-  let draggable;
 
   let upper = [],
     lower = [],
