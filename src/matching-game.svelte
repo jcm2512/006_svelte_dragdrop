@@ -7,6 +7,8 @@
     exp,
     currentWordProgress,
   } from "./store.js";
+  import Timer from "./Timer.svelte";
+
   import { onMount } from "svelte";
   import interact from "interactjs";
   import shuffle from "./functions";
@@ -181,6 +183,7 @@
 
   <!-- <h1>{title}!</h1> -->
   <div id="exp">
+    <div id="timer"><Timer /></div>
     <div id="exp_bar_bg" />
     <img src="/assets/ui/exp_bolt.png" alt="EXP" />
     <div bind:this={expBar} id="exp_bar_fill" style="--exp: {`${$exp}vw`}" />
@@ -262,10 +265,15 @@
   #exp {
     top: 1em;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 6fr;
+    grid-template-areas: "countdown expbar";
     position: relative;
     grid-column: 2/-2;
     grid-row: 1/3;
+  }
+
+  #timer {
+    grid-area: countdown;
   }
 
   #exp img {

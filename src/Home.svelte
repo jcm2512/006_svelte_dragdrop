@@ -6,8 +6,7 @@
     currentWordProgress,
   } from "./store.js";
   import GameLoader from "./GameLoader.svelte";
-
-  const version = "v0.2.1";
+  const version = "v0.2.2";
 
   let words;
   let cvcs = Object.keys($cvcObject);
@@ -34,27 +33,6 @@
   {#if $gameLoaded == true}
     <GameLoader tiles={wordObjects} />
   {:else}
-    <div class="tiles-main">
-      {#each words as tile}
-        {#if $cvcObject[tile].unlocked}
-          <div
-            class="button nonselectable"
-            style="--exp: {`${$cvcObject[tile].exp}%`}"
-          >
-            <img src={$cvcObject[tile].img} width="80" height="80" />
-          </div>
-        {:else}
-          <div class="button" style="--exp: {`${$cvcObject[tile].exp}%`}">
-            <img
-              class="nonselectable"
-              src={$cvcObject[tile].img}
-              width="80"
-              height="80"
-            />
-          </div>
-        {/if}
-      {/each}
-    </div>
     <div class="play" on:click={() => handlePlay()}>play</div>
   {/if}
 </main>
