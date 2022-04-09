@@ -12,7 +12,7 @@
   let cvcs = Object.keys($cvcObject);
 
   // DEV
-  // $gameLoaded = true;
+  $gameLoaded = true;
 
   words = [];
   let wordObjects = [];

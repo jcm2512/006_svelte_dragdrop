@@ -7,6 +7,7 @@
     exp,
     currentWordProgress,
   } from "./store.js";
+  import Expbar from "./Expbar.svelte";
   import Timer from "./Timer.svelte";
 
   import { onMount } from "svelte";
@@ -19,7 +20,6 @@
 
   export let word;
   let gameboard;
-  let expBar;
   let upper = [],
     lower = [],
     droppables = []; // store references to DOM elements
@@ -30,11 +30,11 @@
     if (dropzone.id != draggable.id) {
       if ($exp > 10) {
         $exp -= 10;
-        gsap.fromTo(
-          expBar,
-          { color: "#FF0000" },
-          { duration: 0.1, opacity: 0, repeat: 3, yoyo: true }
-        );
+        // gsap.fromTo(
+        //   expBar,
+        //   { color: "#FF0000" },
+        //   { duration: 0.1, opacity: 0, repeat: 3, yoyo: true }
+        // );
       }
     } else {
       // Get CSS translate values
@@ -175,20 +175,12 @@
   };
 </script>
 
-<main>
-  <!-- <div>{version}</div> -->
+<div id="matching_game">
   <div class="transition dropped" style="display: none">
     Preloaded CSS styles
   </div>
 
-  <!-- <h1>{title}!</h1> -->
-  <div id="exp">
-    <div id="timer"><Timer /></div>
-    <div id="exp_bar_bg" />
-    <img src="/assets/ui/exp_bolt.png" alt="EXP" />
-    <div bind:this={expBar} id="exp_bar_fill" style="--exp: {`${$exp}vw`}" />
-    <div id="exp_bar" />
-  </div>
+  <div id="_expbar"><Expbar /></div>
 
   <div id="gameboard" bind:this={gameboard}>
     <container id="container" class="drop-container">
@@ -242,7 +234,7 @@
       <div class="nextButton" on:click={() => handleClick("back")}>back</div>
     {/if}
   {/if}
-</main>
+</div>
 
 <svelte:head>
   <style>
@@ -262,70 +254,6 @@
   * {
     box-sizing: border-box;
   }
-  #exp {
-    top: 1em;
-    display: grid;
-    grid-template-columns: 1fr 6fr;
-    grid-template-areas: "countdown expbar";
-    position: relative;
-    grid-column: 2/-2;
-    grid-row: 1/3;
-  }
-
-  #timer {
-    grid-area: countdown;
-  }
-
-  #exp img {
-    grid-column: 1/2;
-    grid-row: 1/2;
-    width: 100%;
-    height: auto;
-    z-index: 1;
-  }
-
-  #exp_bar_fill {
-    grid-column: 1/2;
-    grid-row: 1/2;
-    position: relative;
-    top: 4vw;
-    left: 15vw;
-    background-color: #ff61aa;
-    height: 9vw;
-    border-radius: 2.5vw;
-    width: var(--exp);
-    max-width: 40vw;
-    min-width: 4.5vw;
-    transition: width 1s ease-out;
-    z-index: 10;
-  }
-
-  #exp_bar {
-    grid-column: 1/2;
-    grid-row: 1/2;
-    position: relative;
-    top: 4vw;
-    left: 15vw;
-    background-color: #d5d5d5;
-    height: 9vw;
-    border-radius: 2.5vw;
-    width: 40vw;
-    z-index: 5;
-  }
-
-  #exp_bar_bg {
-    grid-column: 1/2;
-    grid-row: 1/2;
-    position: relative;
-    top: 3vw;
-    left: 5vw;
-    background-color: white;
-    height: 9vw;
-    border-radius: 2.5vw;
-    width: 51vw;
-    z-index: 0;
-    border: 5.5vw solid white;
-  }
 
   .transition {
     transition: transform 0.3s ease-out, color 0.3s ease-out;
@@ -341,7 +269,7 @@
     transition: opacity 0.3s ease-out;
   }
 
-  main {
+  #matching_game {
     display: grid;
     text-align: center;
     grid-template-columns: repeat(12, 1fr);
@@ -360,6 +288,12 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+  }
+
+  #_expbar {
+    margin-top: 2em;
+    grid-column: 4/-1;
+    grid-row: 1;
   }
 
   .nextButton {

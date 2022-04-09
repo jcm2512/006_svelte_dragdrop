@@ -12,9 +12,9 @@
   onMount(() => {
     circleTimer = new CircleTimer({
       rootElement: document.getElementById("circle-timer"),
-      units: "em",
-      thickness: 3,
-      radius: 3,
+      units: "vw",
+      thickness: 8,
+      radius: 8,
       color: "#CC76FD",
     });
     circleTimer.startTimer();
@@ -25,7 +25,7 @@
   }
 </script>
 
-<div id="timer" on:click={() => handleClick()}>
+<div id="_timer" on:click={() => handleClick()}>
   <div id="circle-timer" />
   <div id="countdown">{tick}</div>
 </div>
@@ -35,17 +35,17 @@
   :root {
     --main-font: "Londrina Solid";
   }
-  #timer {
+  #_timer {
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr;
     grid-template-areas: "timer";
     align-items: center;
-    justify-content: center;
+    justify-items: center;
     font-size: 1rem;
   }
   #countdown {
-    font-size: 2.5em;
+    font-size: 8vw;
     grid-area: timer;
     z-index: 10;
     text-align: center;

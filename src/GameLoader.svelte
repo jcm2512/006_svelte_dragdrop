@@ -1,6 +1,7 @@
 <script>
   import { gameLoaderWordId, gameLoaded, gameWordLimit } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
+  import Timer from "./Timer.svelte";
   export let tiles;
 
   let limit = [];
@@ -32,14 +33,31 @@
   words = shuffle(words);
 </script>
 
-<main>
-  <div class="tiles-main">
-    {#each limit as index}
-      {#if $gameLoaderWordId == index}
-        <MatchingGame word={words[index]} />
-      {/if}
-    {/each}
+<div class="gameLoader">
+  <div id="timer"><Timer /></div>
+  {#each limit as index}
+    {#if $gameLoaderWordId == index}
+      <div id="matching_game"><MatchingGame word={words[index]} /></div>
+    {/if}
+  {/each}
+</div>
 
-    <!-- <div class="back" on:click={() => handleClick()}>back</div> -->
-  </div>
-</main>
+<style>
+  .gameLoader {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  #timer {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    grid-row: 1/2;
+    grid-column: 1/2;
+  }
+
+  #matching_game {
+    grid-row: 1/2;
+    grid-column: 1/-1;
+  }
+</style>
