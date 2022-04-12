@@ -5,6 +5,7 @@ export const gameLoaderWordId = writable(0);
 export const gameWordLimit = writable(4);
 export const exp = writable(5);
 export const currentWordProgress = writable(0);
+export const gamePoints = writable(0);
 
 export let cvcObject = writable({
   cat: {

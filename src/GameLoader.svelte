@@ -2,6 +2,7 @@
   import { gameLoaderWordId, gameLoaded, gameWordLimit } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
+  import GamePoints from "./GamePoints.svelte";
   export let tiles;
 
   let limit = [];
@@ -35,6 +36,7 @@
 
 <div class="gameLoader">
   <div id="timer"><Timer /></div>
+  <div id="points"><GamePoints /></div>
   {#each limit as index}
     {#if $gameLoaderWordId == index}
       <div id="matching_game"><MatchingGame word={words[index]} /></div>
@@ -54,6 +56,12 @@
     margin-left: 1rem;
     grid-row: 1/2;
     grid-column: 1/2;
+  }
+
+  #points {
+    margin-top: 1rem;
+    grid-row: 1/2;
+    grid-column: -1/-2;
   }
 
   #matching_game {
