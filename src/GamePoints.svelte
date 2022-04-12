@@ -7,4 +7,8 @@
 </div>
 
 <style>
+  #points {
+    color: var(--blue);
+    z-index: 50;
+  }
 </style>

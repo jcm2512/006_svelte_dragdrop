@@ -1,11 +1,14 @@
-import { writable } from "svelte/store";
+import { writable, readable } from "svelte/store";
 
 export const gameLoaded = writable(false);
 export const gameLoaderWordId = writable(0);
 export const gameWordLimit = writable(4);
-export const exp = writable(5);
+export const exp = writable(0);
 export const currentWordProgress = writable(0);
 export const gamePoints = writable(0);
+export const expMultiplier = writable(10);
+export const maxExp = readable(40);
+export const bonustime = writable(false);
 
 export let cvcObject = writable({
   cat: {

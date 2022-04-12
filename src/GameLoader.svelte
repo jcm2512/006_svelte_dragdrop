@@ -62,6 +62,7 @@
     margin-top: 1rem;
     grid-row: 1/2;
     grid-column: -1/-2;
+    z-index: 10;
   }
 
   #matching_game {

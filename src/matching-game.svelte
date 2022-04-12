@@ -6,6 +6,10 @@
     gameWordLimit,
     exp,
     currentWordProgress,
+    gamePoints,
+    expMultiplier,
+    maxExp,
+    bonustime,
   } from "./store.js";
   import Expbar from "./Expbar.svelte";
   import Timer from "./Timer.svelte";
@@ -19,10 +23,18 @@
   gsap.registerPlugin(Draggable);
 
   export let word;
+
   let gameboard;
   let upper = [],
     lower = [],
     droppables = []; // store references to DOM elements
+  let pointsMultiplier = 1;
+
+  setInterval(() => {
+    if ($bonustime) {
+      $exp -= 1;
+    }
+  }, 500);
 
   var overlapThreshold = "40%";
 
@@ -78,9 +90,7 @@
       dropzone.classList.remove("can-drop");
       dropzone.classList.add("dropped");
 
-      $currentWordProgress += 1;
-      $exp += 5;
-      console.log(`${$currentWordProgress}:${$exp}`);
+      onCorrectLetter();
     }
     if ($currentWordProgress == word.length) {
       $cvcObject[word].exp += 5;
@@ -172,6 +182,22 @@
   const getRotation = function () {
     let rot = Math.floor(Math.random() * 60) - 30;
     return rot;
+  };
+
+  const onCorrectLetter = function () {
+    if ($exp >= $maxExp) {
+      $bonustime = true;
+      pointsMultiplier = 2;
+    }
+    if (bonustime) {
+      $gamePoints += 10 * pointsMultiplier;
+    } else {
+      $gamePoints += 10;
+      $exp += 1 * $expMultiplier;
+    }
+
+    $currentWordProgress += 1;
+    console.log($exp, $maxExp, $exp >= $maxExp);
   };
 </script>
 
