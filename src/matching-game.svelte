@@ -236,20 +236,6 @@
   {/if}
 </div>
 
-<svelte:head>
-  <style>
-    :root {
-      --bg-color: hsl(0, 83%, 73%); /* var(--bg-color)  */
-      --dropped-color: hsl(0, 60%, 25%);
-      --main-color: #fce38a; /* var(--main-color)  */
-      --sub-color: #f38181; /* var(--sub-color)  */
-      --fg-color: #f4d042; /* #95e1d3; /* var(--fg-color)  */
-      --main-font: "Londrina Solid";
-      --large: 10em;
-    }
-  </style>
-</svelte:head>
-
 <style>
   * {
     box-sizing: border-box;
@@ -314,7 +300,7 @@
   }
 
   @media (min-width: 640px) {
-    main {
+    #matching_game {
       max-width: none;
     }
   }
@@ -350,7 +336,7 @@
     position: absolute;
     transform-origin: center;
     font-family: var(--main-font);
-    color: hsla(215, 55%, 21%, 1);
+    color: var(--blue);
     -webkit-text-stroke: 4px white;
   }
 

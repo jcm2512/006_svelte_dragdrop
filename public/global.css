@@ -1,6 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredoka&family=Londrina+Outline&family=Londrina+Solid:wght@400&family=Nunito:wght@300;400;600;700&display=swap");
 
 * { box-sizing: Border-box }
+:root {
+  --bg-color: hsl(0, 83%, 73%); /* var(--bg-color)  */
+  --dropped-color: hsl(0, 60%, 25%);
+  --main-color: #fce38a; /* var(--main-color)  */
+  --sub-color: #f38181; /* var(--sub-color)  */
+  --fg-color: #f4d042; /* #95e1d3; /* var(--fg-color)  */
+  --blue: hsla(215, 55%, 21%, 1);
+  --main-font: "Londrina Solid";
+  --large: 10em;
+}
 
 html,
 body {
