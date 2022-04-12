@@ -1,21 +1,29 @@
+<!-- https://www.npmjs.com/package/circle-timer  -->
 <script>
   import CircleTimer from "circle-timer";
   import { onMount } from "svelte";
+  import { ticks } from "./store";
   let circleTimer;
-  let tick = 60;
+  let tick = $ticks;
   let paused = false;
   setInterval(() => {
     if (!paused) {
       tick -= 1;
+      if (tick <= 0) {
+        paused = true;
+      }
     }
   }, 1000);
   onMount(() => {
+    console.log(tick);
     circleTimer = new CircleTimer({
       rootElement: document.getElementById("circle-timer"),
       units: "vw",
       thickness: 8,
       radius: 8,
       color: "#CC76FD",
+      timerDuration: tick,
+      circleDuration: tick,
     });
     circleTimer.startTimer();
   });

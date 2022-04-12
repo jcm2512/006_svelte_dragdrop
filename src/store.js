@@ -9,6 +9,8 @@ export const gamePoints = writable(0);
 export const expMultiplier = writable(10);
 export const maxExp = readable(40);
 export const bonustime = writable(false);
+export const ticks = readable(30);
+export const trigger = writable(0);
 
 export let cvcObject = writable({
   cat: {

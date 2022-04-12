@@ -1,5 +1,10 @@
 <script>
-  import { exp } from "./store.js";
+  import { exp, trigger } from "./store.js";
+  import { gsap } from "gsap";
+
+  import { onMount } from "svelte";
+
+  $: $trigger && console.log("was triggered", $trigger, "times");
 </script>
 
 <div id="expbar">

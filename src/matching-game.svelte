@@ -7,14 +7,13 @@
     exp,
     currentWordProgress,
     gamePoints,
-    expMultiplier,
     maxExp,
     bonustime,
+    trigger,
   } from "./store.js";
   import Expbar from "./Expbar.svelte";
-  import Timer from "./Timer.svelte";
 
-  import { onMount } from "svelte";
+  import { onMount, afterUpdate } from "svelte";
   import interact from "interactjs";
   import shuffle from "./functions";
   import { gsap } from "gsap";
@@ -34,20 +33,13 @@
     if ($bonustime) {
       $exp -= 1;
     }
-  }, 500);
+  }, 100);
 
   var overlapThreshold = "40%";
 
   function onDrop(draggable, dropzone) {
     if (dropzone.id != draggable.id) {
-      if ($exp > 10) {
-        $exp -= 10;
-        // gsap.fromTo(
-        //   expBar,
-        //   { color: "#FF0000" },
-        //   { duration: 0.1, opacity: 0, repeat: 3, yoyo: true }
-        // );
-      }
+      onIncorrectLetter();
     } else {
       // Get CSS translate values
       const computedStyle = window.getComputedStyle(draggable),
@@ -185,20 +177,32 @@
   };
 
   const onCorrectLetter = function () {
-    if ($exp >= $maxExp) {
-      $bonustime = true;
-      pointsMultiplier = 2;
-    }
-    if (bonustime) {
-      $gamePoints += 10 * pointsMultiplier;
+    $currentWordProgress += 1;
+    if ($bonustime) {
+      $gamePoints += 20;
     } else {
       $gamePoints += 10;
-      $exp += 1 * $expMultiplier;
+      $exp += 10;
     }
-
-    $currentWordProgress += 1;
-    console.log($exp, $maxExp, $exp >= $maxExp);
+    if ($exp >= $maxExp) {
+      $bonustime = true;
+    }
   };
+
+  const onIncorrectLetter = function () {
+    $trigger += 1;
+    if ($exp > 10) {
+      if (!$bonustime) {
+        $exp -= 10;
+      }
+    }
+  };
+  afterUpdate(() => {
+    if ($exp <= 0) {
+      $bonustime = false;
+      $exp = 0;
+    }
+  });
 </script>
 
 <div id="matching_game">
