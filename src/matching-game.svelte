@@ -33,7 +33,7 @@
     if ($bonustime) {
       $exp -= 1;
     }
-  }, 100);
+  }, 500);
 
   var overlapThreshold = "40%";
 
@@ -190,9 +190,9 @@
   };
 
   const onIncorrectLetter = function () {
-    $trigger += 1;
     if ($exp > 10) {
       if (!$bonustime) {
+        $trigger += 1;
         $exp -= 10;
       }
     }

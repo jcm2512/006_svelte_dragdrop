@@ -2,14 +2,26 @@
   import { exp, trigger } from "./store.js";
   import { gsap } from "gsap";
 
-  import { onMount } from "svelte";
+  let expBar;
 
-  $: $trigger && console.log("was triggered", $trigger, "times");
+  $: $trigger && reduceExp();
+
+  const reduceExp = function () {
+    // check if expBar has loaded first
+    if (expBar) {
+      gsap.to(expBar, {
+        "background-color": "#FF0000",
+        duration: 0.5,
+        repeat: 1,
+        yoyo: true,
+      });
+    }
+  };
 </script>
 
 <div id="expbar">
   <div id="exp_bar_bg" />
-  <div id="exp_bar_fill" style="--exp: {`${$exp}vw`}" />
+  <div bind:this={expBar} id="exp_bar_fill" style="--exp: {`${$exp}vw`}" />
   <div id="exp_bg" />
   <img src="/assets/ui/bolt.png" alt="EXP" />
   <!--  -->
