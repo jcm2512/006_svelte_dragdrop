@@ -31,7 +31,10 @@
 
   setInterval(() => {
     if ($bonustime) {
-      $exp -= 1;
+      $exp -= 10;
+      if ($exp <= 0) {
+        $bonustime = false;
+      }
     }
   }, 500);
 
@@ -202,7 +205,7 @@
   afterUpdate(() => {
     if ($exp <= 0) {
       $bonustime = false;
-      $exp = 0;
+      // $exp = 0;
     }
   });
 </script>
