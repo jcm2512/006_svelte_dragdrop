@@ -3,16 +3,28 @@
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
   import GamePoints from "./GamePoints.svelte";
-  export let tiles;
+  export let GameWords;
 
+  let randomWords = [];
+
+  // push an id (0,1,2 etc) to LIMIT for each game word
+  // this is so we can cycle through the array with svelte
   let limit = [];
-
   for (let i = 0; i < $gameWordLimit; i++) {
     limit.push(i);
   }
 
-  function handleClick() {
-    gameLoaded.update((value) => !value);
+  // NA?
+  // function handleClick() {
+  //   gameLoaded.update((value) => !value);
+  // }
+
+  function addRandomWordFrom(array, toarray, limit) {
+    let shuffledArray = shuffle(array);
+    for (let i = 0; i < $gameWordLimit; i++) {
+      var index = Math.floor(Math.random() * limit);
+      toarray.push(shuffledArray[index]);
+    }
   }
 
   function shuffle(word) {
@@ -26,20 +38,22 @@
     return array;
   }
 
-  let words = tiles
-    .filter((t) => t.unlocked == true) // only show unlocked cvcs
+  let words = GameWords.filter((t) => t.unlocked == true) // only show unlocked cvcs
     .map((item) => {
       return item.word;
     });
-  words = shuffle(words);
+  // words = shuffle(words);
+
+  addRandomWordFrom(words, randomWords, 5);
+  console.log(randomWords);
 </script>
 
 <div class="gameLoader">
   <div id="timer"><Timer /></div>
   <div id="points"><GamePoints /></div>
-  {#each limit as index}
-    {#if $gameLoaderWordId == index}
-      <div id="matching_game"><MatchingGame word={words[index]} /></div>
+  {#each limit as id}
+    {#if $gameLoaderWordId == id}
+      <div id="matching_game"><MatchingGame word={randomWords[id]} /></div>
     {/if}
   {/each}
 </div>

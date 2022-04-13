@@ -31,7 +31,7 @@
 
 <main>
   {#if $gameLoaded == true}
-    <GameLoader tiles={wordObjects} />
+    <GameLoader GameWords={wordObjects} />
   {:else}
     <div class="play" on:click={() => handlePlay()}>play</div>
   {/if}
