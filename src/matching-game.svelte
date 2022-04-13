@@ -39,7 +39,7 @@
 
   function onDrop(draggable, dropzone) {
     if (dropzone.id != draggable.id) {
-      onIncorrectLetter();
+      onIncorrectLetter(draggable);
     } else {
       // Get CSS translate values
       const computedStyle = window.getComputedStyle(draggable),
@@ -189,7 +189,9 @@
     }
   };
 
-  const onIncorrectLetter = function () {
+  const onIncorrectLetter = function (element) {
+    gsap.to(element, { y: 0 });
+    gsap.to(element.children[0], { transform: `rotate(${getRotation()}deg)` });
     if ($exp > 10) {
       if (!$bonustime) {
         $trigger += 1;
