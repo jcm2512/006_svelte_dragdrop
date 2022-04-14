@@ -29,9 +29,10 @@
     droppables = []; // store references to DOM elements
   let pointsMultiplier = 1;
 
+  // TODO:  use GSAP transition instead; run function at the end of transition
   setInterval(() => {
     if ($bonustime) {
-      $exp -= 10;
+      $exp -= 5;
       if ($exp <= 0) {
         $bonustime = false;
       }
@@ -43,6 +44,7 @@
   function onDrop(draggable, dropzone) {
     if (dropzone.id != draggable.id) {
       onIncorrectLetter(draggable);
+      console.log(draggable.id, " dropped onto ", dropzone.id);
     } else {
       // Get CSS translate values
       const computedStyle = window.getComputedStyle(draggable),
