@@ -1,12 +1,14 @@
 <script>
-  import { exp, trigger } from "./store.js";
+  import { expObj, trigger } from "./store.js";
   import { gsap } from "gsap";
 
   let expBar;
 
-  $: $trigger && reduceExp();
+  $: $trigger && flashExp();
 
-  const reduceExp = function () {
+  const emptyExp = function () {};
+
+  const flashExp = function () {
     // check if expBar has loaded first
     if (expBar) {
       gsap.to(expBar, {
@@ -21,11 +23,15 @@
 
 <div id="expbar">
   <div id="exp_bar_bg" />
-  <div bind:this={expBar} id="exp_bar_fill" style="--exp: {`${$exp}vw`}" />
+  <div
+    bind:this={expBar}
+    id="exp_bar_fill"
+    style="--exp: {`${$expObj.value}vw`}"
+  />
   <div id="exp_bg" />
   <img src="/assets/ui/bolt.png" alt="EXP" />
   <!--  -->
-  <!-- <div id="exp_bar_fill" style="--exp: {`${$exp}vw`}" />
+  <!-- <div id="exp_bar_fill" style="--exp: {`${$expObj.value}vw`}" />
   <div id="exp" /> -->
 </div>
 

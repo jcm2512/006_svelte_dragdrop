@@ -10,6 +10,7 @@
     maxExp,
     bonustime,
     trigger,
+    expObj,
   } from "./store.js";
   import Expbar from "./Expbar.svelte";
 
@@ -28,18 +29,33 @@
     lower = [],
     droppables = []; // store references to DOM elements
   let pointsMultiplier = 1;
+  var overlapThreshold = "40%";
 
   // TODO:  use GSAP transition instead; run function at the end of transition
-  setInterval(() => {
-    if ($bonustime) {
-      $exp -= 5;
-      if ($exp <= 0) {
-        $bonustime = false;
-      }
-    }
-  }, 500);
+  // setInterval(() => {
+  //   if ($bonustime) {
+  //     $expObj.value -= 5;
+  //     if ($expObj.value <= 0) {
+  //       $bonustime = false;
+  //     }
+  //   }
+  // }, 500);
 
-  var overlapThreshold = "40%";
+  $: $expObj.value, console.log(`expObj: ${$expObj.value}`);
+
+  $: $bonustime && bonusTime($expObj);
+
+  function bonusTime(obj) {
+    console.log(obj, "BONUS TIME");
+    gsap.to(obj, {
+      value: 0,
+      duration: 3.0,
+      onComplete: function () {
+        $bonustime = false;
+        console.log("BONUS TIME FINISHED");
+      },
+    });
+  }
 
   function onDrop(draggable, dropzone) {
     if (dropzone.id != draggable.id) {
@@ -187,9 +203,9 @@
       $gamePoints += 20;
     } else {
       $gamePoints += 10;
-      $exp += 10;
+      $expObj.value += 10;
     }
-    if ($exp >= $maxExp) {
+    if ($expObj.value >= $maxExp) {
       $bonustime = true;
     }
   };
@@ -197,17 +213,17 @@
   const onIncorrectLetter = function (element) {
     gsap.to(element, { y: 0 });
     gsap.to(element.children[0], { transform: `rotate(${getRotation()}deg)` });
-    if ($exp > 10) {
+    if ($expObj.value >= 10) {
       if (!$bonustime) {
         $trigger += 1;
-        $exp -= 10;
+        $expObj.value -= 10;
       }
     }
   };
   afterUpdate(() => {
-    if ($exp <= 0) {
+    if ($expObj.value <= 0) {
       $bonustime = false;
-      // $exp = 0;
+      // $expObj.value = 0;
     }
   });
 </script>
