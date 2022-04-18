@@ -23,6 +23,7 @@
   gsap.registerPlugin(Draggable);
 
   export let word;
+  export let gameStateExp;
 
   let gameboard;
   let upper = [],
@@ -41,9 +42,11 @@
   //   }
   // }, 500);
 
-  $: $expObj.value, console.log(`expObj: ${$expObj.value}`);
+  // $: $expObj.value, console.log(`expObj: ${$expObj.value}`);
 
-  $: $bonustime && bonusTime($expObj);
+  // $: $bonustime && bonusTime($expObj);
+
+  // $: gameStateExp, console.log("updated: ", gameStateExp);
 
   function bonusTime(obj) {
     console.log(obj, "BONUS TIME");
@@ -198,16 +201,17 @@
   };
 
   const onCorrectLetter = function () {
+    gameStateExp += 10;
     $currentWordProgress += 1;
     if ($bonustime) {
       $gamePoints += 20;
     } else {
       $gamePoints += 10;
-      $expObj.value += 10;
+      // $gameState.exp += 10;
     }
-    if ($expObj.value >= $maxExp) {
-      $bonustime = true;
-    }
+    // if ($gameState.exp >= $maxExp) {
+    //   $bonustime = true;
+    // }
   };
 
   const onIncorrectLetter = function (element) {
@@ -233,7 +237,8 @@
     Preloaded CSS styles
   </div>
 
-  <div id="_expbar"><Expbar /></div>
+  <!-- load Expbar with "gameStateExp" -->
+  <div id="_expbar"><Expbar {gameStateExp} /></div>
 
   <div id="gameboard" bind:this={gameboard}>
     <container id="container" class="drop-container">

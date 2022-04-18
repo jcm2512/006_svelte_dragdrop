@@ -4,7 +4,7 @@
   import Timer from "./Timer.svelte";
   import GamePoints from "./GamePoints.svelte";
   export let GameWords;
-
+  import { gameStateExp } from "./gameState";
   let randomWords = [];
 
   // push an id (0,1,2 etc) to LIMIT for each game word
@@ -45,7 +45,6 @@
   // words = shuffle(words);
 
   addRandomWordFrom(words, randomWords, 5);
-  console.log(randomWords);
 </script>
 
 <div class="gameLoader">
@@ -53,7 +52,12 @@
   <div id="points"><GamePoints /></div>
   {#each limit as id}
     {#if $gameLoaderWordId == id}
-      <div id="matching_game"><MatchingGame word={randomWords[id]} /></div>
+      <div id="matching_game">
+        <MatchingGame
+          word={randomWords[id]}
+          gameStateExp={$gameStateExp.value}
+        />
+      </div>
     {/if}
   {/each}
 </div>
