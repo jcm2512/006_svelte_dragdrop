@@ -29,7 +29,7 @@
     lower = [],
     droppables = []; // store references to DOM elements
   let pointsMultiplier = 1;
-  var overlapThreshold = "40%";
+  var overlapThreshold = "50%";
 
   // TODO:  use GSAP transition instead; run function at the end of transition
   // setInterval(() => {
