@@ -12,7 +12,7 @@
     trigger,
     expObj,
   } from "./store.js";
-  import Expbar from "./Expbar.svelte";
+  // import Expbar from "./Expbar.svelte";
 
   import { onMount, afterUpdate } from "svelte";
   import interact from "interactjs";
@@ -23,7 +23,6 @@
   gsap.registerPlugin(Draggable);
 
   export let word;
-  export let gameStateExp;
 
   let gameboard;
   let upper = [],
@@ -201,7 +200,7 @@
   };
 
   const onCorrectLetter = function () {
-    gameStateExp += 10;
+    $expObj.value += 10;
     $currentWordProgress += 1;
     if ($bonustime) {
       $gamePoints += 20;
@@ -212,6 +211,7 @@
     // if ($gameState.exp >= $maxExp) {
     //   $bonustime = true;
     // }
+    console.log($expObj.value);
   };
 
   const onIncorrectLetter = function (element) {
@@ -236,9 +236,6 @@
   <div class="transition dropped" style="display: none">
     Preloaded CSS styles
   </div>
-
-  <!-- load Expbar with "gameStateExp" -->
-  <div id="_expbar"><Expbar {gameStateExp} /></div>
 
   <div id="gameboard" bind:this={gameboard}>
     <container id="container" class="drop-container">
@@ -332,12 +329,6 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-  }
-
-  #_expbar {
-    margin-top: 2em;
-    grid-column: 4/-1;
-    grid-row: 1;
   }
 
   .nextButton {

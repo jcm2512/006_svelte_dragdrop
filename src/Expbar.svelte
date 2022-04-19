@@ -3,9 +3,6 @@
   import { gsap } from "gsap";
 
   let expBar;
-  export let gameStateExp;
-
-  console.log(gameStateExp);
 
   $: $trigger && flashExp();
 
@@ -29,7 +26,7 @@
   <div
     bind:this={expBar}
     id="exp_bar_fill"
-    style="--exp: {`${gameStateExp}vw`}"
+    style="--exp: {`${$expObj.value}vw`}"
   />
   <div id="exp_bg" />
   <img src="/assets/ui/bolt.png" alt="EXP" />

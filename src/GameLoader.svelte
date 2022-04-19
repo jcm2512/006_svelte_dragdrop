@@ -3,8 +3,9 @@
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
   import GamePoints from "./GamePoints.svelte";
+  import Expbar from "./Expbar.svelte";
+
   export let GameWords;
-  import { gameStateExp } from "./gameState";
   let randomWords = [];
 
   // push an id (0,1,2 etc) to LIMIT for each game word
@@ -50,13 +51,11 @@
 <div class="gameLoader">
   <div id="timer"><Timer /></div>
   <div id="points"><GamePoints /></div>
+  <div id="_expbar"><Expbar /></div>
   {#each limit as id}
     {#if $gameLoaderWordId == id}
       <div id="matching_game">
-        <MatchingGame
-          word={randomWords[id]}
-          gameStateExp={$gameStateExp.value}
-        />
+        <MatchingGame word={randomWords[id]} />
       </div>
     {/if}
   {/each}
@@ -65,26 +64,34 @@
 <style>
   .gameLoader {
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    grid-template-rows: 1fr;
+    text-align: center;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    width: 100vw;
+    height: 100vh;
+  }
+  #_expbar {
+    margin-top: 2em;
+    grid-column: 4/-1;
+    grid-row: 1;
   }
 
   #timer {
     margin-top: 1rem;
     margin-left: 1rem;
     grid-row: 1/2;
-    grid-column: 1/2;
+    grid-column: 1/4;
   }
 
   #points {
     margin-top: 1rem;
     grid-row: 1/2;
-    grid-column: -1/-2;
+    grid-column: -3/-1;
     z-index: 10;
   }
 
   #matching_game {
-    grid-row: 1/2;
+    grid-row: 1/-1;
     grid-column: 1/-1;
   }
 </style>
