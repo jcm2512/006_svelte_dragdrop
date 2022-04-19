@@ -200,7 +200,7 @@
   };
 
   const onCorrectLetter = function () {
-    $expObj.value += 10;
+    $expObj.value += 5;
     $currentWordProgress += 1;
     if ($bonustime) {
       $gamePoints += 20;

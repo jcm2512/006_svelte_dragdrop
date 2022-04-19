@@ -49,12 +49,12 @@
 </script>
 
 <div class="gameLoader">
-  <div id="timer"><Timer /></div>
-  <div id="points"><GamePoints /></div>
-  <div id="_expbar"><Expbar /></div>
+  <div id="_Timer"><Timer /></div>
+  <div id="_GamePoints"><GamePoints /></div>
+  <div id="_Expbar"><Expbar /></div>
   {#each limit as id}
     {#if $gameLoaderWordId == id}
-      <div id="matching_game">
+      <div id="_matchingGame">
         <MatchingGame word={randomWords[id]} />
       </div>
     {/if}
@@ -70,27 +70,27 @@
     width: 100vw;
     height: 100vh;
   }
-  #_expbar {
+  #_Expbar {
     margin-top: 2em;
     grid-column: 4/-1;
     grid-row: 1;
   }
 
-  #timer {
+  #_Timer {
     margin-top: 1rem;
     margin-left: 1rem;
     grid-row: 1/2;
     grid-column: 1/4;
   }
 
-  #points {
+  #_GamePoints {
     margin-top: 1rem;
     grid-row: 1/2;
     grid-column: -3/-1;
     z-index: 10;
   }
 
-  #matching_game {
+  #_matchingGame {
     grid-row: 1/-1;
     grid-column: 1/-1;
   }

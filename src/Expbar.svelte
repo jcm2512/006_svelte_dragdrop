@@ -4,6 +4,7 @@
 
   let expBar;
 
+  let bonusduration = 10.0;
   $: $expObj && handleUpdate($expObj);
   $: $trigger && flashExp();
 
@@ -23,12 +24,18 @@
 
   const bonusTime = function () {
     console.log("bonus time!!!!");
-    gsap.to(expBar, {
-      width: "10vw",
-      duration: 5.0,
+    gsap.to($expObj, {
+      value: 5,
+      duration: bonusduration,
+      ease: "linear",
       onComplete: function () {
-        console.log("bonus time ended");
+        console.log("bonus time ended biatch");
       },
+    });
+    gsap.to(expBar, {
+      width: "5vw",
+      duration: bonusduration,
+      ease: "linear",
     });
   };
 
@@ -60,6 +67,7 @@
     --height: 8vw;
     --rounded: 4vw;
     --border: 1vw;
+    --min: 5vw;
     --inner: calc(var(--height) - (2 * (var(--border))));
     position: relative;
     display: grid;
@@ -95,7 +103,7 @@
     border-radius: var(--rounded);
     height: var(--inner);
     margin: var(--border);
-    width: 10vw;
+    width: var(--inner);
     max-width: 38vw;
     min-width: var(--inner);
     /* transition: width 1s ease-out; */
