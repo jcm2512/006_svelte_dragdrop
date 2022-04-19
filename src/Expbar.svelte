@@ -1,12 +1,36 @@
 <script>
-  import { expObj, trigger } from "./store.js";
+  import { expObj, trigger, maxExp } from "./store.js";
   import { gsap } from "gsap";
 
   let expBar;
 
+  $: $expObj && handleUpdate($expObj);
   $: $trigger && flashExp();
 
-  const emptyExp = function () {};
+  const handleUpdate = function (obj) {
+    if (expBar) {
+      gsap.to(expBar, {
+        width: `${$expObj.value}vw`,
+        duration: 1.0,
+        onComplete: function () {
+          if ($expObj.value >= $maxExp) {
+            bonusTime();
+          }
+        },
+      });
+    }
+  };
+
+  const bonusTime = function () {
+    console.log("bonus time!!!!");
+    gsap.to(expBar, {
+      width: "10vw",
+      duration: 5.0,
+      onComplete: function () {
+        console.log("bonus time ended");
+      },
+    });
+  };
 
   const flashExp = function () {
     // check if expBar has loaded first
@@ -23,11 +47,7 @@
 
 <div id="expbar">
   <div id="exp_bar_bg" />
-  <div
-    bind:this={expBar}
-    id="exp_bar_fill"
-    style="--exp: {`${$expObj.value}vw`}"
-  />
+  <div bind:this={expBar} id="exp_bar_fill" />
   <div id="exp_bg" />
   <img src="/assets/ui/bolt.png" alt="EXP" />
   <!--  -->
@@ -75,10 +95,10 @@
     border-radius: var(--rounded);
     height: var(--inner);
     margin: var(--border);
-    width: var(--exp);
+    width: 10vw;
     max-width: 38vw;
     min-width: var(--inner);
-    transition: width 1s ease-out;
+    /* transition: width 1s ease-out; */
     z-index: 10;
   }
 

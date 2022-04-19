@@ -211,7 +211,6 @@
     // if ($gameState.exp >= $maxExp) {
     //   $bonustime = true;
     // }
-    console.log($expObj.value);
   };
 
   const onIncorrectLetter = function (element) {
