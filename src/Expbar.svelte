@@ -13,7 +13,7 @@
     if (expBar) {
       gsap.to(expBar, {
         width: `${$expObj.value}vw`,
-        duration: 1.0,
+        duration: 0.4,
         onComplete: function () {
           if ($expObj.value >= $maxExp) {
             bonusTime();
