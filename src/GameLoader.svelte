@@ -4,9 +4,20 @@
   import Timer from "./Timer.svelte";
   import GamePoints from "./GamePoints.svelte";
   import Expbar from "./Expbar.svelte";
+  import { myLocalStorage } from "./functions/localstorage.svelte";
 
   export let GameWords;
   let randomWords = [];
+
+  myLocalStorage.init("happyhippoabc");
+  // let currentSession = myLocalStorage.get();
+  // currentSession.points += 10;
+  // myLocalStorage.set({ points: 0 });
+
+  // myLocalStorage.set(currentSession);
+  myLocalStorage.get();
+
+  // myLocalStorage.remove();
 
   // push an id (0,1,2 etc) to LIMIT for each game word
   // this is so we can cycle through the array with svelte
