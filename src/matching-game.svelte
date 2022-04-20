@@ -200,13 +200,12 @@
   };
 
   const onCorrectLetter = function () {
-    $expObj.value += 5;
     $currentWordProgress += 1;
-    if ($bonustime) {
-      $gamePoints += 20;
-    } else {
+    if (!$bonustime) {
+      $expObj.value += 5;
       $gamePoints += 10;
-      // $gameState.exp += 10;
+    } else {
+      $gamePoints += 17;
     }
     // if ($gameState.exp >= $maxExp) {
     //   $bonustime = true;

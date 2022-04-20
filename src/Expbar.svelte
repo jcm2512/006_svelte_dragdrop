@@ -1,6 +1,6 @@
 <script>
   // TODO: #15 expbar should be right aligned
-  import { expObj, trigger, maxExp } from "./store.js";
+  import { expObj, trigger, maxExp, bonustime } from "./store.js";
   import { gsap } from "gsap";
 
   let expBar;
@@ -14,6 +14,7 @@
       gsap.to(expBar, {
         width: `${$expObj.value}vw`,
         duration: 0.4,
+        // check for bonus time
         onComplete: function () {
           if ($expObj.value >= $maxExp) {
             bonusTime();
@@ -24,13 +25,15 @@
   };
 
   const bonusTime = function () {
-    console.log("bonus time!!!!");
+    $bonustime = true;
+    console.log("bonustime: ", $bonustime);
     gsap.to($expObj, {
       value: 5,
       duration: bonusduration,
       ease: "linear",
       onComplete: function () {
-        console.log("bonus time ended biatch");
+        $bonustime = false;
+        console.log("bonustime: ", $bonustime);
       },
     });
     gsap.to(expBar, {
