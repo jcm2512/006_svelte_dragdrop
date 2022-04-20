@@ -84,10 +84,10 @@
   }
 
   #_GamePoints {
-    margin-top: 1rem;
+    margin-right: 1rem;
+    margin-top: 2rem;
     grid-row: 1/2;
-    grid-column: -3/-1;
-    z-index: 10;
+    grid-column: -4/-1;
   }
 
   #_matchingGame {

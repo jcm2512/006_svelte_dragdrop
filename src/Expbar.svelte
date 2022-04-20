@@ -1,4 +1,5 @@
 <script>
+  // TODO: #15 expbar should be right aligned
   import { expObj, trigger, maxExp } from "./store.js";
   import { gsap } from "gsap";
 
@@ -56,14 +57,12 @@
   <div id="exp_bar_bg" />
   <div bind:this={expBar} id="exp_bar_fill" />
   <div id="exp_bg" />
-  <img src="/assets/ui/bolt.png" alt="EXP" />
-  <!--  -->
-  <!-- <div id="exp_bar_fill" style="--exp: {`${$expObj.value}vw`}" />
-  <div id="exp" /> -->
+  <!-- <img src="/assets/ui/bolt.png" alt="EXP" /> -->
 </div>
 
 <style>
   #expbar {
+    padding: 0.2rem;
     --height: 8vw;
     --rounded: 4vw;
     --border: 1vw;
@@ -93,6 +92,8 @@
     margin-left: 10%;
     height: auto;
     z-index: 1;
+    position: relative;
+    overflow: hidden;
   }
 
   #exp_bar_fill {
@@ -104,7 +105,7 @@
     height: var(--inner);
     margin: var(--border);
     width: var(--inner);
-    max-width: 38vw;
+    max-width: 35vw; /* accounts for margin... this should be fixed */
     min-width: var(--inner);
     /* transition: width 1s ease-out; */
     z-index: 10;
@@ -119,6 +120,7 @@
     height: var(--inner);
     margin: var(--border);
     z-index: 5;
+    max-width: 35vw;
   }
 
   #exp_bar_bg {
