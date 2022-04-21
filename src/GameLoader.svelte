@@ -15,7 +15,9 @@
   let randomWords = [];
 
   let myLocalStorage = localData;
-  myLocalStorage.set({ points: 0 });
+  myLocalStorage.update();
+
+  $: $gamePoints, console.log($gamePoints);
 
   // push an id (0,1,2 etc) to LIMIT for each game word
   // this is so we can cycle through the array with svelte

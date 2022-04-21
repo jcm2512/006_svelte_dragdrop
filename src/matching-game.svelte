@@ -20,6 +20,9 @@
   import { gsap } from "gsap";
   import { Draggable } from "gsap/Draggable";
 
+  // import { localData } from "./functions/localstorage.svelte";
+  // let myLocalStorage = localData;
+
   gsap.registerPlugin(Draggable);
 
   export let word;
@@ -203,14 +206,13 @@
     $currentWordProgress += 1;
     if (!$bonustime) {
       $expObj.value += 5;
-      $gamePoints += 10;
+      $gamePoints.points += 10;
     } else {
-      $gamePoints += 17;
+      $gamePoints.points += 17;
     }
     // if ($gameState.exp >= $maxExp) {
     //   $bonustime = true;
     // }
-    myLocalStorage.set({ points: $gamePoints });
   };
 
   const onIncorrectLetter = function (element) {

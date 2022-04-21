@@ -39,6 +39,11 @@
     clear: function () {
       localStorage.removeItem(this.key);
     },
+    update: function () {
+      localStorage.getItem(this.key) == null
+        ? localStorage.setItem(this.key, JSON.stringify(this.value))
+        : (this.value = localStorage.getItem(this.key));
+    },
   };
 
   export const gamedata = {
