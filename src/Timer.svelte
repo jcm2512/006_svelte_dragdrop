@@ -15,7 +15,7 @@
     }
   }, 1000);
   onMount(() => {
-    console.log(tick);
+    // console.log(tick);
     circleTimer = new CircleTimer({
       rootElement: document.getElementById("circle-timer"),
       units: "vw",
