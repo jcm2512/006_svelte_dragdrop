@@ -1,22 +1,32 @@
 <script context="module">
   export const localData = {
     key: "localData",
-    value: { points: 100 },
+    value: { points: 0 },
     get: function (prop) {
       let array = [],
         entries = [];
-      // If prop is a undefined, return array with all values
-      // If prop is string, convert it to an array so we can cycle through props
 
-      typeof prop == "undefined"
+      // CREATE ARRAY OF VALUES
+      // ----------------------
+
+      // If prop is a seqence of arguments, create an array
+      // e.g function("first", "second") -> ["first", "second"]
+      arguments.length > 1
+        ? (array = Array.from(arguments))
+        : // If prop is a undefined, return array with all current values
+        typeof prop == "undefined"
         ? (array = Object.keys(this.value))
-        : typeof prop == "string"
+        : // If prop is string, convert it to an array so we can cycle through props
+        typeof prop == "string"
         ? array.push(prop)
         : (array = prop);
 
-      array.forEach((key) =>
-        entries.push([String(key), this.value[String(key)]])
-      );
+      array.forEach((key) => {
+        // Skip undefined values
+        if (this.value[String(key)] != undefined) {
+          entries.push([String(key), this.value[String(key)]]);
+        }
+      });
 
       return Object.fromEntries(entries);
     },
@@ -26,10 +36,8 @@
       }
       localStorage.setItem(this.key, JSON.stringify(this.value));
     },
-    filterObject: function (obj, callback) {
-      return Object.fromEntries(
-        Object.entries(obj).filter(([key, val]) => callback(val, key))
-      );
+    clear: function () {
+      localStorage.removeItem(this.key);
     },
   };
 

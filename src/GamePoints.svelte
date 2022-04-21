@@ -6,7 +6,7 @@
   <div id="points_bar_bg" />
   <!-- <img src="/assets/ui/bolt.png" alt="points" /> -->
 
-  <div id="points">{$gamePoints}</div>
+  <div id="points">{Object.values($gamePoints)[0]}</div>
 </div>
 
 <style>

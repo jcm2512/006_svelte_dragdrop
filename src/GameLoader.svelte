@@ -1,5 +1,10 @@
 <script>
-  import { gameLoaderWordId, gameLoaded, gameWordLimit } from "./store.js";
+  import {
+    gameLoaderWordId,
+    gameLoaded,
+    gameWordLimit,
+    gamePoints,
+  } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
   import GamePoints from "./GamePoints.svelte";
@@ -10,12 +15,7 @@
   let randomWords = [];
 
   let myLocalStorage = localData;
-  // myLocalStorage.value.exp = 100;
-  myLocalStorage.set({ exp: 999 });
-  myLocalStorage.set({ gameover: true });
-  myLocalStorage.set({ exp: 124 });
-
-  console.log(myLocalStorage.get(["gameover", "exp"]));
+  myLocalStorage.set({ points: 0 });
 
   // push an id (0,1,2 etc) to LIMIT for each game word
   // this is so we can cycle through the array with svelte

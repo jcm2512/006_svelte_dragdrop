@@ -210,6 +210,7 @@
     // if ($gameState.exp >= $maxExp) {
     //   $bonustime = true;
     // }
+    myLocalStorage.set({ points: $gamePoints });
   };
 
   const onIncorrectLetter = function (element) {
