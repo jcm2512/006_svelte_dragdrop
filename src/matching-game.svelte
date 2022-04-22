@@ -11,6 +11,7 @@
     bonustime,
     trigger,
     expObj,
+    eventTrigger,
   } from "./store.js";
   // import Expbar from "./Expbar.svelte";
 
@@ -155,6 +156,7 @@
     switch (event) {
       case "next":
         $gameLoaderWordId += 1;
+        $eventTrigger.save += 1;
         break;
       case "back":
         $gameLoaded = false;
@@ -204,9 +206,9 @@
     $currentWordProgress += 1;
     if (!$bonustime) {
       $expObj.value += 5;
-      $gamePoints += 10;
+      $gamePoints.points += 10;
     } else {
-      $gamePoints += 17;
+      $gamePoints.points += 17;
     }
     // if ($gameState.exp >= $maxExp) {
     //   $bonustime = true;

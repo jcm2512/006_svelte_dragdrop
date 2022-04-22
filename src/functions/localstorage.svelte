@@ -34,15 +34,21 @@
       for (const [key, value] of Object.entries(obj)) {
         this.value[key] = value;
       }
-      localStorage.setItem(this.key, JSON.stringify(this.value));
+      //   localStorage.setItem(this.key, JSON.stringify(this.value));
     },
     clear: function () {
       localStorage.removeItem(this.key);
     },
-    update: function () {
-      localStorage.getItem(this.key) == null
-        ? localStorage.setItem(this.key, JSON.stringify(this.value))
-        : (this.value = localStorage.getItem(this.key));
+    load: function () {
+      if (localStorage.getItem(this.key) != null)
+        this.value = JSON.parse(localStorage.getItem(this.key));
+    },
+    save: function () {
+      localStorage.setItem(this.key, JSON.stringify(this.value));
+      // Initialize localStorage if == null
+      //   localStorage.getItem(this.key) == null
+      //     ? localStorage.setItem(this.key, JSON.stringify(this.value))
+      //     : (this.value = JSON.parse(localStorage.getItem(this.key)));
     },
   };
 

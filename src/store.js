@@ -13,12 +13,10 @@ export const maxExp = readable(35);
 export const bonustime = writable(false);
 export const ticks = readable(60);
 export const trigger = writable(0);
+export const eventTrigger = writable({ save: 0 });
 
-// SAVED TO LOCAL STORAGE
-
-let myLocalStorage = localData;
-
-export const gamePoints = writable(myLocalStorage.get("points"));
+// UPDATED FROM LOCALSTORAGE
+export const gamePoints = writable({ points: 0 });
 
 // CVC WORD LIST
 export let cvcObject = writable({
