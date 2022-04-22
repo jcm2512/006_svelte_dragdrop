@@ -15,7 +15,6 @@
   // import Expbar from "./Expbar.svelte";
 
   import { onMount, afterUpdate } from "svelte";
-  import interact from "interactjs";
   import shuffle from "./functions";
   import { gsap } from "gsap";
   import { Draggable } from "gsap/Draggable";
@@ -152,7 +151,6 @@
   });
 
   function handleClick(event) {
-    interact(".draggable").unset();
     $currentWordProgress = 0;
     switch (event) {
       case "next":
@@ -206,9 +204,9 @@
     $currentWordProgress += 1;
     if (!$bonustime) {
       $expObj.value += 5;
-      $gamePoints.points += 10;
+      $gamePoints += 10;
     } else {
-      $gamePoints.points += 17;
+      $gamePoints += 17;
     }
     // if ($gameState.exp >= $maxExp) {
     //   $bonustime = true;
