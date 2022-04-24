@@ -271,7 +271,7 @@
     grid-template-rows: repeat(12, 1fr);
     width: 100vw;
     height: 100vh;
-    background-image: url("/assets/bg-tile-blue-stars.png");
+    /* background-image: url("/assets/bg-tile-blue-stars.png"); */
   }
 
   #gameboard {

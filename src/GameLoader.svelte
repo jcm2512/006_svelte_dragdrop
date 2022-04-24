@@ -10,6 +10,7 @@
   import Timer from "./Timer.svelte";
   import GamePoints from "./GamePoints.svelte";
   import Expbar from "./Expbar.svelte";
+  import BG from "./BG.svelte";
   import { localData } from "./functions/localstorage.svelte";
 
   export let GameWords;
@@ -62,6 +63,7 @@
 </script>
 
 <div class="gameLoader">
+  <div id="_Background"><BG /></div>
   <div id="_Timer"><Timer /></div>
   <div id="_GamePoints"><GamePoints /></div>
   <div id="_Expbar"><Expbar /></div>
@@ -83,10 +85,24 @@
     width: 100vw;
     height: 100vh;
   }
+
+  #_Background {
+    grid-row: 1/-1;
+    grid-column: 1/-1;
+    z-index: 10;
+  }
+
+  #_matchingGame {
+    grid-row: 1/-1;
+    grid-column: 1/-1;
+    z-index: 20;
+  }
+
   #_Expbar {
     margin-top: 2em;
     grid-column: 4/-1;
     grid-row: 1;
+    z-index: 30;
   }
 
   #_Timer {
@@ -94,6 +110,7 @@
     margin-left: 1rem;
     grid-row: 1/2;
     grid-column: 1/4;
+    z-index: 40;
   }
 
   #_GamePoints {
@@ -101,10 +118,6 @@
     margin-top: 2rem;
     grid-row: 1/2;
     grid-column: -4/-1;
-  }
-
-  #_matchingGame {
-    grid-row: 1/-1;
-    grid-column: 1/-1;
+    z-index: 50;
   }
 </style>
