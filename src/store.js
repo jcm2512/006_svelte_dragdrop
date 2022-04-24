@@ -1,10 +1,13 @@
 import { writable, readable } from "svelte/store";
 import { localData } from "./functions/localstorage.svelte";
 
+export const devMode = readable(false);
+
 // NON PERSISTENT
 export const gameLoaded = writable(false);
 export const gameLoaderWordId = writable(0);
 export const gameWordLimit = writable(10);
+export const gameState = writable(0);
 export const exp = writable(0);
 export const expObj = writable({ value: 5 }); // use objects so GSAP an animate the values
 export const currentWordProgress = writable(0);

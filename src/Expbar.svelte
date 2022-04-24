@@ -1,6 +1,6 @@
 <script>
   // TODO: #15 expbar should be right aligned
-  import { expObj, trigger, maxExp, bonustime } from "./store.js";
+  import { expObj, trigger, maxExp, bonustime, gameState } from "./store.js";
   import { gsap } from "gsap";
 
   let expBar;
@@ -25,6 +25,7 @@
   };
 
   const bonusTime = function () {
+    $gameState += 1;
     $bonustime = true;
     console.log("bonustime: ", $bonustime);
     gsap.to($expObj, {
@@ -32,6 +33,7 @@
       duration: bonusduration,
       ease: "linear",
       onComplete: function () {
+        $gameState += 1;
         $bonustime = false;
         console.log("bonustime: ", $bonustime);
       },

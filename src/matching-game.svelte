@@ -13,6 +13,8 @@
     expObj,
     eventTrigger,
     timerEnd,
+    devMode,
+    gameState,
   } from "./store.js";
 
   import { onMount, afterUpdate } from "svelte";
@@ -23,6 +25,14 @@
   gsap.registerPlugin(Draggable);
 
   export let word;
+
+  const devmodeStyling = function () {
+    return $devMode ? "devStyle" : "";
+  };
+
+  const setMatchingGameBG = function () {
+    return $bonustime ? "gameBonus" : $timerEnd ? "gameEnded" : "gamePlaying";
+  };
 
   let gameboard;
   let dropableLetter = [],
@@ -173,9 +183,6 @@
     } else {
       $gamePoints.points += 17;
     }
-    // if ($gameState.exp >= $maxExp) {
-    //   $bonustime = true;
-    // }
   };
 
   const onIncorrectLetter = function (element) {
@@ -203,6 +210,9 @@
 </script>
 
 <div id="matching_game">
+  {#key gameState}
+    <div id="bg" class={setMatchingGameBG()} />
+  {/key}
   <div class="transition dropped" style="display: none">
     Preloaded CSS styles
   </div>
@@ -225,11 +235,14 @@
         <div
           bind:this={dropableLetter[index]}
           id={letter}
-          class="tile draggable {yPos(index)} hidden"
+          class="tile draggable {yPos(index)} hidden {devmodeStyling()}"
           style="margin-right:{getLimit(margin)}rem;"
         >
           {letter}
-          <div class="rotation" style="transform:rotate({getRotation()}deg)">
+          <div
+            class="rotation {devmodeStyling()}"
+            style="transform:rotate({getRotation()}deg)"
+          >
             {letter}
           </div>
         </div>
@@ -250,6 +263,25 @@
     box-sizing: border-box;
   }
 
+  .devStyle {
+    border: 1px solid black;
+  }
+
+  #bg {
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    position: absolute;
+  }
+  .gameEnded {
+    background-image: url("/assets/bg-tile-yellow-stars.png");
+  }
+  .gamePlaying {
+    background-image: url("/assets/bg-tile-blue-stars.png");
+  }
+  .gameBonus {
+    background-image: url("/assets/bg-tile-yellow-stars.png");
+  }
   .transition {
     transition: transform 0.3s ease-out, color 0.3s ease-out;
     color: #f4d042 !important;
@@ -271,7 +303,6 @@
     grid-template-rows: repeat(12, 1fr);
     width: 100vw;
     height: 100vh;
-    background-image: url("/assets/bg-tile-blue-stars.png");
   }
 
   #gameboard {
@@ -327,15 +358,15 @@
     justify-content: center;
     font-family: var(--main-font);
     font-size: var(--large);
-    padding: 0.02em;
+    padding: 0.7rem;
     margin: 0rem;
     touch-action: none;
     user-select: none;
   }
 
   .rotation {
-    width: 1em;
-    overflow: hidden;
+    /* width: 1em; */
+    /* overflow: hidden; */ /* might break j on mobile*/
     position: absolute;
     transform-origin: center;
     font-family: var(--main-font);
