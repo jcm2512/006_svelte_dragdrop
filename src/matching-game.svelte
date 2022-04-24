@@ -12,43 +12,23 @@
     trigger,
     expObj,
     eventTrigger,
+    timerEnd,
   } from "./store.js";
-  // import Expbar from "./Expbar.svelte";
 
   import { onMount, afterUpdate } from "svelte";
   import shuffle from "./functions";
   import { gsap } from "gsap";
   import { Draggable } from "gsap/Draggable";
 
-  // import { localData } from "./functions/localstorage.svelte";
-  // let myLocalStorage = localData;
-
   gsap.registerPlugin(Draggable);
 
   export let word;
 
   let gameboard;
-  let upper = [],
-    lower = [],
+  let dropableLetter = [],
     droppables = []; // store references to DOM elements
   let pointsMultiplier = 1;
   var overlapThreshold = "50%";
-
-  // TODO:  use GSAP transition instead; run function at the end of transition
-  // setInterval(() => {
-  //   if ($bonustime) {
-  //     $expObj.value -= 5;
-  //     if ($expObj.value <= 0) {
-  //       $bonustime = false;
-  //     }
-  //   }
-  // }, 500);
-
-  // $: $expObj.value, console.log(`expObj: ${$expObj.value}`);
-
-  // $: $bonustime && bonusTime($expObj);
-
-  // $: gameStateExp, console.log("updated: ", gameStateExp);
 
   function bonusTime(obj) {
     console.log(obj, "BONUS TIME");
@@ -122,21 +102,7 @@
     });
     gsap.registerPlugin(Draggable);
 
-    upper.forEach((div) => {
-      Draggable.create(div, {
-        bounds: window,
-        onDragEnd: function (e) {
-          var i = droppables.length;
-          while (--i > -1) {
-            if (this.hitTest(droppables[i], overlapThreshold)) {
-              onDrop(this.target, droppables[i]);
-            }
-          }
-        },
-      });
-    });
-
-    lower.forEach((div) => {
+    dropableLetter.forEach((div) => {
       Draggable.create(div, {
         bounds: window,
         onDragEnd: function (e) {
@@ -164,15 +130,8 @@
     }
   }
 
-  // let stars = ["s", "s", "s"],
-  //   blank = [];
-
   let wordUpper = [],
     wordLower = [];
-  const position = { x: 0, y: 0 };
-
-  const width = 300;
-  const height = 300;
 
   let wordLimit = Math.ceil(word.length / 2);
 
@@ -187,8 +146,12 @@
       : wordUpper.push(i);
   }
 
-  const upperEm = { limit: 12 };
-  const lowerEm = { limit: 12 };
+  let randomIndex = Math.floor(Math.random() * (word.length / 2));
+
+  const yPos = function (index) {
+    return index <= randomIndex ? "upper" : "lower";
+  };
+  const margin = { limit: 12 };
 
   const getLimit = function (obj) {
     let em = Math.floor(Math.random() * obj.limit) + 2;
@@ -226,9 +189,15 @@
     }
   };
   afterUpdate(() => {
+    console.log($timerEnd);
+    if ($timerEnd) {
+      dropableLetter.forEach((element) => {
+        let draggable = Draggable.get(element);
+        draggable.disable();
+      });
+    }
     if ($expObj.value <= 0) {
       $bonustime = false;
-      // $expObj.value = 0;
     }
   });
 </script>
@@ -252,28 +221,12 @@
     </container>
 
     <container id="container" class="drag-container">
-      {#each shuffle(wordUpper) as letter, index}
+      {#each shuffle(word) as letter, index}
         <div
-          bind:this={upper[index]}
+          bind:this={dropableLetter[index]}
           id={letter}
-          class="tile draggable upper hidden"
-          style="margin-right:{getLimit(upperEm)}rem;"
-        >
-          {letter}
-          <div class="rotation" style="transform:rotate({getRotation()}deg)">
-            {letter}
-          </div>
-        </div>
-      {/each}
-    </container>
-
-    <container id="container" class="drag-container">
-      {#each shuffle(wordLower) as letter, index}
-        <div
-          bind:this={lower[index]}
-          id={letter}
-          class="tile draggable lower hidden"
-          style="margin-right:{getLimit(upperEm)}rem;"
+          class="tile draggable {yPos(index)} hidden"
+          style="margin-right:{getLimit(margin)}rem;"
         >
           {letter}
           <div class="rotation" style="transform:rotate({getRotation()}deg)">
