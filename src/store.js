@@ -2,6 +2,8 @@ import { writable, readable } from "svelte/store";
 import { localData } from "./functions/localstorage.svelte";
 
 // NON PERSISTENT
+export const ticks = readable(30);
+
 export const gameLoaded = writable(false);
 export const gameLoaderWordId = writable(0);
 export const gameWordLimit = writable(10);
@@ -11,10 +13,11 @@ export const currentWordProgress = writable(0);
 export const expMultiplier = writable(10);
 export const maxExp = readable(35);
 export const bonustime = writable(false);
-export const ticks = readable(10);
 export const trigger = writable(0);
 export const eventTrigger = writable({ save: 0 });
 export const timerEnd = writable(false);
+
+export const gameState = writable(0);
 
 // UPDATED FROM LOCALSTORAGE
 export const gamePoints = writable({ points: 0 });

@@ -189,7 +189,6 @@
     }
   };
   afterUpdate(() => {
-    console.log($timerEnd);
     if ($timerEnd) {
       dropableLetter.forEach((element) => {
         let draggable = Draggable.get(element);

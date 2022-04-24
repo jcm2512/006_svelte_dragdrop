@@ -2,7 +2,7 @@
 <script>
   import CircleTimer from "circle-timer";
   import { onMount } from "svelte";
-  import { ticks, timerEnd } from "./store";
+  import { ticks, timerEnd, gameState } from "./store";
   let circleTimer;
   let tick = $ticks;
   let paused = false;
@@ -11,7 +11,8 @@
       tick -= 1;
       if (tick <= 0) {
         paused = true;
-        $timerEnd = true
+        $gameState += 1;
+        $timerEnd = true;
       }
     }
   }, 1000);

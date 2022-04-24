@@ -5,6 +5,7 @@
     gameWordLimit,
     gamePoints,
     eventTrigger,
+    gameState,
   } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
@@ -21,6 +22,7 @@
   $gamePoints = sessionStorage.get("points");
   $: $gamePoints && sessionStorage.set($gamePoints);
   $: $eventTrigger.save && sessionStorage.save();
+  $: $gameState, console.log($gameState);
 
   // push an id (0,1,2 etc) to LIMIT for each game word
   // this is so we can cycle through the array with svelte
