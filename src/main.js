@@ -1,7 +1,5 @@
-import Home from "./Home.svelte";
+import MainMenu from "./MainMenu.svelte";
 
-// Tried Phaser. was ok. nothing special.
-
-const home = new Home({
+const mainMenu = new MainMenu({
   target: document.body,
 });

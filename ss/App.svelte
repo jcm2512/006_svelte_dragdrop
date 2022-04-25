@@ -3,7 +3,7 @@
 
   import { onMount } from "svelte";
   import interact from "interactjs";
-  import shuffle from "./functions";
+  import shuffle from "../src./src/functions";
   import { writable } from "svelte/store";
 
   export let words;
