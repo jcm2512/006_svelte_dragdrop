@@ -14,7 +14,7 @@
 
   const version = "v0.3.2";
 
-  let stageCards, handleNext, handlePrev;
+  let stageCards, handleNav, handleNext, handlePrev;
   let words;
   let cvcs = Object.keys($cvcObject);
 
@@ -25,30 +25,25 @@
   };
 
   onMount(() => {
-    handleNext = function handleNext(div, obj) {
-      console.log(div.scrollLeft);
-      if (obj.currentId < obj.cards.length - 1) {
-        obj.currentId += 1;
-      } else {
-        obj.currentId = 0;
-      }
+    handleNav = function (direction, div, obj) {
+      let amount;
+      direction == "next"
+        ? (obj.currentId < obj.cards.length - 1
+            ? (obj.currentId += 1)
+            : (obj.currentId = 0),
+          (amount = div.offsetWidth * 0.85))
+        : (obj.currentId >= 1
+            ? (obj.currentId -= 1)
+            : (obj.currentId = obj.cards.length - 1),
+          (amount = -div.offsetWidth * 0.85));
       gsap.to(stageCards, {
         duration: 0.5,
         // scrollTo: `#${obj.id[obj.currentId]}`,
-        scrollTo: `${div.scrollLeft + 320}`,
-      });
-    };
-
-    handlePrev = function handlePrev(div, obj) {
-      if (obj.currentId >= 1) {
-        obj.currentId -= 1;
-      } else {
-        obj.currentId = obj.cards.length - 1;
-      }
-      gsap.to(stageCards, {
-        duration: 0.5,
-        // scrollTo: `#${obj.id[obj.currentId]}`,
-        scrollTo: `${div.scrollLeft - 320}`,
+        scrollTo: `${div.scrollLeft + amount}`,
+        onComplete: function () {
+          console.log(div.scrollLeft);
+          console.log(div.offsetWidth);
+        },
       });
     };
   });
@@ -97,14 +92,14 @@
     <div
       id="prev"
       class="auto arrow_btn"
-      on:click={() => handlePrev(stageCards, CARDS)}
+      on:click={() => handleNav("prev", stageCards, CARDS)}
     >
       «
     </div>
     <div
       id="next"
       class="auto arrow_btn"
-      on:click={() => handleNext(stageCards, CARDS)}
+      on:click={() => handleNav("next", stageCards, CARDS)}
     >
       »
     </div>
@@ -206,12 +201,12 @@
 
   #stage_card {
     grid-row: 4/-4;
-    grid-column: 2/-2;
+    grid-column: 1/-1;
   }
 
   #next,
   #prev {
-    grid-row: 8/11;
+    grid-row: 15/18;
   }
 
   #prev {
