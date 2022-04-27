@@ -72,7 +72,16 @@
   {:else}
     <div id="level" class="auto rounded label">Player Level</div>
     <div id="points" class="auto rounded label">Player Points</div>
-    {#key cardId}
+
+    <!-- swipable menu -->
+    <ul id="stage_card" class="gallery">
+      {#each cards as card}
+        <li class="auto rounded card">
+          {card}
+        </li>
+      {/each}
+    </ul>
+    <!-- {#key cardId}
       <div
         id="stage_card"
         class="auto rounded card"
@@ -81,7 +90,7 @@
       >
         {cards[cardId]}
       </div>
-    {/key}
+    {/key} -->
     <div id="prev" class="auto arrow_btn" on:click={() => handlePrev()}>«</div>
     <div id="next" class="auto arrow_btn" on:click={() => handleNext()}>»</div>
     <div
@@ -95,6 +104,36 @@
 </main>
 
 <style>
+  /* swipable menu */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(10, 80vw);
+    grid-template-rows: 1fr;
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    overflow: scroll;
+    height: 50vh;
+    scroll-snap-type: both mandatory;
+  }
+
+  li {
+    scroll-snap-align: center;
+    display: inline-block; /* remove list bullets*/
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .gallery::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .gallery {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* swipable menu END*/
+
   main {
     display: grid;
     text-align: center;
