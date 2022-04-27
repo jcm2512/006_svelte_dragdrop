@@ -5,19 +5,53 @@
     cvcObject,
     currentWordProgress,
   } from "./store.js";
-  import { fly } from "svelte/transition";
-  import { Swipe, SwipeItem } from "svelte-swipe";
   import GameLoader from "./GameLoader.svelte";
+  import { gsap } from "gsap";
+  import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+  import { onMount } from "svelte";
+
+  gsap.registerPlugin(ScrollToPlugin);
 
   const version = "v0.3.1";
 
+  let stageCards, handleNext, handlePrev;
   let words;
   let cvcs = Object.keys($cvcObject);
 
-  let cards = ["card a", "card b", "card c", "card d"],
-    cardId = 0;
+  const CARDS = {
+    id: ["lvl_1", "lvl_2", "lvl_3", "lvl_4"],
+    cards: ["card a", "card b", "card c", "card d"],
+    currentId: 0,
+  };
 
-  let transitionIn, transitionOut;
+  onMount(() => {
+    handleNext = function handleNext(div, obj) {
+      console.log(div.scrollLeft);
+      if (obj.currentId < obj.cards.length - 1) {
+        obj.currentId += 1;
+      } else {
+        obj.currentId = 0;
+      }
+      gsap.to(stageCards, {
+        duration: 0.5,
+        // scrollTo: `#${obj.id[obj.currentId]}`,
+        scrollTo: `${div.scrollLeft + 320}`,
+      });
+    };
+
+    handlePrev = function handlePrev(div, obj) {
+      if (obj.currentId >= 1) {
+        obj.currentId -= 1;
+      } else {
+        obj.currentId = obj.cards.length - 1;
+      }
+      gsap.to(stageCards, {
+        duration: 0.5,
+        // scrollTo: `#${obj.id[obj.currentId]}`,
+        scrollTo: `${div.scrollLeft - 320}`,
+      });
+    };
+  });
 
   const swipeConfig = {
     autoplay: false,
@@ -39,30 +73,9 @@
   });
 
   function handlePlay() {
-    transitionOut = { duration: 0 };
-
     $gameLoaded = true;
     $gameLoaderWordId = 0; // reset word ID to 0
     $currentWordProgress = 0;
-  }
-  function handleNext() {
-    transitionIn = { x: -window.screen.width, duration: 500 };
-    transitionOut = { x: window.screen.width, duration: 500 };
-    if (cardId >= 1) {
-      cardId -= 1;
-    } else {
-      cardId = cards.length - 1;
-    }
-  }
-
-  function handlePrev() {
-    transitionIn = { x: window.screen.width, duration: 500 };
-    transitionOut = { x: -window.screen.width, duration: 500 };
-    if (cardId < cards.length - 1) {
-      cardId += 1;
-    } else {
-      cardId = 0;
-    }
   }
 </script>
 
@@ -74,25 +87,27 @@
     <div id="points" class="auto rounded label">Player Points</div>
 
     <!-- swipable menu -->
-    <ul id="stage_card" class="gallery">
-      {#each cards as card}
-        <li class="auto rounded card">
+    <ul bind:this={stageCards} id="stage_card" class="gallery">
+      {#each CARDS.cards as card, index}
+        <li id={CARDS.id[index]} class="auto rounded card">
           {card}
         </li>
       {/each}
     </ul>
-    <!-- {#key cardId}
-      <div
-        id="stage_card"
-        class="auto rounded card"
-        in:fly={transitionIn}
-        out:fly={transitionOut}
-      >
-        {cards[cardId]}
-      </div>
-    {/key} -->
-    <div id="prev" class="auto arrow_btn" on:click={() => handlePrev()}>«</div>
-    <div id="next" class="auto arrow_btn" on:click={() => handleNext()}>»</div>
+    <div
+      id="prev"
+      class="auto arrow_btn"
+      on:click={() => handlePrev(stageCards, CARDS)}
+    >
+      «
+    </div>
+    <div
+      id="next"
+      class="auto arrow_btn"
+      on:click={() => handleNext(stageCards, CARDS)}
+    >
+      »
+    </div>
     <div
       id="play_btn"
       class="auto rounded button"
