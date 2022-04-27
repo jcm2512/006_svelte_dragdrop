@@ -206,7 +206,7 @@
 
   #next,
   #prev {
-    grid-row: 15/18;
+    grid-row: 8/11;
   }
 
   #prev {
