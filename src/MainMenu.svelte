@@ -12,7 +12,7 @@
 
   gsap.registerPlugin(ScrollToPlugin);
 
-  const version = "v0.3.1";
+  const version = "v0.3.2";
 
   let stageCards, handleNext, handlePrev;
   let words;
