@@ -1,7 +1,6 @@
 <script>
   import {
     gameLoaderWordId,
-    gameLoaded,
     gameWordLimit,
     gamePoints,
     eventTrigger,
@@ -9,7 +8,6 @@
   } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
-  import GamePoints from "./GamePoints.svelte";
   import Expbar from "./Expbar.svelte";
   import BG from "./BG.svelte";
   import { localData } from "./functions/localstorage.svelte";
@@ -23,18 +21,6 @@
   $: $gamePoints && sessionStorage.set($gamePoints);
   $: $eventTrigger.save && sessionStorage.save();
   $: $gameState, console.log($gameState);
-
-  // push an id (0,1,2 etc) to LIMIT for each game word
-  // this is so we can cycle through the array with svelte
-  let limit = [];
-  for (let i = 0; i < $gameWordLimit; i++) {
-    limit.push(i);
-  }
-
-  // NA?
-  // function handleClick() {
-  //   gameLoaded.update((value) => !value);
-  // }
 
   function addRandomWordFrom(array, toarray, limit) {
     let shuffledArray = shuffle(array);
@@ -59,7 +45,6 @@
     .map((item) => {
       return item.word;
     });
-  // words = shuffle(words);
 
   addRandomWordFrom(words, randomWords, 5);
 </script>
@@ -67,15 +52,12 @@
 <div class="gameLoader">
   <div id="_Background"><BG /></div>
   <div id="_Timer"><Timer /></div>
-  <div id="_GamePoints"><GamePoints /></div>
   <div id="_Expbar"><Expbar /></div>
-  {#each limit as id}
-    {#if $gameLoaderWordId == id}
-      <div id="_matchingGame">
-        <MatchingGame word={randomWords[id]} />
-      </div>
-    {/if}
-  {/each}
+  {#key $gameLoaderWordId}
+    <div id="_matchingGame" class={$gameLoaderWordId}>
+      <MatchingGame word={randomWords[$gameLoaderWordId]} />
+    </div>
+  {/key}
 </div>
 
 <style>

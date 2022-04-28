@@ -14,7 +14,7 @@
 
   const version = "v0.3.2";
 
-  let stageCards, handleNav, handleNext, handlePrev;
+  let stageCards, handleNav;
   let words;
   let cvcs = Object.keys($cvcObject);
 
@@ -78,8 +78,8 @@
   {#if $gameLoaded == true}
     <GameLoader GameWords={wordObjects} />
   {:else}
-    <div id="level" class="auto rounded label">Player Level</div>
-    <div id="points" class="auto rounded label">Player Points</div>
+    <div id="level" class="auto rounded label">Stars</div>
+    <!-- <div id="points" class="auto rounded label">Player Points</div> -->
 
     <!-- swipable menu -->
     <ul bind:this={stageCards} id="stage_card" class="gallery">
@@ -89,6 +89,7 @@
         </li>
       {/each}
     </ul>
+
     <div
       id="prev"
       class="auto arrow_btn"
