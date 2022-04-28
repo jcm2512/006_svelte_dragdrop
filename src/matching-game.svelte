@@ -4,15 +4,14 @@
     gameLoaded,
     cvcObject,
     gameWordLimit,
-    exp,
     currentWordProgress,
     gamePoints,
-    maxExp,
     bonustime,
     trigger,
     expObj,
     eventTrigger,
     timerEnd,
+    wordExpValue,
   } from "./store.js";
 
   import { onMount, afterUpdate } from "svelte";
@@ -27,20 +26,7 @@
   let gameboard;
   let dropableLetter = [],
     droppables = []; // store references to DOM elements
-  let pointsMultiplier = 1;
   var overlapThreshold = "50%";
-
-  function bonusTime(obj) {
-    console.log(obj, "BONUS TIME");
-    gsap.to(obj, {
-      value: 0,
-      duration: 3.0,
-      onComplete: function () {
-        $bonustime = false;
-        console.log("BONUS TIME FINISHED");
-      },
-    });
-  }
 
   function onDrop(draggable, dropzone) {
     if (dropzone.id != draggable.id) {
@@ -91,7 +77,7 @@
       onCorrectLetter();
     }
     if ($currentWordProgress == word.length) {
-      $cvcObject[word].exp += 5;
+      $cvcObject[word].exp += $wordExpValue;
     }
   }
 

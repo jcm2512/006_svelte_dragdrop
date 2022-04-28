@@ -9,6 +9,7 @@
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
   import Expbar from "./Expbar.svelte";
+  import WordExp from "./WordExp.svelte";
   import BG from "./BG.svelte";
   import { localData } from "./functions/localstorage.svelte";
 
@@ -58,6 +59,9 @@
       <MatchingGame word={randomWords[$gameLoaderWordId]} />
     </div>
   {/key}
+  <div id="_WordExp">
+    <WordExp currentWord={randomWords[$gameLoaderWordId]} />
+  </div>
 </div>
 
 <style>
@@ -85,7 +89,7 @@
   #_Expbar {
     margin-top: 2em;
     grid-column: 4/-1;
-    grid-row: 1;
+    grid-row: 11;
     z-index: 30;
   }
 
@@ -97,11 +101,10 @@
     z-index: 40;
   }
 
-  #_GamePoints {
-    margin-right: 1rem;
-    margin-top: 2rem;
-    grid-row: 1/2;
-    grid-column: -4/-1;
-    z-index: 50;
+  #_WordExp {
+    margin-top: 2em;
+    grid-column: 4/-1;
+    grid-row: 1;
+    z-index: 30;
   }
 </style>
