@@ -43,9 +43,6 @@
       gsap.to(stageCards, {
         duration: 0.5,
         scrollTo: `${div.scrollLeft + offset}`,
-        onComplete: function () {
-          console.log(div.scrollLeft);
-        },
       });
     };
   });
