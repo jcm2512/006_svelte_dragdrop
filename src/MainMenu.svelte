@@ -20,29 +20,31 @@
 
   const CARDS = {
     id: ["lvl_1", "lvl_2", "lvl_3", "lvl_4"],
-    cards: ["card a", "card b", "card c", "card d"],
+    cards: ["LEVEL 1", "LEVEL 2", "LEVEL 3", "LEVEL 4"],
     currentId: 0,
   };
 
   onMount(() => {
     handleNav = function (direction, div, obj) {
-      let amount;
-      direction == "next"
-        ? (obj.currentId < obj.cards.length - 1
-            ? (obj.currentId += 1)
-            : (obj.currentId = 0),
-          (amount = div.offsetWidth * 0.85))
-        : (obj.currentId >= 1
-            ? (obj.currentId -= 1)
-            : (obj.currentId = obj.cards.length - 1),
-          (amount = -div.offsetWidth * 0.85));
+      let offset = div.offsetWidth * 0.8;
+      let limit = offset * (obj.cards.length - 1);
+
+      if (direction == "prev") {
+        offset *= -1;
+        if (div.scrollLeft == 0) {
+          offset = 0;
+        }
+      } else {
+        if (div.scrollLeft >= limit) {
+          offset = 0;
+        }
+      }
+
       gsap.to(stageCards, {
         duration: 0.5,
-        // scrollTo: `#${obj.id[obj.currentId]}`,
-        scrollTo: `${div.scrollLeft + amount}`,
+        scrollTo: `${div.scrollLeft + offset}`,
         onComplete: function () {
           console.log(div.scrollLeft);
-          console.log(div.offsetWidth);
         },
       });
     };
@@ -78,15 +80,19 @@
   {#if $gameLoaded == true}
     <GameLoader GameWords={wordObjects} />
   {:else}
-    <div id="level" class="auto rounded label">Stars</div>
+    <div id="level" class="auto rounded label">
+      <span class="star">&#9733</span>
+    </div>
     <!-- <div id="points" class="auto rounded label">Player Points</div> -->
 
     <!-- swipable menu -->
     <ul bind:this={stageCards} id="stage_card" class="gallery">
       {#each CARDS.cards as card, index}
-        <li id={CARDS.id[index]} class="auto rounded card">
-          {card}
-        </li>
+        <div class="card_main">
+          <li id={CARDS.id[index]} class="auto rounded card">
+            {card}
+          </li>
+        </div>
       {/each}
     </ul>
 
@@ -109,7 +115,7 @@
       class="auto rounded button"
       on:click={() => handlePlay()}
     >
-      play
+      <span>play</span>
     </div>
   {/if}
 </main>
@@ -120,8 +126,8 @@
     display: grid;
     grid-template-columns: repeat(10, 80vw);
     grid-template-rows: 1fr;
-    grid-column-gap: 1rem;
-    grid-row-gap: 1rem;
+    /* grid-column-gap: 1rem;
+    grid-row-gap: 1rem; */
     overflow: scroll;
     height: 50vh;
     scroll-snap-type: both mandatory;
@@ -130,6 +136,18 @@
   li {
     scroll-snap-align: center;
     display: inline-block; /* remove list bullets*/
+    font-size: 2rem;
+    color: white;
+  }
+
+  ul {
+    list-style-type: disc;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 10vw;
+    padding-inline-end: 10vw;
   }
 
   /* Hide scrollbar for Chrome, Safari and Opera */
@@ -149,6 +167,7 @@
     display: grid;
     text-align: center;
     background-color: #00a4ff;
+    font-family: var(--main-font);
   }
 
   .auto {
@@ -169,7 +188,7 @@
 
   .rounded {
     border-radius: 1rem;
-    padding: 0.5em;
+    /* padding: 0.5em; */
   }
 
   .card {
@@ -195,11 +214,22 @@
     z-index: 100;
   }
 
+  .card_main {
+    padding: 1rem;
+  }
+
   #play_btn {
     grid-row: 15/16;
     grid-column: 4/8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
+  #play_btn span {
+    font-size: 1.5rem;
+    color: var(--blue);
+  }
   #stage_card {
     grid-row: 4/-4;
     grid-column: 1/-1;
@@ -221,6 +251,14 @@
   #level {
     grid-row: 2/3;
     grid-column: 2/4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #level .star {
+    color: orange;
+    font-size: 2rem;
   }
 
   #points {
