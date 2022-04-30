@@ -23,7 +23,6 @@
   $gamePoints = sessionStorage.get("points");
   $: $gamePoints && sessionStorage.set($gamePoints);
   $: $eventTrigger.save && sessionStorage.save();
-  $: $gameState, console.log($gameState);
 
   function addRandomWordFrom(array, toarray, limit) {
     let shuffledArray = shuffle(array);
@@ -69,7 +68,7 @@
     <WordExp {currentWord} />
   </div>
   <div id="_Combo">
-    <Combo {currentWord} />
+    <Combo />
   </div>
 </div>
 

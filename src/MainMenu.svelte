@@ -15,7 +15,7 @@
   const version = "v0.3.3";
 
   // DEV
-  $gameLoaded = true;
+  $gameLoaded = false;
 
   let stageCards,
     handleNav,
@@ -81,7 +81,6 @@
     $gameLoaderWordId = 0; // reset word ID to 0
     $currentWordProgress = 0;
   }
-  console.log(cvcs);
 </script>
 
 <main class="full_grid">

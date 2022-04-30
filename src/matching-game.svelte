@@ -12,6 +12,8 @@
     eventTrigger,
     timerEnd,
     wordExpValue,
+    combo,
+    comboTimer,
   } from "./store.js";
 
   import { onMount, afterUpdate } from "svelte";
@@ -152,6 +154,8 @@
   };
 
   const onCorrectLetter = function () {
+    $combo += 1;
+    $comboTimer = 0;
     $currentWordProgress += 1;
     if (!$bonustime) {
       $expObj.value += 5;
@@ -162,6 +166,8 @@
   };
 
   const onIncorrectLetter = function (element) {
+    $combo = 0;
+    $comboTimer = 0;
     gsap.to(element, { y: 0 });
     gsap.to(element.children[0], { transform: `rotate(${getRotation()}deg)` });
     if ($expObj.value >= 10) {

@@ -1,14 +1,41 @@
 <script>
-  import { cvcObject } from "./store.js";
-  export let currentWord;
+  import { combo, comboTimer } from "./store.js";
+  import { scale } from "svelte/transition";
+  import { quintOut } from "svelte/easing";
+
+  setInterval(() => {
+    $comboTimer += 1;
+    if ($comboTimer > 5) {
+      $combo = 0;
+    }
+  }, 1000);
 </script>
 
-{#key $cvcObject[currentWord].exp}
-  <div class="combo">
-    <span class="count">X 10</span>
-    <span class="title">COMBO</span>
-  </div>
-{/key}
+<div class="combo">
+  {#key $combo}
+    {#if $comboTimer < 5 && $combo > 0}
+      <span
+        class="count"
+        in:scale={{
+          duration: 500,
+          opacity: 0.5,
+          start: 0.5,
+          easing: quintOut,
+        }}>{$combo}</span
+      >
+    {/if}
+  {/key}
+  {#if $comboTimer < 5 && $combo > 0}
+    <span
+      class="title"
+      in:scale={{
+        duration: 500,
+        opacity: 0.5,
+        start: 0.5,
+        easing: quintOut,
+      }}>COMBO</span
+    >{/if}
+</div>
 
 <style>
   .combo {
