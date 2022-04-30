@@ -15,6 +15,7 @@
   --yellow: #f4d042;
   --pink:#ff61aa;
   --blue:#00a4ff;
+  --orange: #fc8c78;
   --dark-blue:#3D4856;
   --transparent-blue:hsla(215, 55%, 21%, 0.3);
 }
@@ -22,9 +23,10 @@
 html,
 body {
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: #333;
+  overflow: hidden;
 }
 
 body {

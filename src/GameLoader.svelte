@@ -11,6 +11,8 @@
   import Expbar from "./Expbar.svelte";
   import WordExp from "./WordExp.svelte";
   import BG from "./BG.svelte";
+  import WordIcon from "./WordIcon.svelte";
+  import Combo from "./Combo.svelte";
   import { localData } from "./functions/localstorage.svelte";
 
   export let GameWords;
@@ -48,19 +50,26 @@
     });
 
   addRandomWordFrom(words, randomWords, 5);
+  $: currentWord = randomWords[$gameLoaderWordId];
 </script>
 
 <div class="gameLoader">
+  <div id="_WordIcon">
+    <WordIcon {currentWord} />
+  </div>
   <div id="_Background"><BG /></div>
   <div id="_Timer"><Timer /></div>
   <div id="_Expbar"><Expbar /></div>
   {#key $gameLoaderWordId}
     <div id="_matchingGame" class={$gameLoaderWordId}>
-      <MatchingGame word={randomWords[$gameLoaderWordId]} />
+      <MatchingGame {currentWord} />
     </div>
   {/key}
   <div id="_WordExp">
-    <WordExp currentWord={randomWords[$gameLoaderWordId]} />
+    <WordExp {currentWord} />
+  </div>
+  <div id="_Combo">
+    <Combo {currentWord} />
   </div>
 </div>
 
@@ -87,7 +96,6 @@
   }
 
   #_Expbar {
-    margin-top: 2em;
     grid-column: 4/-1;
     grid-row: 11;
     z-index: 30;
@@ -102,9 +110,26 @@
   }
 
   #_WordExp {
-    grid-column: 4/-1;
+    grid-column: 4/-4;
     grid-row: 1;
     z-index: 30;
+    padding-bottom: 1rem;
     align-self: end;
+  }
+  #_WordIcon {
+    grid-row: 1;
+    grid-column: 1/4;
+    z-index: 40;
+    height: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #_Combo {
+    grid-column: 1/4;
+    grid-row: 10/12;
+    height: 100%;
+    z-index: 100;
   }
 </style>

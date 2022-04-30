@@ -31,15 +31,26 @@
   };
 </script>
 
-<div id="wordExp">
-  <div id="exp_bar_bg" />
-  <div bind:this={wordExp} id="exp_bar_fill" />
-  <div id="exp_bg" />
+<div class="container">
+  <span class="title">EXP</span>
+
+  <div id="wordExp">
+    <div id="exp_bar_bg" />
+    <div bind:this={wordExp} id="exp_bar_fill" />
+    <div id="exp_bg" />
+  </div>
 </div>
 
 <style>
+  .title {
+    text-align: left;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
   #wordExp {
-    padding: 0.2rem;
     --height: 1rem;
     --rounded: 0.5rem;
     --border: 1vw;
@@ -75,29 +86,28 @@
 
   #exp_bar_fill {
     position: relative;
-    grid-column: 2/-1;
+    grid-column: 1/-1;
     grid-row: 1/-1;
-    background-color: #ff61aa;
+    background-color: var(--blue);
     border-radius: var(--rounded);
     height: var(--inner);
     margin: var(--border);
     width: var(--inner);
-    max-width: 35vw; /* accounts for margin... this should be fixed */
+    max-width: 50vw;
     min-width: var(--inner);
-    /* transition: width 1s ease-out; */
     z-index: 10;
   }
 
   #exp_bg {
     position: relative;
-    grid-column: 2/-1;
+    grid-column: 1/-1;
     grid-row: 1/-1;
     background-color: #d5d5d5;
     border-radius: var(--rounded);
     height: var(--inner);
     margin: var(--border);
     z-index: 5;
-    max-width: 35vw;
+    max-width: 50vw;
   }
 
   #exp_bar_bg {

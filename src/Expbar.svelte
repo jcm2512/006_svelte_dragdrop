@@ -105,7 +105,7 @@
     position: relative;
     grid-column: 2/-1;
     grid-row: 1/-1;
-    background-color: #fc8c78;
+    background-color: var(--orange);
     border-radius: var(--rounded);
     height: var(--inner);
     margin: var(--border);

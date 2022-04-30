@@ -21,9 +21,7 @@
 
   gsap.registerPlugin(Draggable);
 
-  export let word;
-
-  console.log(word);
+  export let currentWord;
 
   let gameboard;
   let dropableLetter = [],
@@ -78,8 +76,8 @@
 
       onCorrectLetter();
     }
-    if ($currentWordProgress == word.length) {
-      $cvcObject[word].exp += $wordExpValue;
+    if ($currentWordProgress == currentWord.length) {
+      $cvcObject[currentWord].exp += $wordExpValue;
     }
   }
 
@@ -121,9 +119,9 @@
   let wordUpper = [],
     wordLower = [];
 
-  let wordLimit = Math.ceil(word.length / 2);
+  let wordLimit = Math.ceil(currentWord.length / 2);
 
-  for (let i of word) {
+  for (let i of currentWord) {
     let r = Math.floor(Math.random() * 2);
     r == 0
       ? wordUpper.length <= wordLimit
@@ -134,7 +132,7 @@
       : wordUpper.push(i);
   }
 
-  let randomIndex = Math.floor(Math.random() * (word.length / 2));
+  let randomIndex = Math.floor(Math.random() * (currentWord.length / 2));
 
   const yPos = function (index) {
     return index <= randomIndex ? "upper" : "lower";
@@ -161,9 +159,6 @@
     } else {
       $gamePoints.points += 17;
     }
-    // if ($gameState.exp >= $maxExp) {
-    //   $bonustime = true;
-    // }
   };
 
   const onIncorrectLetter = function (element) {
@@ -196,7 +191,7 @@
 
   <div id="gameboard" bind:this={gameboard}>
     <container id="container" class="drop-container">
-      {#each word as letter, index}
+      {#each currentWord as letter, index}
         <div
           id={letter}
           bind:this={droppables[index]}
@@ -208,7 +203,7 @@
     </container>
 
     <container id="container" class="drag-container">
-      {#each shuffle(word) as letter, index}
+      {#each shuffle(currentWord) as letter, index}
         <div
           bind:this={dropableLetter[index]}
           id={letter}
@@ -223,7 +218,7 @@
       {/each}
     </container>
   </div>
-  {#if $currentWordProgress == word.length}
+  {#if $currentWordProgress == currentWord.length}
     {#if $gameLoaderWordId < $gameWordLimit - 1}
       <div class="nextButton" on:click={() => handleClick("next")}>next</div>
     {:else}

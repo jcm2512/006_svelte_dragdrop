@@ -14,6 +14,9 @@
 
   const version = "v0.3.3";
 
+  // DEV
+  $gameLoaded = true;
+
   let stageCards,
     handleNav,
     cards = []; //Create empty array to store DOM references
@@ -66,9 +69,6 @@
     transitionDuration: 1000,
     defaultIndex: 0,
   };
-
-  // DEV
-  $gameLoaded = false;
 
   let wordObjects = [];
 
