@@ -19,7 +19,8 @@ export const trigger = writable(0);
 export const eventTrigger = writable({ save: 0 });
 export const timerEnd = writable(false);
 
-export const wordExpValue = writable(10);
+export const wordExp = writable(1);
+export const wordExpBonus = writable(3);
 export const gameState = writable(0);
 
 // UPDATED FROM LOCALSTORAGE

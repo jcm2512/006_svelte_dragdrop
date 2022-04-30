@@ -11,7 +11,8 @@
     expObj,
     eventTrigger,
     timerEnd,
-    wordExpValue,
+    wordExp,
+    wordExpBonus,
     combo,
     comboTimer,
   } from "./store.js";
@@ -79,7 +80,7 @@
       onCorrectLetter();
     }
     if ($currentWordProgress == currentWord.length) {
-      $cvcObject[currentWord].exp += $wordExpValue;
+      $cvcObject[currentWord].exp += $wordExpBonus;
     }
   }
 
@@ -154,6 +155,7 @@
   };
 
   const onCorrectLetter = function () {
+    $cvcObject[currentWord].exp += $wordExp;
     $combo += 1;
     $comboTimer = 0;
     $currentWordProgress += 1;
@@ -188,6 +190,8 @@
       $bonustime = false;
     }
   });
+
+  $: console.log($cvcObject[currentWord].word, $cvcObject[currentWord].exp);
 </script>
 
 <div id="matching_game">

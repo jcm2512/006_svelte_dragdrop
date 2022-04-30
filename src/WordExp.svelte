@@ -9,7 +9,7 @@
 
   $: $gameLoaderWordId, update();
 
-  $: $cvcObject && handleUpdate($cvcObject);
+  $: handleUpdate($cvcObject);
 
   const update = function () {
     if (wordExp) {
@@ -22,7 +22,6 @@
 
   const handleUpdate = function (obj) {
     if (wordExp) {
-      console.log($cvcObject[currentWord].exp);
       gsap.to(wordExp, {
         width: `${$cvcObject[currentWord].exp}vw`,
         duration: 0.4,
