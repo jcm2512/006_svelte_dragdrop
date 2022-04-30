@@ -1,19 +1,31 @@
 <script>
   import { cvcObject } from "./store.js";
+  import { scale } from "svelte/transition";
+  import { quintOut } from "svelte/easing";
 
   export let currentWord;
 </script>
 
-<img
-  class="auto rounded label"
-  src={$cvcObject[currentWord].img}
-  alt={$cvcObject[currentWord].word}
-/>
+<span class="container rounded label">
+  {#key currentWord}
+    <img
+      class="auto"
+      src={$cvcObject[currentWord].img}
+      alt={$cvcObject[currentWord].word}
+      in:scale={{
+        duration: 200,
+        start: 0.7,
+        opacity: 0.5,
+      }}
+    />
+  {/key}
+</span>
 
 <style>
-  img {
+  .container {
+    width: 20vw;
+    height: 20vw;
     padding: 0.3rem;
-    align-self: flex-end;
   }
 
   .auto {

@@ -47,6 +47,6 @@
     -webkit-text-stroke: 0.1rem var(--dark-blue);
   }
   .count {
-    font-size: 3rem;
+    font-size: 4rem;
   }
 </style>

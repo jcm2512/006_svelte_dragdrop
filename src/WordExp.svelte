@@ -44,6 +44,7 @@
 <style>
   .title {
     text-align: left;
+    padding-left: 0.5rem;
   }
   .container {
     display: flex;
