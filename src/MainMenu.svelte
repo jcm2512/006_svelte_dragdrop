@@ -17,7 +17,6 @@
   let stageCards,
     handleNav,
     cards = []; //Create empty array to store DOM references
-  let words;
   let cvcs = Object.keys($cvcObject);
 
   const CARDS_OBJ = {
@@ -107,15 +106,15 @@
 
     <div
       id="prev"
-      class="auto arrow_btn"
-      on:click={() => handleNav("prev", stageCards, CARDS_OBJ)}
+      class="auto arrow_btn unselectable"
+      on:click|preventDefault={() => handleNav("prev", stageCards, CARDS_OBJ)}
     >
       «
     </div>
     <div
       id="next"
-      class="auto arrow_btn"
-      on:click={() => handleNav("next", stageCards, CARDS_OBJ)}
+      class="auto arrow_btn unselectable"
+      on:click|preventDefault={() => handleNav("next", stageCards, CARDS_OBJ)}
     >
       »
     </div>
@@ -177,6 +176,14 @@
     font-family: var(--main-font);
   }
 
+  .unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
   .auto {
     width: 100%;
     height: 100%;
@@ -217,7 +224,7 @@
   .arrow_btn {
     color: white;
     font-size: 3rem;
-    cursor: pointer;
+    cursor: default;
     z-index: 100;
   }
 
