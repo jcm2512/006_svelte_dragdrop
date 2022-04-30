@@ -62,7 +62,7 @@
   <div id="exp_bar_bg" />
   <div bind:this={expBar} id="exp_bar_fill" />
   <div id="exp_bg" />
-  <!-- <img src="/assets/ui/bolt.png" alt="EXP" /> -->
+  <img src="/assets/ui/electricity.png" alt="BONUS" />
 </div>
 
 <style>
@@ -105,7 +105,7 @@
     position: relative;
     grid-column: 2/-1;
     grid-row: 1/-1;
-    background-color: #ff61aa;
+    background-color: #fc8c78;
     border-radius: var(--rounded);
     height: var(--inner);
     margin: var(--border);

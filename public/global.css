@@ -11,6 +11,12 @@
   --blue: hsla(215, 55%, 21%, 1);
   --main-font: "Londrina Solid";
   --large: 10em;
+
+  --yellow: #f4d042;
+  --pink:#ff61aa;
+  --blue:#00a4ff;
+  --dark-blue:#3D4856;
+  --transparent-blue:hsla(215, 55%, 21%, 0.3);
 }
 
 html,

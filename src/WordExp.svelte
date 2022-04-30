@@ -35,17 +35,16 @@
   <div id="exp_bar_bg" />
   <div bind:this={wordExp} id="exp_bar_fill" />
   <div id="exp_bg" />
-  <!-- <img src="/assets/ui/bolt.png" alt="EXP" /> -->
 </div>
 
 <style>
   #wordExp {
     padding: 0.2rem;
-    --height: 8vw;
-    --rounded: 4vw;
+    --height: 1rem;
+    --rounded: 0.5rem;
     --border: 1vw;
     --min: 5vw;
-    --inner: calc(var(--height) - (2 * (var(--border))));
+    --inner: 0.6rem;
     position: relative;
     display: grid;
     grid-template-columns: 1fr 4fr;

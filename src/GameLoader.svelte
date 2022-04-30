@@ -42,7 +42,7 @@
     return array;
   }
 
-  let words = GameWords.filter((t) => t.unlocked == true) // only show unlocked cvcs
+  let words = GameWords.filter((t) => t.status == "unlocked") // only show unlocked cvcs
     .map((item) => {
       return item.word;
     });
@@ -97,14 +97,14 @@
     margin-top: 1rem;
     margin-left: 1rem;
     grid-row: 1/2;
-    grid-column: 1/4;
+    grid-column: 9/-1;
     z-index: 40;
   }
 
   #_WordExp {
-    margin-top: 2em;
     grid-column: 4/-1;
     grid-row: 1;
     z-index: 30;
+    align-self: end;
   }
 </style>

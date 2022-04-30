@@ -23,6 +23,8 @@
 
   export let word;
 
+  console.log(word);
+
   let gameboard;
   let dropableLetter = [],
     droppables = []; // store references to DOM elements
@@ -237,14 +239,13 @@
 
   .transition {
     transition: transform 0.3s ease-out, color 0.3s ease-out;
-    color: #f4d042 !important;
+    color: var(--yellow) !important;
     opacity: 1;
     pointer-events: none;
     touch-action: none;
   }
 
   .dropped {
-    /* color: var(--fg-color) !important; */
     opacity: 0;
     transition: opacity 0.3s ease-out;
   }
@@ -279,7 +280,7 @@
     justify-content: center;
     font-family: var(--main-font);
     font-size: 2em;
-    color: #ff61aa;
+    color: var(--pink);
     cursor: pointer;
     background-color: white;
     border-radius: 3em;
@@ -324,7 +325,7 @@
     position: absolute;
     transform-origin: center;
     font-family: var(--main-font);
-    color: var(--blue);
+    color: var(--dark-blue);
     -webkit-text-stroke: 4px white;
   }
 
@@ -345,7 +346,7 @@
     /* background-color: #17c3b2; */
     font-family: var(--main-font);
     -webkit-text-stroke: 4px white;
-    color: hsla(215, 55%, 21%, 0.3);
+    color: var(--transparent-blue);
     z-index: 0;
   }
 </style>

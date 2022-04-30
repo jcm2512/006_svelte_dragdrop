@@ -81,6 +81,7 @@
     $gameLoaderWordId = 0; // reset word ID to 0
     $currentWordProgress = 0;
   }
+  console.log(cvcs);
 </script>
 
 <main class="full_grid">
@@ -96,8 +97,17 @@
     <ul bind:this={stageCards} id="stage_card" class="gallery">
       {#each CARDS_OBJ.cards as card, index}
         <div id="lvl_{index}" bind:this={cards[index]} class="card_main">
-          <li class="auto rounded card">
-            {card}
+          {card}
+          <li class="auto rounded card container">
+            {#if index == 0}
+              {#each cvcs as word}
+                {#if $cvcObject[word].status == "unlocked"}
+                  <img src={$cvcObject[word].img} alt={word} />
+                {:else}
+                  <img class="locked" src={$cvcObject[word].img} alt={word} />
+                {/if}
+              {/each}
+            {/if}
           </li>
         </div>
       {/each}
@@ -135,7 +145,7 @@
     grid-template-columns: repeat(10, 80vw);
     grid-template-rows: 1fr;
     overflow: scroll;
-    height: 50vh;
+    height: 65vh;
     scroll-snap-type: both mandatory;
   }
 
@@ -172,7 +182,7 @@
   main {
     display: grid;
     text-align: center;
-    background-color: #00a4ff;
+    background-color: var(--blue);
     font-family: var(--main-font);
   }
 
@@ -184,6 +194,24 @@
     -ms-user-select: none;
     user-select: none;
   }
+
+  img {
+    height: 20vw;
+    width: 20vw;
+    max-width: 3.5rem;
+    max-height: 3.5rem;
+  }
+
+  .locked {
+    filter: brightness(0.1) opacity(0.35);
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* justify-content: space-evenly; */
+  }
+
   .auto {
     width: 100%;
     height: 100%;
@@ -230,6 +258,8 @@
 
   .card_main {
     padding: 1rem;
+    color: white;
+    font-size: 2rem;
   }
 
   #play_btn {
@@ -242,7 +272,7 @@
 
   #play_btn span {
     font-size: 1.5rem;
-    color: var(--blue);
+    color: var(--dark-blue);
   }
   #stage_card {
     grid-row: 4/-4;
