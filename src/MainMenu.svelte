@@ -14,35 +14,48 @@
 
   const version = "v0.3.2";
 
-  let stageCards, handleNav;
+  let stageCards,
+    handleNav,
+    cards = []; //Create empty array to store DOM references
   let words;
   let cvcs = Object.keys($cvcObject);
 
-  const CARDS = {
-    id: ["lvl_1", "lvl_2", "lvl_3", "lvl_4"],
+  const CARDS_OBJ = {
     cards: ["LEVEL 1", "LEVEL 2", "LEVEL 3", "LEVEL 4"],
     currentId: 0,
   };
 
   onMount(() => {
     handleNav = function (direction, div, obj) {
-      let offset = div.offsetWidth * 0.8;
-      let limit = offset * (obj.cards.length - 1);
+      let width = cards[obj.currentId].offsetWidth;
+      let padding = (div.offsetWidth - width) / 2;
 
-      if (direction == "prev") {
-        offset *= -1;
-        if (div.scrollLeft == 0) {
-          offset = 0;
-        }
-      } else {
-        if (div.scrollLeft >= limit) {
-          offset = 0;
-        }
+      // Calculate the current ID when swiping
+      obj.currentId = Math.round(div.scrollLeft / width);
+
+      switch (direction) {
+        case "prev":
+          if (obj.currentId > 0) {
+            obj.currentId -= 1;
+          }
+          break;
+        case "next":
+          if (obj.currentId < obj.cards.length - 1) {
+            obj.currentId += 1;
+          }
+          break;
       }
 
       gsap.to(stageCards, {
         duration: 0.5,
-        scrollTo: `${div.scrollLeft + offset}`,
+        scrollTo: {
+          x: `#lvl_${obj.currentId}`,
+          offsetX: padding,
+        },
+
+        onComplete: function () {
+          // console.log(obj.currentId);
+        },
       });
     };
   });
@@ -58,11 +71,9 @@
   // DEV
   $gameLoaded = false;
 
-  words = [];
   let wordObjects = [];
 
   cvcs.forEach((value) => {
-    words.push($cvcObject[value].word);
     wordObjects.push($cvcObject[value]);
   });
 
@@ -77,33 +88,34 @@
   {#if $gameLoaded == true}
     <GameLoader GameWords={wordObjects} />
   {:else}
+    <span id="ruler" />
     <div id="level" class="auto rounded label">
       <span class="star">&#9733</span>
     </div>
-    <!-- <div id="points" class="auto rounded label">Player Points</div> -->
 
-    <!-- swipable menu -->
+    <!-- swipable menu START-->
     <ul bind:this={stageCards} id="stage_card" class="gallery">
-      {#each CARDS.cards as card, index}
-        <div class="card_main">
-          <li id={CARDS.id[index]} class="auto rounded card">
+      {#each CARDS_OBJ.cards as card, index}
+        <div id="lvl_{index}" bind:this={cards[index]} class="card_main">
+          <li class="auto rounded card">
             {card}
           </li>
         </div>
       {/each}
     </ul>
+    <!-- swipable menu WND -->
 
     <div
       id="prev"
       class="auto arrow_btn"
-      on:click={() => handleNav("prev", stageCards, CARDS)}
+      on:click={() => handleNav("prev", stageCards, CARDS_OBJ)}
     >
       «
     </div>
     <div
       id="next"
       class="auto arrow_btn"
-      on:click={() => handleNav("next", stageCards, CARDS)}
+      on:click={() => handleNav("next", stageCards, CARDS_OBJ)}
     >
       »
     </div>
@@ -123,8 +135,6 @@
     display: grid;
     grid-template-columns: repeat(10, 80vw);
     grid-template-rows: 1fr;
-    /* grid-column-gap: 1rem;
-    grid-row-gap: 1rem; */
     overflow: scroll;
     height: 50vh;
     scroll-snap-type: both mandatory;
