@@ -76,17 +76,6 @@
     }
   }
 
-  #wordExp img {
-    grid-column: 1/2;
-    grid-row: 1/-1;
-    width: 80%;
-    margin-left: 10%;
-    height: auto;
-    z-index: 1;
-    position: relative;
-    overflow: hidden;
-  }
-
   #exp_bar_fill {
     position: relative;
     grid-column: 1/-1;

@@ -22,4 +22,8 @@ export const wordExp = writable(1);
 export const wordExpBonus = writable(3);
 export const gameState = writable(0);
 
+// UPDATED FROM LOCALSTORAGE
 export const gamePoints = writable({ points: 0 });
+
+// CVC WORD LIST
+export let cvcObject = writable({});

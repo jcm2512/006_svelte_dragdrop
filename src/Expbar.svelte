@@ -1,6 +1,13 @@
 <script>
   // TODO: #15 expbar should be right aligned
-  import { expObj, trigger, maxExp, bonustime, gameState } from "./store.js";
+  import {
+    expObj,
+    trigger,
+    maxExp,
+    bonustime,
+    gameState,
+    combo,
+  } from "./store.js";
   import { gsap } from "gsap";
 
   let expBar;
@@ -8,6 +15,18 @@
   let bonusduration = 10.0;
   $: $expObj && handleUpdate($expObj);
   $: $trigger && flashExp();
+  // $: if (($expObj = 5)) {
+  //   $combo = 0;
+  // }
+
+  setInterval(() => {
+    if ($expObj.value > 5) {
+      $expObj.value -= 1;
+      if ($expObj.value == 5) {
+        $combo = 0;
+      }
+    }
+  }, 500);
 
   const handleUpdate = function (obj) {
     if (expBar) {

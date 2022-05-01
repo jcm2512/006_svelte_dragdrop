@@ -10,15 +10,10 @@
   ];
 </script>
 
-<!-- <svelte:head>
-  {#each preloadImageUrls as image}
-    <link rel="preload" as="image" href={image} />
-  {/each}
-</svelte:head> -->
-
 {#key $gameState}
   <div id="preload" class="bonus default gameOver" />
-  <div id="background" class={switchBackground()} />
+  <!-- <div id="background" class={switchBackground()} /> -->
+  <div id="background" class="default" />
 {/key}
 
 <style>

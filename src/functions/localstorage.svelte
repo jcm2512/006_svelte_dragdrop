@@ -139,12 +139,4 @@
       //     : (this.value = JSON.parse(localStorage.getItem(this.key)));
     },
   };
-
-  export const gamedata = {
-    key: "gamedata",
-    value: {
-      points: 0,
-      wordData: {},
-    },
-  };
 </script>

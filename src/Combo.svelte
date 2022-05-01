@@ -3,12 +3,12 @@
   import { scale } from "svelte/transition";
   import { quintOut } from "svelte/easing";
 
-  setInterval(() => {
-    $comboTimer += 1;
-    if ($comboTimer > 5) {
-      $combo = 0;
-    }
-  }, 1000);
+  // setInterval(() => {
+  //   $comboTimer += 1;
+  //   if ($comboTimer > 5) {
+  //     $combo = 0;
+  //   }
+  // }, 1000);
 </script>
 
 <div class="combo">
