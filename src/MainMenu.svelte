@@ -115,7 +115,18 @@
                 {#if $cvcObject[word].status == "unlocked"}
                   <img src={$cvcObject[word].img} alt={word} />
                 {:else}
-                  <img class="locked" src={$cvcObject[word].img} alt={word} />
+                  <span class="img_Container">
+                    <img
+                      class="image overlay"
+                      src={$cvcObject[word].img}
+                      alt={word}
+                    />
+                    <img
+                      class="locked overlay"
+                      src="/assets/ui/locked.png"
+                      alt="locked"
+                    />
+                  </span>
                 {/if}
               {/each}
             {/if}
@@ -150,6 +161,14 @@
 </main>
 
 <style>
+  .img_Container {
+    display: grid;
+  }
+
+  .overlay {
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+  }
   /* swipable menu */
   .gallery {
     display: grid;
@@ -213,8 +232,12 @@
     max-height: 3.5rem;
   }
 
-  .locked {
+  .image {
     filter: brightness(0.1) opacity(0.35);
+  }
+
+  .locked {
+    z-index: 100;
   }
 
   .container {
