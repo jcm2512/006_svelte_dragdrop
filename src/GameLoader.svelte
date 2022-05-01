@@ -1,11 +1,5 @@
 <script>
-  import {
-    gameLoaderWordId,
-    gameWordLimit,
-    gamePoints,
-    eventTrigger,
-    gameState,
-  } from "./store.js";
+  import { gameLoaderWordId, gameWordLimit } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
   import Expbar from "./Expbar.svelte";
@@ -13,16 +7,9 @@
   import BG from "./BG.svelte";
   import WordIcon from "./WordIcon.svelte";
   import Combo from "./Combo.svelte";
-  import { localData } from "./functions/localstorage.svelte";
 
   export let GameWords;
   let randomWords = [];
-
-  let sessionStorage = localData;
-  sessionStorage.load();
-  $gamePoints = sessionStorage.get("points");
-  $: $gamePoints && sessionStorage.set($gamePoints);
-  $: $eventTrigger.save && sessionStorage.save();
 
   function addRandomWordFrom(array, toarray, limit) {
     let shuffledArray = shuffle(array);

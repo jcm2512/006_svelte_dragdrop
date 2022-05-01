@@ -4,11 +4,14 @@
     gameLoaded,
     cvcObject,
     currentWordProgress,
+    gamePoints,
+    eventTrigger,
   } from "./store.js";
   import GameLoader from "./GameLoader.svelte";
   import { gsap } from "gsap";
   import { ScrollToPlugin } from "gsap/ScrollToPlugin";
   import { onMount } from "svelte";
+  import { localData } from "./functions/localstorage.svelte";
 
   gsap.registerPlugin(ScrollToPlugin);
 
@@ -16,6 +19,15 @@
 
   // DEV
   $gameLoaded = false;
+
+  // Load local game data
+  let sessionStorage = localData;
+  sessionStorage.load();
+  $cvcObject = Object.values(sessionStorage.get("gameData"))[0];
+  $gamePoints = sessionStorage.get("points");
+  $: $gamePoints && sessionStorage.set($gamePoints);
+  $: $eventTrigger.save && sessionStorage.set({ gameData: $cvcObject }),
+    sessionStorage.save();
 
   let stageCards,
     handleNav,

@@ -28,6 +28,9 @@
       });
     }
   };
+  onMount(() => {
+    update();
+  });
 </script>
 
 <div class="container">
