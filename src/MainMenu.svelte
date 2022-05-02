@@ -165,6 +165,7 @@
   }
   .img_Container {
     display: grid;
+    align-items: center;
   }
 
   .overlay {
