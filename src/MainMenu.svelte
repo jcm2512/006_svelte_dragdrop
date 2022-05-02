@@ -22,6 +22,8 @@
 
   // Load local game data
   let sessionStorage = localData;
+  sessionStorage.clear();
+
   sessionStorage.load();
   $cvcObject = Object.values(sessionStorage.get("gameData"))[0];
   $gamePoints = sessionStorage.get("points");
@@ -93,8 +95,6 @@
     $gameLoaderWordId = 0; // reset word ID to 0
     $currentWordProgress = 0;
   }
-
-  sessionStorage.clear();
 </script>
 
 <main class="full_grid">
