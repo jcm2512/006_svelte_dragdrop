@@ -99,6 +99,7 @@
   {#if $gameLoaded == true}
     <GameLoader GameWords={wordObjects} />
   {:else}
+    <div class="clear" on:click={() => sessionStorage.clear()}>clear</div>
     <span id="ruler" />
     <div id="level" class="auto rounded label">
       <span class="star">&#9733</span>
@@ -161,6 +162,9 @@
 </main>
 
 <style>
+  .clear {
+    grid-column-end: -1;
+  }
   .img_Container {
     display: grid;
   }
@@ -175,7 +179,6 @@
     grid-template-columns: repeat(10, 80vw);
     grid-template-rows: 1fr;
     overflow: scroll;
-    height: 65vh;
     scroll-snap-type: both mandatory;
   }
 
@@ -294,6 +297,7 @@
     padding: 1rem;
     color: white;
     font-size: 2rem;
+    height: 90%;
   }
 
   #play_btn {
