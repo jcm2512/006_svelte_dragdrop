@@ -117,16 +117,12 @@
                   <img src={$cvcObject[word].img} alt={word} />
                 {:else}
                   <span class="img_Container">
-                    <img
-                      class="image overlay"
-                      src={$cvcObject[word].img}
-                      alt={word}
-                    />
-                    <img
-                      class="locked overlay"
-                      src="/assets/ui/locked.png"
-                      alt="locked"
-                    />
+                    <span class="image overlay"
+                      ><img src={$cvcObject[word].img} alt={word} /></span
+                    >
+                    <span class="locked overlay"
+                      ><img src="/assets/ui/locked.png" alt="locked" /></span
+                    >
                   </span>
                 {/if}
               {/each}
@@ -241,6 +237,11 @@
 
   .locked {
     z-index: 100;
+  }
+
+  .locked img {
+    height: 10vw;
+    width: 10vw;
   }
 
   .container {
