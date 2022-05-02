@@ -22,7 +22,6 @@
 
   // Load local game data
   let sessionStorage = localData;
-  sessionStorage.clear();
 
   sessionStorage.load();
   $cvcObject = Object.values(sessionStorage.get("gameData"))[0];
