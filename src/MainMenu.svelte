@@ -93,6 +93,8 @@
     $gameLoaderWordId = 0; // reset word ID to 0
     $currentWordProgress = 0;
   }
+
+  sessionStorage.clear();
 </script>
 
 <main class="full_grid">
