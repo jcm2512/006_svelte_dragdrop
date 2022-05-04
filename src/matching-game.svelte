@@ -12,6 +12,7 @@
     wordExp,
     combo,
     comboTimer,
+    gameStars,
   } from "./store.js";
 
   import { onMount, afterUpdate } from "svelte";
@@ -33,6 +34,8 @@
         return value * 8;
     }
   };
+
+  $: console.log($gameStars);
 
   let gameboard;
   let dropableLetter = [],
@@ -173,6 +176,13 @@
     $gamePoints.points += 10;
     if ($expObj.value < $expObj.max) {
       $expObj.value += $expObj.increment;
+    }
+    if (
+      $cvcObject[currentWord].exp >= $wordExp.max &&
+      !$cvcObject[currentWord].starred
+    ) {
+      $gameStars.stars += 1;
+      $cvcObject[currentWord].starred = true;
     }
   };
 

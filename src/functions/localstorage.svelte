@@ -14,6 +14,7 @@
           img: "/assets/png/cat.png",
           exp: 0,
           status: "unlocked",
+          starred: false,
         },
         hat: {
           level: 1,
@@ -22,6 +23,7 @@
           img: "/assets/png/hat.png",
           exp: 0,
           status: "unlocked",
+          starred: false,
         },
         dog: {
           level: 1,
@@ -30,6 +32,7 @@
           img: "/assets/png/dog.png",
           exp: 0,
           status: "unlocked",
+          starred: false,
         },
         fox: {
           level: 1,
@@ -38,6 +41,7 @@
           img: "/assets/png/fox.png",
           exp: 0,
           status: "unlocked",
+          starred: false,
         },
         sun: {
           level: 1,
@@ -46,6 +50,7 @@
           img: "/assets/png/sun.png",
           exp: 0,
           status: "unlocked",
+          starred: false,
         },
         bed: {
           level: 1,
@@ -54,6 +59,7 @@
           img: "/assets/png/bed.png",
           exp: 0,
           status: "locked",
+          starred: false,
         },
         jet: {
           level: 1,
@@ -62,6 +68,7 @@
           img: "/assets/png/jet.png",
           exp: 0,
           status: "locked",
+          starred: false,
         },
         pin: {
           level: 1,
@@ -70,6 +77,7 @@
           img: "/assets/png/pin.png",
           exp: 0,
           status: "locked",
+          starred: false,
         },
         dig: {
           level: 1,
@@ -78,6 +86,7 @@
           img: "/assets/png/dig.png",
           exp: 0,
           status: "locked",
+          starred: false,
         },
         nut: {
           level: 1,
@@ -86,6 +95,7 @@
           img: "/assets/png/nut.png",
           exp: 0,
           status: "locked",
+          starred: false,
         },
         bag: {
           level: 1,
@@ -94,6 +104,7 @@
           img: "/assets/png/bag.png",
           exp: 0,
           status: "locked",
+          starred: false,
         },
         cup: {
           level: 1,
@@ -102,6 +113,7 @@
           img: "/assets/png/cup.png",
           exp: 0,
           status: "locked",
+          starred: false,
         },
         cat: {
           level: 2,
@@ -110,6 +122,7 @@
           img: "/assets/png/cat.png",
           exp: 0,
           status: "unlocked",
+          starred: false,
         },
       },
     },

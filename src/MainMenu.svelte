@@ -30,12 +30,14 @@
   $gameStars = sessionStorage.get("stars");
   // TODO: #17 create function to update localStorage with new keys if not present
   $: $gamePoints && sessionStorage.set($gamePoints);
+  $: $gameStars && sessionStorage.set($gameStars);
   $: $eventTrigger.save && sessionStorage.set({ gameData: $cvcObject }),
     sessionStorage.save();
 
   let stageCards,
     handleNav,
-    cards = []; //Create empty array to store DOM references
+    cards = [], //Create empty array to store DOM references
+    star;
   let cvcs = Object.keys($cvcObject);
 
   const CARDS_OBJ = {
@@ -43,7 +45,6 @@
     currentId: 0,
   };
 
-  console.log(Object.values(sessionStorage.get("maxLevel")));
   for (let i = 1; i <= Object.values(sessionStorage.get("maxLevel")); i++) {
     CARDS_OBJ.cards.push(`LEVEL ${i}`);
   }
@@ -81,6 +82,15 @@
         },
       });
     };
+    // // ANIMATE STAR
+    // const M2 = gsap.to(star, {
+    //   duration: 1,
+    //   repeat: 1,
+    //   x: -2250,
+    //   // ease: SteppedEase.config(15),
+    // });
+    // M2.pause();
+    // console.log(star);
   });
 
   const swipeConfig = {
@@ -111,7 +121,7 @@
     <div class="clear" on:click={() => sessionStorage.clear()}>clear</div>
     <span id="ruler" />
     <div id="level" class="auto rounded label">
-      <img src="/assets/ui/star.png" alt="stars" />
+      <img bind:this={star} src="/assets/ui/star.png" alt="stars" />
       <span>{$gameStars.stars}</span>
     </div>
 
