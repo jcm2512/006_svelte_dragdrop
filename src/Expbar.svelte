@@ -15,9 +15,6 @@
   let bonusduration = 10.0;
   $: $expObj && handleUpdate($expObj);
   $: $trigger && flashExp();
-  // $: if (($expObj = 5)) {
-  //   $combo = 0;
-  // }
 
   setInterval(() => {
     if ($expObj.value > 5) {
@@ -139,7 +136,7 @@
     position: relative;
     grid-column: 2/-1;
     grid-row: 1/-1;
-    background-color: #d5d5d5;
+    background-color: var(--white);
     border-radius: var(--rounded);
     height: var(--inner);
     margin: var(--border);
@@ -151,10 +148,10 @@
     position: relative;
     grid-column: 1/-1;
     grid-row: 1/-1;
-    background-color: white;
+    background-color: var(--white);
     border-radius: var(--rounded);
     height: var(--height);
-    border: var(--border) solid white;
+    border: var(--border) solid var(--white);
     z-index: 0;
   }
 </style>

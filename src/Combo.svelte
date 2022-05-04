@@ -2,13 +2,6 @@
   import { combo, comboTimer } from "./store.js";
   import { scale } from "svelte/transition";
   import { quintOut } from "svelte/easing";
-
-  // setInterval(() => {
-  //   $comboTimer += 1;
-  //   if ($comboTimer > 5) {
-  //     $combo = 0;
-  //   }
-  // }, 1000);
 </script>
 
 <div class="combo">
@@ -43,8 +36,8 @@
     display: flex;
     flex-direction: column;
     font-size: 2rem;
-    color: white;
-    -webkit-text-stroke: 0.1rem var(--dark-blue);
+    color: var(--white);
+    -webkit-text-stroke: 0.1rem var(--outline);
   }
   .count {
     font-size: 4rem;

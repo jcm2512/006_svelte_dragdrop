@@ -84,8 +84,8 @@
     border-radius: var(--rounded);
     height: var(--inner);
     margin: var(--border);
-    width: var(--inner);
-    max-width: 50vw;
+    /* width: var(--inner); */
+    max-width: calc(50vw - 2 * (var(--inner)));
     min-width: var(--inner);
     z-index: 10;
   }

@@ -163,6 +163,7 @@
   }
   .img_Container {
     display: grid;
+    align-items: center;
   }
 
   .overlay {
@@ -272,23 +273,23 @@
   }
 
   .card {
-    background-color: #ff61aa;
+    background-color: var(--pink);
     z-index: 50;
   }
 
   .button {
     cursor: pointer;
-    background-color: #f4d042;
+    background-color: var(--yellow);
     z-index: 10;
   }
 
   .label {
-    background-color: #ffffff;
+    background-color: var(--white);
     z-index: 10;
   }
 
   .arrow_btn {
-    color: white;
+    color: var(--white);
     font-size: 3rem;
     cursor: default;
     z-index: 100;
@@ -311,7 +312,7 @@
 
   #play_btn span {
     font-size: 1.5rem;
-    color: var(--dark-blue);
+    color: var(--outline);
   }
   #stage_card {
     grid-row: 4/-4;
@@ -340,7 +341,7 @@
   }
 
   #level .star {
-    color: orange;
+    color: var(--orange);
     font-size: 2rem;
   }
 

@@ -3,21 +3,17 @@
 /* TODO: download font */
 * { box-sizing: Border-box }
 :root {
-  --bg-color: hsl(0, 83%, 73%); /* var(--bg-color)  */
-  --dropped-color: hsl(0, 60%, 25%);
-  --main-color: #fce38a; /* var(--main-color)  */
-  --sub-color: #f38181; /* var(--sub-color)  */
-  --fg-color: #f4d042; /* #95e1d3; /* var(--fg-color)  */
-  --blue: hsla(215, 55%, 21%, 1);
   --main-font: "Londrina Solid";
-  --large: 10em;
-
-  --yellow: #f4d042;
-  --pink:#ff61aa;
-  --blue:#00a4ff;
-  --orange: #fc8c78;
-  --dark-blue:#3D4856;
-  --transparent-blue:hsla(215, 55%, 21%, 0.3);
+  --white: hsl(0, 0%, 100%);
+  --yellow: hsl(44, 90%, 77%);
+  --orange: hsl(36, 75%, 75%);
+  --pink:hsl(340, 66%, 64%);
+  --blue:hsl(204, 74%, 70%);
+  --dark-blue:hsl(219, 49%, 62%);
+  --transparent-blue:hsla(226, 6%, 57%, 0.5);
+  --outline: hsl(279, 21%, 52%);
+  --gray:hsl(226, 6%, 57%);
+  --light-gray: hsl(219, 56%, 93%)
 }
 
 html,
@@ -25,7 +21,7 @@ body {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-color: #333;
+  background-color: var(--gray);
   overflow: hidden;
 }
 

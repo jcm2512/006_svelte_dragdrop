@@ -23,7 +23,7 @@
       units: "vw",
       thickness: 8,
       radius: 8,
-      color: "#CC76FD",
+      color: "hsl(162, 45%, 62%)",
       timerDuration: tick,
       circleDuration: tick,
     });
@@ -61,7 +61,7 @@
     text-align: center;
     font-family: var(--main-font);
     font-weight: 900;
-    -webkit-text-stroke: 0.01em white;
+    -webkit-text-stroke: 0.01rem var(--white);
   }
   #circle-timer {
     z-index: 5;
