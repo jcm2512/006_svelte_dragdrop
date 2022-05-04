@@ -1,5 +1,5 @@
 <script>
-  import { combo, comboTimer } from "./store.js";
+  import { combo, comboTimer, eventTrigger } from "./store.js";
   import { scale } from "svelte/transition";
   import { quintOut } from "svelte/easing";
 </script>

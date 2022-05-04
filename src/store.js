@@ -11,14 +11,23 @@ export const gameLoaded = writable(false);
 export const gameLoaderWordId = writable(0);
 export const gameWordLimit = writable(30);
 export const exp = writable(0);
-export const expObj = writable({ value: 10, increment: 10 }); // use objects so GSAP an animate the values
+export const expObj = writable({
+  min: 5,
+  value: 5,
+  increment: 10,
+  max: 35,
+  correct: true,
+}); // use objects so GSAP an animate the values
 export const combo = writable(0);
 export const comboTimer = writable(0);
 export const currentWordProgress = writable(0);
 export const expMultiplier = writable(10);
 export const bonustime = writable(false);
-export const trigger = writable(0);
-export const eventTrigger = writable({ save: 0 });
+export const eventTrigger = writable({
+  save: 0,
+  incorrectLetter: 0,
+  correctLetter: 0,
+});
 export const timerEnd = writable(false);
 
 export const wordExp = writable(1);

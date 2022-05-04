@@ -1,56 +1,54 @@
 <script>
   // TODO: #15 expbar should be right aligned
-  import { expObj, trigger, bonustime, gameState, combo } from "./store.js";
+  import { expObj, eventTrigger, combo } from "./store.js";
+  import { onMount } from "svelte";
   import { gsap } from "gsap";
 
   let expBar;
+  let options;
 
-  let maxExp = 35;
+  $: $eventTrigger && animate($expObj);
 
-  $: handleUpdate($expObj);
-  $: $trigger && flashExp();
+  const animate = function () {
+    // PREPARE ANIMATION PROPERTIES
+    let timeline = gsap.timeline();
+    let duration = $expObj.correct ? 0.5 : 1.0;
+    let defaults = { width: `${$expObj.value}vw`, duration: duration };
+    if ($expObj.correct) {
+      duration = 0.5;
+      options = {};
+    } else {
+      duration = 1.0;
+      options = { "background-color": "#FF0000", repeat: 1, yoyo: true };
+    }
+
+    // ANIMATE WITH GSAP
+    if (expBar) {
+      timeline
+        .to(expBar, {
+          ...defaults,
+        })
+        .to(expBar, { ...options }, "<");
+    }
+  };
 
   setInterval(() => {
-    if ($expObj.value > 5) {
-      $expObj.value -= 0.25;
+    if ($combo > 1) {
+      $expObj.value -= 0.5;
       if ($expObj.value == 5) {
         $combo = 0;
       }
     }
   }, 100);
-
-  const handleUpdate = function (obj) {
-    if (expBar) {
-      if ($expObj.value <= maxExp) {
-        gsap.to(expBar, {
-          width: `${$expObj.value}vw`,
-          duration: 0.5,
-        });
-      }
-    }
-  };
-
-  const flashExp = function () {
-    // check if expBar has loaded first
-    if (expBar) {
-      gsap.to($expObj, {
-        value: $expObj.value - 10,
-        duration: 0.5,
-        ease: "linear",
-      });
-      gsap.to(expBar, {
-        "background-color": "#FF0000",
-        duration: 0.5,
-        repeat: 1,
-        yoyo: true,
-      });
-    }
-  };
 </script>
 
 <div id="expbar">
   <div id="exp_bar_bg" />
-  <div bind:this={expBar} id="exp_bar_fill" style="--maxWidth: {maxExp}vw" />
+  <div
+    bind:this={expBar}
+    id="exp_bar_fill"
+    style="--maxWidth: {$expObj.max}vw"
+  />
   <div id="exp_bg" />
   <img src="/assets/ui/electricity.png" alt="BONUS" />
 </div>

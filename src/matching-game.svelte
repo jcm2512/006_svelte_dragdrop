@@ -7,7 +7,6 @@
     currentWordProgress,
     gamePoints,
     bonustime,
-    trigger,
     expObj,
     eventTrigger,
     timerEnd,
@@ -36,8 +35,6 @@
         return value * 8;
     }
   };
-
-  console.log(multiplier());
 
   let gameboard;
   let dropableLetter = [],
@@ -169,28 +166,27 @@
   };
 
   const onCorrectLetter = function () {
+    $expObj.correct = true;
+    $eventTrigger.correctLetter += 1;
     $cvcObject[currentWord].exp += multiplier($wordExp);
     $combo += 1;
     $comboTimer = 0;
     $currentWordProgress += 1;
-    if (!$bonustime) {
+    $gamePoints.points += 10;
+    if ($expObj.value < $expObj.max) {
       $expObj.value += $expObj.increment;
-      $gamePoints.points += 10;
-    } else {
-      $gamePoints.points += 17;
     }
   };
 
   const onIncorrectLetter = function (element) {
-    $combo = 0;
-    $comboTimer = 0;
+    $expObj.correct = false;
     gsap.to(element, { y: 0 });
     gsap.to(element.children[0], { transform: `rotate(${getRotation()}deg)` });
     if ($expObj.value >= 10) {
-      if (!$bonustime) {
-        $trigger += 1;
-      }
+      $eventTrigger.incorrectLetter += 1;
     }
+    $expObj.value = $expObj.min;
+    $combo = 0;
   };
   afterUpdate(() => {
     if ($timerEnd) {
@@ -199,12 +195,7 @@
         draggable.disable();
       });
     }
-    if ($expObj.value <= 0) {
-      $bonustime = false;
-    }
   });
-
-  $: console.log($cvcObject[currentWord].word, $cvcObject[currentWord].exp);
 </script>
 
 <div id="matching_game">

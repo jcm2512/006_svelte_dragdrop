@@ -51,7 +51,6 @@
 
   addRandomWordFrom(words, randomWords, wordLimit);
   $: currentWord = randomWords[$gameLoaderWordId];
-  $: console.log(wordLimit);
 </script>
 
 <div class="gameLoader">
