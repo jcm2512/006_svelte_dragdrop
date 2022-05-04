@@ -44,8 +44,8 @@
 
   // dev mode
 
-  if ($devMode) {
-    words = words.slice(0, $wordLimitOverride);
+  if ($devMode.wordLimitOverride) {
+    words = words.slice(0, $devMode.wordLimitOverride);
   }
   let wordLimit = words.length > 5 ? 5 : words.length;
 

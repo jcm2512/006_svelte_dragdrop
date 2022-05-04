@@ -5,7 +5,7 @@
   import { ticks, timerEnd, gameState, devMode } from "./store";
   let circleTimer;
   let tick = $ticks;
-  let paused = $devMode ? true : false;
+  let paused = $devMode.paused ? true : false;
   setInterval(() => {
     if (!paused) {
       tick -= 1;
@@ -26,7 +26,7 @@
       timerDuration: tick,
       circleDuration: tick,
     });
-    if (!$devMode) {
+    if (!$devMode.paused) {
       circleTimer.startTimer();
     }
   });

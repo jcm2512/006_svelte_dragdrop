@@ -1,7 +1,7 @@
 import { writable, readable } from "svelte/store";
 
 // DEV mode
-export const devMode = readable(true);
+export const devMode = readable({ paused: false, wordLimitOverride: null });
 export const wordLimitOverride = readable(1);
 
 // NON PERSISTENT
