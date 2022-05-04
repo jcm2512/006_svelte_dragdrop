@@ -22,7 +22,6 @@ export const combo = writable(0);
 export const comboTimer = writable(0);
 export const currentWordProgress = writable(0);
 export const expMultiplier = writable(10);
-export const bonustime = writable(false);
 export const eventTrigger = writable({
   save: 0,
   incorrectLetter: 0,
@@ -30,8 +29,7 @@ export const eventTrigger = writable({
 });
 export const timerEnd = writable(false);
 
-export const wordExp = writable(1);
-export const wordExpBonus = writable(3);
+export const wordExp = writable({ increment: 1, max: 48 });
 export const gameState = writable(0);
 
 // UPDATED FROM LOCALSTORAGE

@@ -1,13 +1,5 @@
 <script>
-  import { gameState, bonustime, timerEnd } from "./store.js";
-  const switchBackground = function () {
-    return $timerEnd ? "gameOver" : $bonustime ? "bonus" : "default";
-  };
-  $: preloadImageUrls = [
-    "/assets/bg-tile-yellow-stars.png",
-    "/assets/bg-tile-blue-stars.png",
-    "/assets/bg-tile-orange-stars.png",
-  ];
+  import { gameState } from "./store.js";
 </script>
 
 {#key $gameState}

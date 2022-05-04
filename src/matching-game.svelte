@@ -6,12 +6,10 @@
     gameWordLimit,
     currentWordProgress,
     gamePoints,
-    bonustime,
     expObj,
     eventTrigger,
     timerEnd,
     wordExp,
-    wordExpBonus,
     combo,
     comboTimer,
   } from "./store.js";
@@ -168,7 +166,7 @@
   const onCorrectLetter = function () {
     $expObj.correct = true;
     $eventTrigger.correctLetter += 1;
-    $cvcObject[currentWord].exp += multiplier($wordExp);
+    $cvcObject[currentWord].exp += multiplier($wordExp.increment);
     $combo += 1;
     $comboTimer = 0;
     $currentWordProgress += 1;
