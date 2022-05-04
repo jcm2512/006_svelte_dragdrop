@@ -59,15 +59,16 @@
   </div>
   <div id="_Background"><BG /></div>
   <div id="_Timer"><Timer /></div>
+
   <div id="_Expbar"><Expbar /></div>
   {#key $gameLoaderWordId}
     <div id="_matchingGame" class={$gameLoaderWordId}>
       <MatchingGame {currentWord} {GameLevel} />
     </div>
+    <div id="_WordExp">
+      <WordExp {currentWord} />
+    </div>
   {/key}
-  <div id="_WordExp">
-    <WordExp {currentWord} />
-  </div>
   <div id="_Combo">
     <Combo />
   </div>

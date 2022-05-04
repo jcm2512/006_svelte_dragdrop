@@ -24,7 +24,7 @@
     if (wordExp) {
       gsap.to(wordExp, {
         width: `${$cvcObject[currentWord].exp}vw`,
-        duration: 0.4,
+        duration: 1.5,
       });
     }
   };
@@ -80,7 +80,7 @@
     position: relative;
     grid-column: 1/-1;
     grid-row: 1/-1;
-    background-color: var(--blue);
+    background-color: var(--pink);
     border-radius: var(--rounded);
     height: var(--inner);
     margin: var(--border);
