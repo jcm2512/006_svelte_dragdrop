@@ -13,7 +13,7 @@
   --transparent-blue:hsla(226, 6%, 57%, 0.5);
   --outline: hsl(279, 21%, 52%);
   --gray:hsl(226, 6%, 57%);
-  --light-gray: hsl(219, 56%, 93%)
+  --light-gray: hsl(219, 56%, 93%);
 }
 
 html,
