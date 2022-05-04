@@ -22,6 +22,7 @@
 
   // Load local game data
   let sessionStorage = localData;
+
   sessionStorage.load();
   $cvcObject = sessionStorage.get("gameData").gameData;
   $gamePoints = sessionStorage.get("points");
