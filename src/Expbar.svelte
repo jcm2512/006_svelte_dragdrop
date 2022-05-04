@@ -1,69 +1,43 @@
 <script>
   // TODO: #15 expbar should be right aligned
-  import {
-    expObj,
-    trigger,
-    maxExp,
-    bonustime,
-    gameState,
-    combo,
-  } from "./store.js";
+  import { expObj, trigger, bonustime, gameState, combo } from "./store.js";
   import { gsap } from "gsap";
 
   let expBar;
 
-  let bonusduration = 10.0;
-  $: $expObj && handleUpdate($expObj);
+  let maxExp = 35;
+
+  $: handleUpdate($expObj);
   $: $trigger && flashExp();
 
   setInterval(() => {
     if ($expObj.value > 5) {
-      $expObj.value -= 1;
+      $expObj.value -= 0.25;
       if ($expObj.value == 5) {
         $combo = 0;
       }
     }
-  }, 500);
+  }, 100);
 
   const handleUpdate = function (obj) {
     if (expBar) {
-      gsap.to(expBar, {
-        width: `${$expObj.value}vw`,
-        duration: 0.4,
-        // check for bonus time
-        onComplete: function () {
-          if ($expObj.value >= $maxExp) {
-            bonusTime();
-          }
-        },
-      });
+      if ($expObj.value <= maxExp) {
+        gsap.to(expBar, {
+          width: `${$expObj.value}vw`,
+          duration: 0.5,
+        });
+      }
     }
-  };
-
-  const bonusTime = function () {
-    $gameState += 1;
-    $bonustime = true;
-    console.log("bonustime: ", $bonustime);
-    gsap.to($expObj, {
-      value: 5,
-      duration: bonusduration,
-      ease: "linear",
-      onComplete: function () {
-        $gameState += 1;
-        $bonustime = false;
-        console.log("bonustime: ", $bonustime);
-      },
-    });
-    gsap.to(expBar, {
-      width: "5vw",
-      duration: bonusduration,
-      ease: "linear",
-    });
   };
 
   const flashExp = function () {
     // check if expBar has loaded first
     if (expBar) {
+      gsap.to($expObj, {
+        value: $expObj.value - 10,
+        duration: 0.5,
+        ease: "linear",
+      });
       gsap.to(expBar, {
         "background-color": "#FF0000",
         duration: 0.5,
@@ -76,7 +50,7 @@
 
 <div id="expbar">
   <div id="exp_bar_bg" />
-  <div bind:this={expBar} id="exp_bar_fill" />
+  <div bind:this={expBar} id="exp_bar_fill" style="--maxWidth: {maxExp}vw" />
   <div id="exp_bg" />
   <img src="/assets/ui/electricity.png" alt="BONUS" />
 </div>
@@ -126,7 +100,7 @@
     height: var(--inner);
     margin: var(--border);
     width: var(--inner);
-    max-width: 35vw; /* accounts for margin... this should be fixed */
+    max-width: var(--maxWidth); /* this should be made relative */
     min-width: var(--inner);
     /* transition: width 1s ease-out; */
     z-index: 10;

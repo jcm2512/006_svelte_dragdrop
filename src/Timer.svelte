@@ -2,10 +2,10 @@
 <script>
   import CircleTimer from "circle-timer";
   import { onMount } from "svelte";
-  import { ticks, timerEnd, gameState } from "./store";
+  import { ticks, timerEnd, gameState, devMode } from "./store";
   let circleTimer;
   let tick = $ticks;
-  let paused = false;
+  let paused = $devMode ? true : false;
   setInterval(() => {
     if (!paused) {
       tick -= 1;
@@ -17,7 +17,6 @@
     }
   }, 1000);
   onMount(() => {
-    // console.log(tick);
     circleTimer = new CircleTimer({
       rootElement: document.getElementById("circle-timer"),
       units: "vw",
@@ -27,7 +26,9 @@
       timerDuration: tick,
       circleDuration: tick,
     });
-    circleTimer.startTimer();
+    if (!$devMode) {
+      circleTimer.startTimer();
+    }
   });
   function handleClick() {
     paused ? circleTimer.startTimer() : circleTimer.pauseTimer();

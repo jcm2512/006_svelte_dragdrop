@@ -23,7 +23,7 @@
   // Load local game data
   let sessionStorage = localData;
   sessionStorage.load();
-  $cvcObject = Object.values(sessionStorage.get("gameData"))[0];
+  $cvcObject = sessionStorage.get("gameData").gameData;
   $gamePoints = sessionStorage.get("points");
   $: $gamePoints && sessionStorage.set($gamePoints);
   $: $eventTrigger.save && sessionStorage.set({ gameData: $cvcObject }),
@@ -35,9 +35,14 @@
   let cvcs = Object.keys($cvcObject);
 
   const CARDS_OBJ = {
-    cards: ["LEVEL 1", "LEVEL 2", "LEVEL 3", "LEVEL 4"],
+    cards: [],
     currentId: 0,
   };
+
+  console.log(Object.values(sessionStorage.get("maxLevel")));
+  for (let i = 1; i <= Object.values(sessionStorage.get("maxLevel")); i++) {
+    CARDS_OBJ.cards.push(`LEVEL ${i}`);
+  }
 
   onMount(() => {
     handleNav = function (direction, div, obj) {
@@ -97,7 +102,7 @@
 
 <main class="full_grid">
   {#if $gameLoaded == true}
-    <GameLoader GameWords={wordObjects} />
+    <GameLoader GameWords={wordObjects} GameLevel={CARDS_OBJ.currentId + 1} />
   {:else}
     <div class="clear" on:click={() => sessionStorage.clear()}>clear</div>
     <span id="ruler" />

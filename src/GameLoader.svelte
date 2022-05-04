@@ -1,5 +1,10 @@
 <script>
-  import { gameLoaderWordId, gameWordLimit } from "./store.js";
+  import {
+    gameLoaderWordId,
+    gameWordLimit,
+    devMode,
+    wordLimitOverride,
+  } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
   import Expbar from "./Expbar.svelte";
@@ -9,6 +14,8 @@
   import Combo from "./Combo.svelte";
 
   export let GameWords;
+  export let GameLevel;
+
   let randomWords = [];
 
   function addRandomWordFrom(array, toarray, limit) {
@@ -35,8 +42,16 @@
       return item.word;
     });
 
-  addRandomWordFrom(words, randomWords, 5);
+  // dev mode
+
+  if ($devMode) {
+    words = words.slice(0, $wordLimitOverride);
+  }
+  let wordLimit = words.length > 5 ? 5 : words.length;
+
+  addRandomWordFrom(words, randomWords, wordLimit);
   $: currentWord = randomWords[$gameLoaderWordId];
+  $: console.log(wordLimit);
 </script>
 
 <div class="gameLoader">
@@ -48,7 +63,7 @@
   <div id="_Expbar"><Expbar /></div>
   {#key $gameLoaderWordId}
     <div id="_matchingGame" class={$gameLoaderWordId}>
-      <MatchingGame {currentWord} />
+      <MatchingGame {currentWord} {GameLevel} />
     </div>
   {/key}
   <div id="_WordExp">

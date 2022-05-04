@@ -25,6 +25,19 @@
   gsap.registerPlugin(Draggable);
 
   export let currentWord;
+  export let GameLevel;
+
+  // SCORING:
+  let multiplier = function (value) {
+    switch (GameLevel) {
+      case 1:
+        return value * 10;
+      case 2:
+        return value * 8;
+    }
+  };
+
+  console.log(multiplier());
 
   let gameboard;
   let dropableLetter = [],
@@ -79,9 +92,10 @@
 
       onCorrectLetter();
     }
-    if ($currentWordProgress == currentWord.length) {
-      $cvcObject[currentWord].exp += $wordExpBonus;
-    }
+    // // WORD BONUS
+    // if ($currentWordProgress == currentWord.length) {
+    //   $cvcObject[currentWord].exp += $wordExpBonus;
+    // }
   }
 
   onMount(() => {
@@ -155,12 +169,12 @@
   };
 
   const onCorrectLetter = function () {
-    $cvcObject[currentWord].exp += $wordExp;
+    $cvcObject[currentWord].exp += multiplier($wordExp);
     $combo += 1;
     $comboTimer = 0;
     $currentWordProgress += 1;
     if (!$bonustime) {
-      $expObj.value += 5;
+      $expObj.value += $expObj.increment;
       $gamePoints.points += 10;
     } else {
       $gamePoints.points += 17;
@@ -175,7 +189,6 @@
     if ($expObj.value >= 10) {
       if (!$bonustime) {
         $trigger += 1;
-        $expObj.value -= 10;
       }
     }
   };

@@ -3,8 +3,11 @@
     key: "localData",
     value: {
       points: 0,
+      currentLevel: 1,
+      maxLevel: 2,
       gameData: {
         cat: {
+          level: 1,
           word: "cat",
           vowel: "a",
           img: "/assets/png/cat.png",
@@ -12,6 +15,7 @@
           status: "unlocked",
         },
         hat: {
+          level: 1,
           word: "hat",
           vowel: "a",
           img: "/assets/png/hat.png",
@@ -19,6 +23,7 @@
           status: "unlocked",
         },
         dog: {
+          level: 1,
           word: "dog",
           vowel: "o",
           img: "/assets/png/dog.png",
@@ -26,6 +31,7 @@
           status: "unlocked",
         },
         fox: {
+          level: 1,
           word: "fox",
           vowel: "o",
           img: "/assets/png/fox.png",
@@ -33,6 +39,7 @@
           status: "unlocked",
         },
         sun: {
+          level: 1,
           word: "sun",
           vowel: "u",
           img: "/assets/png/sun.png",
@@ -40,6 +47,7 @@
           status: "unlocked",
         },
         bed: {
+          level: 1,
           word: "bed",
           vowel: "e",
           img: "/assets/png/bed.png",
@@ -47,6 +55,7 @@
           status: "locked",
         },
         jet: {
+          level: 1,
           word: "jet",
           vowel: "e",
           img: "/assets/png/jet.png",
@@ -54,6 +63,7 @@
           status: "locked",
         },
         pin: {
+          level: 1,
           word: "pin",
           vowel: "i",
           img: "/assets/png/pin.png",
@@ -61,6 +71,7 @@
           status: "locked",
         },
         dig: {
+          level: 1,
           word: "dig",
           vowel: "i",
           img: "/assets/png/dig.png",
@@ -68,6 +79,7 @@
           status: "locked",
         },
         nut: {
+          level: 1,
           word: "nut",
           vowel: "u",
           img: "/assets/png/nut.png",
@@ -75,6 +87,7 @@
           status: "locked",
         },
         bag: {
+          level: 1,
           word: "bag",
           vowel: "e",
           img: "/assets/png/bag.png",
@@ -82,11 +95,20 @@
           status: "locked",
         },
         cup: {
+          level: 1,
           word: "cup",
           vowel: "e",
           img: "/assets/png/cup.png",
           exp: 0,
           status: "locked",
+        },
+        cat: {
+          level: 2,
+          word: "cat",
+          vowel: "a",
+          img: "/assets/png/cat.png",
+          exp: 0,
+          status: "unlocked",
         },
       },
     },
@@ -122,7 +144,6 @@
       for (const [key, value] of Object.entries(obj)) {
         this.value[key] = value;
       }
-      //   localStorage.setItem(this.key, JSON.stringify(this.value));
     },
     clear: function () {
       localStorage.removeItem(this.key);
@@ -133,10 +154,6 @@
     },
     save: function () {
       localStorage.setItem(this.key, JSON.stringify(this.value));
-      // Initialize localStorage if == null
-      //   localStorage.getItem(this.key) == null
-      //     ? localStorage.setItem(this.key, JSON.stringify(this.value))
-      //     : (this.value = JSON.parse(localStorage.getItem(this.key)));
     },
   };
 </script>

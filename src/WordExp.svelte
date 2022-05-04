@@ -85,7 +85,7 @@
     height: var(--inner);
     margin: var(--border);
     /* width: var(--inner); */
-    max-width: calc(50vw - 2 * (var(--inner)));
+    max-width: calc(50vw - 2 * (var(--border)));
     min-width: var(--inner);
     z-index: 10;
   }
