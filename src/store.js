@@ -36,6 +36,7 @@ export const gameState = writable(0);
 
 // UPDATED FROM LOCALSTORAGE
 export const gamePoints = writable({ points: 0 });
+export const gameStars = writable({ stars: 0 });
 
 // CVC WORD LIST
 export let cvcObject = writable({});

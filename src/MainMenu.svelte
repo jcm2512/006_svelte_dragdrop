@@ -6,6 +6,7 @@
     currentWordProgress,
     gamePoints,
     eventTrigger,
+    gameStars,
   } from "./store.js";
   import GameLoader from "./GameLoader.svelte";
   import { gsap } from "gsap";
@@ -26,6 +27,8 @@
   sessionStorage.load();
   $cvcObject = sessionStorage.get("gameData").gameData;
   $gamePoints = sessionStorage.get("points");
+  $gameStars = sessionStorage.get("stars");
+  // TODO: #17 create function to update localStorage with new keys if not present
   $: $gamePoints && sessionStorage.set($gamePoints);
   $: $eventTrigger.save && sessionStorage.set({ gameData: $cvcObject }),
     sessionStorage.save();
@@ -108,7 +111,8 @@
     <div class="clear" on:click={() => sessionStorage.clear()}>clear</div>
     <span id="ruler" />
     <div id="level" class="auto rounded label">
-      <span class="star">&#9733</span>
+      <img src="/assets/ui/star.png" alt="stars" />
+      <span>{$gameStars.stars}</span>
     </div>
 
     <!-- swipable menu START-->
@@ -340,15 +344,19 @@
 
   #level {
     grid-row: 2/3;
-    grid-column: 2/4;
+    grid-column: 1/4;
     display: flex;
-    justify-content: center;
     align-items: center;
+    font-size: 1.5rem;
+    padding: 0 0 0 1.5rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 
-  #level .star {
-    color: var(--orange);
-    font-size: 2rem;
+  #level img {
+    height: 100%;
+    width: auto;
+    padding: 0.2rem;
   }
 
   #points {

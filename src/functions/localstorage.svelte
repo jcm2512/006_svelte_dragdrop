@@ -3,6 +3,7 @@
     key: "localData",
     value: {
       points: 0,
+      stars: 0,
       currentLevel: 1,
       maxLevel: 2,
       gameData: {
