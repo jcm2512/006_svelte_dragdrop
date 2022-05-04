@@ -1,7 +1,6 @@
 <script>
   import { cvcObject } from "./store.js";
   import { scale } from "svelte/transition";
-  import { quintOut } from "svelte/easing";
 
   export let currentWord;
 </script>
@@ -39,7 +38,7 @@
 
   .rounded {
     border-radius: 1rem;
-    /* padding: 0.5em; */
+    border: 0.25rem solid var(--light-gray);
   }
 
   .label {

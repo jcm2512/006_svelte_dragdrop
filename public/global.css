@@ -8,12 +8,14 @@
   --yellow: hsl(44, 90%, 77%);
   --orange: hsl(36, 75%, 75%);
   --pink:hsl(340, 66%, 64%);
+  --light-pink: hsl(330, 100%, 87%);
   --blue:hsl(204, 74%, 70%);
   --dark-blue:hsl(219, 49%, 62%);
   --transparent-blue:hsla(226, 6%, 57%, 0.5);
   --outline: hsl(279, 21%, 52%);
   --gray:hsl(226, 6%, 57%);
   --light-gray: hsl(219, 56%, 93%);
+  --off-white:hsl(213, 61%, 90%);
 }
 
 html,

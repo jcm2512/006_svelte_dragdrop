@@ -295,6 +295,7 @@
   .card {
     background-color: var(--pink);
     z-index: 50;
+    border: 0.25rem solid var(--white);
   }
 
   .button {
@@ -328,6 +329,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 0.25rem solid var(--light-gray);
   }
 
   #play_btn span {
@@ -361,6 +363,8 @@
     padding: 0 0 0 1.5rem;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+    border: 0.25rem solid var(--light-gray);
+    border-left: 0;
   }
 
   #level img {
