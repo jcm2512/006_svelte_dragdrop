@@ -14,6 +14,7 @@
   import { ScrollToPlugin } from "gsap/ScrollToPlugin";
   import { localData } from "./functions/localstorage.svelte";
   import Level from "./Level.svelte";
+  import { animateCSS } from "./animateCSS.svelte";
   gsap.registerPlugin(ScrollToPlugin);
 
   const version = "v0.4.2";
@@ -37,7 +38,9 @@
   let stageCards,
     handleNav,
     CARDS = [], //Create empty array to store DOM references
-    star;
+    star,
+    next,
+    prev;
   let cvcs = Object.keys($cvcObject);
 
   const LVL = {
@@ -103,10 +106,10 @@
 
     <!-- swipable menu START-->
     <ul bind:this={stageCards} id="stage_card" class="gallery">
-      {#each Object.keys($cvcObject) as card, index}
-        <!-- <div class="level">
-          {card}
-        </div> -->
+      {#each Object.keys($cvcObject) as id, index}
+        <div class="level">
+          LEVEL {index + 1}
+        </div>
         <div id="lvl_{index + 1}" bind:this={CARDS[index]} class="_level">
           <Level {index} />
         </div>
@@ -115,22 +118,30 @@
     <!-- swipable menu END -->
 
     <div
+      bind:this={prev}
       id="prev"
       class="auto arrow_btn unselectable"
-      on:click|preventDefault={() => handleNav("prev", stageCards, LVL)}
+      on:click|preventDefault={() => {
+        handleNav("prev", stageCards, LVL);
+        animateCSS(prev, "headShake");
+      }}
     >
       «
     </div>
     <div
+      bind:this={next}
       id="next"
       class="auto arrow_btn unselectable"
-      on:click|preventDefault={() => handleNav("next", stageCards, LVL)}
+      on:click|preventDefault={() => {
+        handleNav("next", stageCards, LVL);
+        animateCSS(next, "headShake");
+      }}
     >
       »
     </div>
     <div
       id="play_btn"
-      class="auto rounded button"
+      class="auto rounded button animate__animated animate__pulse animate__slow animate__infinite"
       on:click|preventDefault={() => handleNav("play", stageCards, LVL)}
     >
       <span>play</span>
@@ -266,7 +277,10 @@
 
   #next,
   #prev {
-    grid-row: 8/11;
+    grid-row: 4/14;
+    display: flex;
+    align-content: space-around;
+    justify-content: space-around;
   }
 
   #prev {

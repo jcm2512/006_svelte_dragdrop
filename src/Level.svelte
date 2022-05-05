@@ -1,20 +1,34 @@
 <script>
   import { cvcObject } from "./store.js";
+  import { animateCSS } from "./animateCSS.svelte";
   export let index;
   let level = Object.keys($cvcObject)[index];
   let cvcs = Object.keys($cvcObject[level]);
+  let DOMelements = [];
 </script>
 
 <li class="card container">
-  {#each cvcs as word}
+  {#each cvcs as word, index}
     {#if $cvcObject[level][word].status == "unlocked"}
       <span class="img_Container">
         <img src={$cvcObject[level][word].img} alt={word} class="icon" />
       </span>
     {:else}
       <span class="img_Container">
-        <img src={$cvcObject[level][word].img} alt={word} class="icon locked" />
-        <img src="/assets/ui/locked.png" alt="locked" class="lock" />
+        <img
+          src={$cvcObject[level][word].img}
+          alt={word}
+          class="icon locked "
+        />
+        <img
+          src="/assets/ui/locked.png"
+          alt="locked"
+          class="lock "
+          bind:this={DOMelements[index]}
+          on:click|preventDefault={() => {
+            animateCSS(DOMelements[index], "headShake");
+          }}
+        />
       </span>
     {/if}
   {/each}
