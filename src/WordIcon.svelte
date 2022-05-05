@@ -3,14 +3,15 @@
   import { scale } from "svelte/transition";
 
   export let currentWord;
+  export let GameLevel;
 </script>
 
 <span class="container rounded label">
   {#key currentWord}
     <img
       class="auto"
-      src={$cvcObject[currentWord].img}
-      alt={$cvcObject[currentWord].word}
+      src={$cvcObject[GameLevel][currentWord].img}
+      alt={$cvcObject[GameLevel][currentWord].word}
       in:scale={{
         duration: 200,
         start: 0.7,

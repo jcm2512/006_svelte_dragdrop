@@ -1,18 +1,22 @@
 <script>
   import { cvcObject } from "./store.js";
-  // export let index;
-  let cvcs = Object.keys($cvcObject);
+  export let index;
+  let level = Object.keys($cvcObject)[index];
+  let cvcs = Object.keys($cvcObject[level]);
 </script>
 
 <li class="auto rounded card container">
-  <!-- {#if index == 0} -->
   {#each cvcs as word}
-    {#if $cvcObject[word].status == "unlocked"}
-      <img src={$cvcObject[word].img} alt={word} />
+    {#if $cvcObject[level][word].status == "unlocked"}
+      <span class="img_Container">
+        <span class="overlay">
+          <img src={$cvcObject[level][word].img} alt={word} />
+        </span>
+      </span>
     {:else}
       <span class="img_Container">
         <span class="image overlay"
-          ><img src={$cvcObject[word].img} alt={word} /></span
+          ><img src={$cvcObject[level][word].img} alt={word} /></span
         >
         <span class="locked overlay"
           ><img src="/assets/ui/locked.png" alt="locked" /></span
@@ -20,13 +24,27 @@
       </span>
     {/if}
   {/each}
-  <!-- {/if} -->
 </li>
 
 <style>
   .img_Container {
+    grid-column: span 2;
     display: grid;
     align-items: center;
+  }
+
+  /* Dealing with 2 orphan items */
+  .img_Container:last-child:nth-child(3n - 1) {
+    grid-column-end: -2;
+  }
+
+  .img_Container:nth-last-child(2):nth-child(3n + 1) {
+    grid-column-end: 4;
+  }
+
+  /* Dealing with single orphan */
+  .img_Container:last-child:nth-child(3n - 2) {
+    grid-column-end: 5;
   }
 
   .overlay {
@@ -63,7 +81,7 @@
 
   .container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     /* justify-content: space-evenly; */
   }
 
@@ -85,12 +103,5 @@
     background-color: var(--pink);
     z-index: 50;
     border: 0.25rem solid var(--white);
-  }
-
-  .card_main {
-    padding: 1rem;
-    color: white;
-    font-size: 2rem;
-    height: 90%;
   }
 </style>

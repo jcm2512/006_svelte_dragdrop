@@ -4,6 +4,7 @@
   import { onMount } from "svelte";
 
   export let currentWord;
+  export let GameLevel;
 
   let wordExp;
 
@@ -14,7 +15,7 @@
   const update = function () {
     if (wordExp) {
       gsap.to(wordExp, {
-        width: `${$cvcObject[currentWord].exp}vw`,
+        width: `${$cvcObject[GameLevel][currentWord].exp}vw`,
         duration: 0,
       });
     }
@@ -23,7 +24,7 @@
   const handleUpdate = function (obj) {
     if (wordExp) {
       gsap.to(wordExp, {
-        width: `${$cvcObject[currentWord].exp}vw`,
+        width: `${$cvcObject[GameLevel][currentWord].exp}vw`,
         duration: 1.5,
       });
     }

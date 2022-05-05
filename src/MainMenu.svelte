@@ -103,8 +103,8 @@
 
   let wordObjects = [];
 
-  cvcs.forEach((value) => {
-    wordObjects.push($cvcObject[value]);
+  cvcs.forEach((level) => {
+    wordObjects.push(Object.values($cvcObject[level]));
   });
 
   function handlePlay() {
@@ -116,7 +116,11 @@
 
 <main class="full_grid">
   {#if $gameLoaded == true}
-    <GameLoader GameWords={wordObjects} GameLevel={CARDS_OBJ.currentId + 1} />
+    <GameLoader
+      GameWords={wordObjects[CARDS_OBJ.currentId]}
+      GameLevelId={CARDS_OBJ.currentId + 1}
+      GameLevel={Object.keys($cvcObject)[CARDS_OBJ.currentId]}
+    />
   {:else}
     <div class="clear" on:click={() => sessionStorage.clear()}>clear</div>
     <span id="ruler" />
@@ -130,7 +134,7 @@
       {#each CARDS_OBJ.cards as card, index}
         <div id="lvl_{index}" bind:this={cards[index]} class="card_main">
           {card}
-          <Level />
+          <Level {index} />
         </div>
       {/each}
     </ul>

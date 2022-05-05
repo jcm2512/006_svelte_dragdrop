@@ -23,19 +23,18 @@
   gsap.registerPlugin(Draggable);
 
   export let currentWord;
+  export let GameLevelId;
   export let GameLevel;
 
   // SCORING:
   let multiplier = function (value) {
-    switch (GameLevel) {
+    switch (GameLevelId) {
       case 1:
         return value * 10;
       case 2:
         return value * 8;
     }
   };
-
-  $: console.log($gameStars);
 
   let gameboard;
   let dropableLetter = [],
@@ -45,7 +44,6 @@
   function onDrop(draggable, dropzone) {
     if (dropzone.id != draggable.id) {
       onIncorrectLetter(draggable);
-      console.log(draggable.id, " dropped onto ", dropzone.id);
     } else {
       // Get CSS translate values
       const computedStyle = window.getComputedStyle(draggable),
@@ -90,10 +88,6 @@
 
       onCorrectLetter();
     }
-    // // WORD BONUS
-    // if ($currentWordProgress == currentWord.length) {
-    //   $cvcObject[currentWord].exp += $wordExpBonus;
-    // }
   }
 
   onMount(() => {
@@ -134,6 +128,7 @@
   let wordUpper = [],
     wordLower = [];
 
+  console.log(currentWord);
   let wordLimit = Math.ceil(currentWord.length / 2);
 
   for (let i of currentWord) {
@@ -169,7 +164,7 @@
   const onCorrectLetter = function () {
     $expObj.correct = true;
     $eventTrigger.correctLetter += 1;
-    $cvcObject[currentWord].exp += multiplier($wordExp.increment);
+    $cvcObject[GameLevel][currentWord].exp += multiplier($wordExp.increment);
     $combo += 1;
     $comboTimer = 0;
     $currentWordProgress += 1;
@@ -178,11 +173,11 @@
       $expObj.value += $expObj.increment;
     }
     if (
-      $cvcObject[currentWord].exp >= $wordExp.max &&
-      !$cvcObject[currentWord].starred
+      $cvcObject[GameLevel][currentWord].exp >= $wordExp.max &&
+      !$cvcObject[GameLevel][currentWord].starred
     ) {
       $gameStars.stars += 1;
-      $cvcObject[currentWord].starred = true;
+      $cvcObject[GameLevel][currentWord].starred = true;
     }
   };
 
