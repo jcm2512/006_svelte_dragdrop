@@ -11,12 +11,11 @@
   import GameLoader from "./GameLoader.svelte";
   import { gsap } from "gsap";
   import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-  import { onMount } from "svelte";
   import { localData } from "./functions/localstorage.svelte";
   import Level from "./level.svelte";
   gsap.registerPlugin(ScrollToPlugin);
 
-  const version = "v0.3.3";
+  const version = "v0.4.2";
 
   // DEV
   $gameLoaded = false;
@@ -49,49 +48,34 @@
     CARDS_OBJ.cards.push(`LEVEL ${i}`);
   }
 
-  onMount(() => {
-    handleNav = function (direction, div, obj) {
-      let width = cards[obj.currentId].offsetWidth;
-      let padding = (div.offsetWidth - width) / 2;
+  handleNav = function (direction, div, obj) {
+    let width = cards[obj.currentId].offsetWidth;
+    let padding = (div.offsetWidth - width) / 2;
 
-      // Calculate the current ID when swiping
-      obj.currentId = Math.round(div.scrollLeft / width);
+    // Calculate the current ID when swiping
+    obj.currentId = Math.round(div.scrollLeft / width);
 
-      switch (direction) {
-        case "prev":
-          if (obj.currentId > 0) {
-            obj.currentId -= 1;
-          }
-          break;
-        case "next":
-          if (obj.currentId < obj.cards.length - 1) {
-            obj.currentId += 1;
-          }
-          break;
-      }
+    switch (direction) {
+      case "prev":
+        if (obj.currentId > 0) {
+          obj.currentId -= 1;
+        }
+        break;
+      case "next":
+        if (obj.currentId < obj.cards.length - 1) {
+          obj.currentId += 1;
+        }
+        break;
+    }
 
-      gsap.to(stageCards, {
-        duration: 0.5,
-        scrollTo: {
-          x: `#lvl_${obj.currentId}`,
-          offsetX: padding,
-        },
-
-        onComplete: function () {
-          // console.log(obj.currentId);
-        },
-      });
-    };
-    // // ANIMATE STAR
-    // const M2 = gsap.to(star, {
-    //   duration: 1,
-    //   repeat: 1,
-    //   x: -2250,
-    //   // ease: SteppedEase.config(15),
-    // });
-    // M2.pause();
-    // console.log(star);
-  });
+    gsap.to(stageCards, {
+      duration: 0.5,
+      scrollTo: {
+        x: `#lvl_${obj.currentId + 1}`,
+        offsetX: padding,
+      },
+    });
+  };
 
   const swipeConfig = {
     autoplay: false,
