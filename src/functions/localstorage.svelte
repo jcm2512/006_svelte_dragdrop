@@ -9,7 +9,6 @@
       gameData: {
         Level_01: {
           cat: {
-            level: 1,
             word: "cat",
             vowel: "a",
             img: "/assets/png/cat.png",
@@ -18,7 +17,6 @@
             starred: false,
           },
           hat: {
-            level: 1,
             word: "hat",
             vowel: "a",
             img: "/assets/png/hat.png",
@@ -27,7 +25,6 @@
             starred: false,
           },
           dog: {
-            level: 1,
             word: "dog",
             vowel: "o",
             img: "/assets/png/dog.png",
@@ -36,7 +33,6 @@
             starred: false,
           },
           fox: {
-            level: 1,
             word: "fox",
             vowel: "o",
             img: "/assets/png/fox.png",
@@ -45,7 +41,6 @@
             starred: false,
           },
           sun: {
-            level: 1,
             word: "sun",
             vowel: "u",
             img: "/assets/png/sun.png",
@@ -54,7 +49,6 @@
             starred: false,
           },
           bed: {
-            level: 1,
             word: "bed",
             vowel: "e",
             img: "/assets/png/bed.png",
@@ -63,7 +57,6 @@
             starred: false,
           },
           jet: {
-            level: 1,
             word: "jet",
             vowel: "e",
             img: "/assets/png/jet.png",
@@ -72,7 +65,6 @@
             starred: false,
           },
           pin: {
-            level: 1,
             word: "pin",
             vowel: "i",
             img: "/assets/png/pin.png",
@@ -81,7 +73,6 @@
             starred: false,
           },
           dig: {
-            level: 1,
             word: "dig",
             vowel: "i",
             img: "/assets/png/dig.png",
@@ -90,7 +81,6 @@
             starred: false,
           },
           nut: {
-            level: 1,
             word: "nut",
             vowel: "u",
             img: "/assets/png/nut.png",
@@ -99,7 +89,6 @@
             starred: false,
           },
           bag: {
-            level: 1,
             word: "bag",
             vowel: "e",
             img: "/assets/png/bag.png",
@@ -108,7 +97,6 @@
             starred: false,
           },
           cup: {
-            level: 1,
             word: "cup",
             vowel: "e",
             img: "/assets/png/cup.png",
@@ -119,10 +107,41 @@
         },
         Level_02: {
           cat: {
-            level: 2,
             word: "cat",
             vowel: "a",
             img: "/assets/png/cat.png",
+            exp: 0,
+            status: "unlocked",
+            starred: false,
+          },
+          dig: {
+            word: "dig",
+            vowel: "i",
+            img: "/assets/png/dig.png",
+            exp: 0,
+            status: "unlocked",
+            starred: false,
+          },
+          nut: {
+            word: "nut",
+            vowel: "u",
+            img: "/assets/png/nut.png",
+            exp: 0,
+            status: "unlocked",
+            starred: false,
+          },
+          bag: {
+            word: "bag",
+            vowel: "e",
+            img: "/assets/png/bag.png",
+            exp: 0,
+            status: "unlocked",
+            starred: false,
+          },
+          cup: {
+            word: "cup",
+            vowel: "e",
+            img: "/assets/png/cup.png",
             exp: 0,
             status: "unlocked",
             starred: false,
