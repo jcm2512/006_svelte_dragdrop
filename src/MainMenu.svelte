@@ -13,7 +13,7 @@
   import { ScrollToPlugin } from "gsap/ScrollToPlugin";
   import { onMount } from "svelte";
   import { localData } from "./functions/localstorage.svelte";
-
+  import Level from "./level.svelte";
   gsap.registerPlugin(ScrollToPlugin);
 
   const version = "v0.3.3";
@@ -130,24 +130,7 @@
       {#each CARDS_OBJ.cards as card, index}
         <div id="lvl_{index}" bind:this={cards[index]} class="card_main">
           {card}
-          <li class="auto rounded card container">
-            {#if index == 0}
-              {#each cvcs as word}
-                {#if $cvcObject[word].status == "unlocked"}
-                  <img src={$cvcObject[word].img} alt={word} />
-                {:else}
-                  <span class="img_Container">
-                    <span class="image overlay"
-                      ><img src={$cvcObject[word].img} alt={word} /></span
-                    >
-                    <span class="locked overlay"
-                      ><img src="/assets/ui/locked.png" alt="locked" /></span
-                    >
-                  </span>
-                {/if}
-              {/each}
-            {/if}
-          </li>
+          <Level />
         </div>
       {/each}
     </ul>
