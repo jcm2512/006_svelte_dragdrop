@@ -5,22 +5,16 @@
   let cvcs = Object.keys($cvcObject[level]);
 </script>
 
-<li class="auto rounded card container">
+<li class="card container">
   {#each cvcs as word}
     {#if $cvcObject[level][word].status == "unlocked"}
       <span class="img_Container">
-        <span class="overlay">
-          <img src={$cvcObject[level][word].img} alt={word} />
-        </span>
+        <img src={$cvcObject[level][word].img} alt={word} class="icon" />
       </span>
     {:else}
       <span class="img_Container">
-        <span class="image overlay"
-          ><img src={$cvcObject[level][word].img} alt={word} /></span
-        >
-        <span class="locked overlay"
-          ><img src="/assets/ui/locked.png" alt="locked" /></span
-        >
+        <img src={$cvcObject[level][word].img} alt={word} class="icon locked" />
+        <img src="/assets/ui/locked.png" alt="locked" class="lock" />
       </span>
     {/if}
   {/each}
@@ -31,6 +25,7 @@
     grid-column: span 2;
     display: grid;
     align-items: center;
+    justify-items: center;
   }
 
   /* Dealing with 2 orphan items */
@@ -47,11 +42,6 @@
     grid-column-end: 5;
   }
 
-  .overlay {
-    grid-column: 1/-1;
-    grid-row: 1/-1;
-  }
-
   li {
     scroll-snap-align: center;
     display: inline-block; /* remove list bullets*/
@@ -64,17 +54,16 @@
     width: 20vw;
     max-width: 3.5rem;
     max-height: 3.5rem;
-  }
-
-  .image {
-    filter: brightness(0.1) opacity(0.35);
+    grid-column: 1/-1;
+    grid-row: 1/-1;
   }
 
   .locked {
-    z-index: 100;
+    filter: brightness(0.1) opacity(0.35);
   }
 
-  .locked img {
+  .lock {
+    z-index: 100;
     height: 10vw;
     width: 10vw;
   }
@@ -82,10 +71,8 @@
   .container {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    /* justify-content: space-evenly; */
-  }
-
-  .auto {
+    justify-content: space-evenly;
+    align-content: space-evenly;
     width: 100%;
     height: 100%;
     margin: auto;
@@ -94,12 +81,8 @@
     justify-items: center;
   }
 
-  .rounded {
-    border-radius: 1rem;
-    /* padding: 0.5em; */
-  }
-
   .card {
+    border-radius: 1rem;
     background-color: var(--pink);
     z-index: 50;
     border: 0.25rem solid var(--white);

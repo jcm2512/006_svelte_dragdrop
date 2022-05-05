@@ -132,10 +132,10 @@
     <!-- swipable menu START-->
     <ul bind:this={stageCards} id="stage_card" class="gallery">
       {#each CARDS_OBJ.cards as card, index}
-        <div id="lvl_{index}" bind:this={cards[index]} class="card_main">
+        <div id="lvl_{index + 1}" bind:this={cards[index]} class="level">
           {card}
-          <Level {index} />
         </div>
+        <div id="_Level"><Level {index} /></div>
       {/each}
     </ul>
     <!-- swipable menu WND -->
@@ -165,32 +165,20 @@
 </main>
 
 <style>
+  #_Level {
+    grid-row: 2;
+  }
   .clear {
     grid-column-end: -1;
-  }
-  .img_Container {
-    display: grid;
-    align-items: center;
-  }
-
-  .overlay {
-    grid-column: 1/-1;
-    grid-row: 1/-1;
   }
   /* swipable menu */
   .gallery {
     display: grid;
+    gap: 0 5vw;
     grid-template-columns: repeat(10, 80vw);
-    grid-template-rows: 1fr;
+    grid-template-rows: 1fr 9fr;
     overflow: scroll;
     scroll-snap-type: both mandatory;
-  }
-
-  li {
-    scroll-snap-align: center;
-    display: inline-block; /* remove list bullets*/
-    font-size: 2rem;
-    color: white;
   }
 
   ul {
@@ -239,25 +227,6 @@
     max-height: 3.5rem;
   }
 
-  .image {
-    filter: brightness(0.1) opacity(0.35);
-  }
-
-  .locked {
-    z-index: 100;
-  }
-
-  .locked img {
-    height: 10vw;
-    width: 10vw;
-  }
-
-  .container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    /* justify-content: space-evenly; */
-  }
-
   .auto {
     width: 100%;
     height: 100%;
@@ -279,12 +248,6 @@
     /* padding: 0.5em; */
   }
 
-  .card {
-    background-color: var(--pink);
-    z-index: 50;
-    border: 0.25rem solid var(--white);
-  }
-
   .button {
     cursor: pointer;
     background-color: var(--yellow);
@@ -303,11 +266,10 @@
     z-index: 100;
   }
 
-  .card_main {
-    padding: 1rem;
+  .level {
+    grid-row: 1;
     color: white;
     font-size: 2rem;
-    height: 90%;
   }
 
   #play_btn {
