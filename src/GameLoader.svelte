@@ -1,5 +1,10 @@
 <script>
-  import { gameLoaderWordId, gameWordLimit, devMode } from "./store.js";
+  import {
+    gameLoaderWordId,
+    gameWordLimit,
+    devMode,
+    currentLevel,
+  } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
   import Expbar from "./Expbar.svelte";
@@ -12,6 +17,7 @@
   export let GameLevelId;
   export let GameLevel;
 
+  console.log($currentLevel);
   let randomWords = [];
 
   function addRandomWordFrom(array, toarray, limit) {

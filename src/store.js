@@ -1,12 +1,13 @@
 import { writable, readable } from "svelte/store";
 
 // DEV mode
-export const devMode = readable({ paused: false, wordLimitOverride: 1 });
+export const devMode = readable({ paused: false, wordLimitOverride: null });
 export const wordLimitOverride = readable(1);
 
 // NON PERSISTENT
 export const ticks = readable(60);
 
+export const currentLevel = writable(0);
 export const gameLoaded = writable(false);
 export const gameLoaderWordId = writable(0);
 export const gameWordLimit = writable(30);
@@ -23,6 +24,7 @@ export const comboTimer = writable(0);
 export const currentWordProgress = writable(0);
 export const expMultiplier = writable(10);
 export const eventTrigger = writable({
+  swipe: 0,
   save: 0,
   incorrectLetter: 0,
   correctLetter: 0,

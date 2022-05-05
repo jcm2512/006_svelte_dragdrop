@@ -7,6 +7,7 @@
     gamePoints,
     eventTrigger,
     gameStars,
+    currentLevel,
   } from "./store.js";
   import GameLoader from "./GameLoader.svelte";
   import { gsap } from "gsap";
@@ -35,54 +36,47 @@
 
   let stageCards,
     handleNav,
-    cards = [], //Create empty array to store DOM references
+    CARDS = [], //Create empty array to store DOM references
     star;
   let cvcs = Object.keys($cvcObject);
 
-  const CARDS_OBJ = {
-    cards: [],
-    currentId: 0,
+  const LVL = {
+    id: 0,
   };
 
-  for (let i = 1; i <= Object.values(sessionStorage.get("maxLevel")); i++) {
-    CARDS_OBJ.cards.push(`LEVEL ${i}`);
-  }
-
-  handleNav = function (direction, div, obj) {
-    let width = cards[obj.currentId].offsetWidth;
+  handleNav = function (direction, div, lvl) {
+    let width = CARDS[lvl.id].offsetWidth;
     let padding = (div.offsetWidth - width) / 2;
 
     // Calculate the current ID when swiping
-    obj.currentId = Math.round(div.scrollLeft / width);
+    lvl.id = Math.round(div.scrollLeft / width);
 
     switch (direction) {
       case "prev":
-        if (obj.currentId > 0) {
-          obj.currentId -= 1;
+        if (lvl.id > 0) {
+          lvl.id -= 1;
         }
         break;
       case "next":
-        if (obj.currentId < obj.cards.length - 1) {
-          obj.currentId += 1;
+        if (lvl.id < Object.keys($cvcObject).length - 1) {
+          lvl.id += 1;
         }
         break;
+      case "play":
+        $gameLoaded = true;
+        $gameLoaderWordId = 0; // reset word ID to 0
+        $currentWordProgress = 0;
     }
-
-    gsap.to(stageCards, {
-      duration: 0.5,
-      scrollTo: {
-        x: `#lvl_${obj.currentId + 1}`,
-        offsetX: padding,
-      },
-    });
-  };
-
-  const swipeConfig = {
-    autoplay: false,
-    delay: 2000,
-    showIndicators: true,
-    transitionDuration: 1000,
-    defaultIndex: 0,
+    // PLAY SWIPE ANIMATION
+    if (direction != "play") {
+      gsap.to(stageCards, {
+        duration: 0.5,
+        scrollTo: {
+          x: `#lvl_${lvl.id + 1}`,
+          offsetX: padding,
+        },
+      });
+    }
   };
 
   let wordObjects = [];
@@ -90,58 +84,54 @@
   cvcs.forEach((level) => {
     wordObjects.push(Object.values($cvcObject[level]));
   });
-
-  function handlePlay() {
-    $gameLoaded = true;
-    $gameLoaderWordId = 0; // reset word ID to 0
-    $currentWordProgress = 0;
-  }
 </script>
 
 <main class="full_grid">
   {#if $gameLoaded == true}
     <GameLoader
-      GameWords={wordObjects[CARDS_OBJ.currentId]}
-      GameLevelId={CARDS_OBJ.currentId + 1}
-      GameLevel={Object.keys($cvcObject)[CARDS_OBJ.currentId]}
+      GameWords={wordObjects[LVL.id]}
+      GameLevelId={LVL.id + 1}
+      GameLevel={Object.keys($cvcObject)[LVL.id]}
     />
   {:else}
     <div class="clear" on:click={() => sessionStorage.clear()}>clear</div>
     <span id="ruler" />
-    <div id="level" class="auto rounded label">
+    <div id="stars" class="auto rounded label">
       <img bind:this={star} src="/assets/ui/star.png" alt="stars" />
       <span>{$gameStars.stars}</span>
     </div>
 
     <!-- swipable menu START-->
     <ul bind:this={stageCards} id="stage_card" class="gallery">
-      {#each CARDS_OBJ.cards as card, index}
-        <div id="lvl_{index + 1}" bind:this={cards[index]} class="level">
+      {#each Object.keys($cvcObject) as card, index}
+        <!-- <div class="level">
           {card}
+        </div> -->
+        <div id="lvl_{index + 1}" bind:this={CARDS[index]} class="_level">
+          <Level {index} />
         </div>
-        <div id="_Level"><Level {index} /></div>
       {/each}
     </ul>
-    <!-- swipable menu WND -->
+    <!-- swipable menu END -->
 
     <div
       id="prev"
       class="auto arrow_btn unselectable"
-      on:click|preventDefault={() => handleNav("prev", stageCards, CARDS_OBJ)}
+      on:click|preventDefault={() => handleNav("prev", stageCards, LVL)}
     >
       «
     </div>
     <div
       id="next"
       class="auto arrow_btn unselectable"
-      on:click|preventDefault={() => handleNav("next", stageCards, CARDS_OBJ)}
+      on:click|preventDefault={() => handleNav("next", stageCards, LVL)}
     >
       »
     </div>
     <div
       id="play_btn"
       class="auto rounded button"
-      on:click={() => handlePlay()}
+      on:click|preventDefault={() => handleNav("play", stageCards, LVL)}
     >
       <span>play</span>
     </div>
@@ -149,7 +139,7 @@
 </main>
 
 <style>
-  #_Level {
+  ._level {
     grid-row: 2;
   }
   .clear {
@@ -287,7 +277,7 @@
     grid-column: -2;
   }
 
-  #level {
+  #stars {
     grid-row: 2/3;
     grid-column: 1/4;
     display: flex;
@@ -300,14 +290,20 @@
     border-left: 0;
   }
 
-  #level img {
+  #stars img {
     height: 100%;
-    width: auto;
+    width: 6vh;
+    height: 6vh;
     padding: 0.2rem;
   }
 
   #points {
     grid-row: 2/3;
     grid-column: 5/-2;
+  }
+
+  #level {
+    grid-row: 3;
+    grid-column: 1/-1;
   }
 </style>
