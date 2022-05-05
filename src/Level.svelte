@@ -11,7 +11,15 @@
   {#each cvcs as word, index}
     {#if $cvcObject[level][word].status == "unlocked"}
       <span class="img_Container">
-        <img src={$cvcObject[level][word].img} alt={word} class="icon" />
+        <img
+          src={$cvcObject[level][word].img}
+          alt={word}
+          class="icon"
+          bind:this={DOMelements[index]}
+          on:click|preventDefault={() => {
+            animateCSS(DOMelements[index], "rubberBand");
+          }}
+        />
       </span>
     {:else}
       <span class="img_Container">
@@ -26,7 +34,7 @@
           class="lock "
           bind:this={DOMelements[index]}
           on:click|preventDefault={() => {
-            animateCSS(DOMelements[index], "headShake");
+            animateCSS(DOMelements[index], "swing");
           }}
         />
       </span>
