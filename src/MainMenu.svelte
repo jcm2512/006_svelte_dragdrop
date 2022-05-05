@@ -12,7 +12,7 @@
   import { gsap } from "gsap";
   import { ScrollToPlugin } from "gsap/ScrollToPlugin";
   import { localData } from "./functions/localstorage.svelte";
-  import Level from "./level.svelte";
+  import Level from "./Level.svelte";
   gsap.registerPlugin(ScrollToPlugin);
 
   const version = "v0.4.2";
