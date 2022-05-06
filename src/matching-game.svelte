@@ -188,6 +188,13 @@
       $gameStars.stars += 1;
       $cvcObject[GameLevel][currentWord].starred = true;
     }
+    if ($currentWordProgress == currentWord.length) {
+      console.log(gameboard);
+      gameboard.classList.add("animate__animated", "animate__tada");
+      gameboard.addEventListener("animationend", () => {
+        handleClick("next");
+      });
+    }
   };
 
   const onIncorrectLetter = function (element) {

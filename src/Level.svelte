@@ -16,7 +16,7 @@
         <img
           src={$cvcObject[GameLevel][currentWord].img}
           alt={currentWord}
-          class="icon"
+          class="icon animate__faster"
           bind:this={DOMelements[index]}
           on:click|preventDefault={() => {
             animateCSS(DOMelements[index], "rubberBand");
@@ -26,7 +26,7 @@
           {currentWord}
           {GameLevel}
           width="15vw"
-          height="1.3vw"
+          height="1.5vw"
           inner_border="0px"
           fill_color="var(--pink)"
           inner_color="var(--white)"
@@ -116,8 +116,8 @@
 
   .card {
     border-radius: 1rem;
-    background-color: var(--orange);
+    background-color: var(--yellow);
     z-index: 50;
-    border: 0.25rem solid var(--white);
+    border: var(--border-width) solid var(--white);
   }
 </style>
