@@ -4,9 +4,12 @@
 * { box-sizing: Border-box ;
 margin:0;}
 :root {
+  --border-width: 1.5vw;
+
   --main-font: "Londrina Solid";
   --white: hsl(0, 0%, 100%);
   --yellow: hsl(44, 90%, 77%);
+  --light-yellow: hsl(48, 100%, 80%);
   --orange: hsl(36, 75%, 75%);
   --pink:hsl(340, 66%, 64%);
   --light-pink: hsl(330, 100%, 87%);
@@ -19,6 +22,7 @@ margin:0;}
   --off-white:hsl(213, 61%, 90%);
   --medium-gray: hsl(0, 0%, 85%);
   --green: hsl(160, 41%, 55%);
+  --light-green: hsl(162, 45%, 62%);
 }
 
 html,
@@ -43,35 +47,8 @@ body {
   font-family: "Fredoka", sans-serif;
 }
 
-a {
-  color: rgb(0, 100, 200);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-a:visited {
-  color: rgb(0, 80, 160);
-}
-
 label {
   display: block;
-}
-
-input,
-button,
-select,
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-  -webkit-padding: 0.4em 0;
-  padding: 0.4em;
-  margin: 0 0 0.5em 0;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 2px;
 }
 
 input:disabled {
