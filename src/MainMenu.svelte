@@ -41,16 +41,17 @@
   let stageCards,
     handleNav,
     CARDS = [], //Create empty array to store DOM references
-    star,
+    stars,
     next,
-    prev;
+    prev,
+    play;
   let cvcs = Object.keys($cvcObject);
 
   const LVL = {
     id: 0,
   };
 
-  handleNav = function (direction, div, lvl) {
+  handleNav = function (direction, div, lvl, options) {
     let width = CARDS[lvl.id].offsetWidth;
     let padding = (div.offsetWidth - width) / 2;
 
@@ -69,9 +70,24 @@
         }
         break;
       case "play":
-        $gameLoaded = true;
-        $gameLoaderWordId = 0; // reset word ID to 0
-        $currentWordProgress = 0;
+        div.classList.add("animate__animated", "animate__backOutRight");
+        options.play.style.setProperty("--animate-duration", "0.5s");
+        options.play.classList.add("animate__animated", "animate__bounceOut");
+        options.stars.classList.add(
+          "animate__animated",
+          "animate__backOutLeft"
+        );
+        options.prev.classList.add("animate__animated", "animate__backOutLeft");
+        options.next.classList.add(
+          "animate__animated",
+          "animate__backOutRight"
+        );
+
+        div.addEventListener("animationend", () => {
+          $gameLoaded = true;
+          $gameLoaderWordId = 0; // reset word ID to 0
+          $currentWordProgress = 0;
+        });
     }
     // PLAY SWIPE ANIMATION
     if (direction != "play") {
@@ -102,8 +118,8 @@
   {:else}
     <div class="clear" on:click={() => sessionStorage.clear()}>clear</div>
     <span id="ruler" />
-    <div id="stars" class="auto rounded label">
-      <img bind:this={star} src="/assets/ui/star.png" alt="stars" />
+    <div bind:this={stars} id="stars" class="auto rounded label">
+      <img src="/assets/ui/star.png" alt="stars" />
       <span>{$gameStars.stars}</span>
     </div>
 
@@ -143,9 +159,16 @@
       »
     </div>
     <div
+      bind:this={play}
       id="play_btn"
       class="auto rounded button animate__animated animate__pulse animate__slow animate__infinite"
-      on:click|preventDefault={() => handleNav("play", stageCards, LVL)}
+      on:click|preventDefault={() =>
+        handleNav("play", stageCards, LVL, {
+          play: play,
+          stars: stars,
+          prev: prev,
+          next: next,
+        })}
     >
       <span>play</span>
     </div>

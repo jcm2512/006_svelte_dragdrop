@@ -221,7 +221,7 @@
         <div
           id={letter}
           bind:this={droppables[index]}
-          class="tile dropzone can-drop"
+          class="tile dropzone can-drop animate__bounceIn animate__delay-5s"
         >
           {letter}
         </div>
@@ -237,7 +237,7 @@
           style="margin-right:{getLimit(margin)}rem;"
         >
           {letter}
-          <div class="rotation" style="transform:rotate({getRotation()}deg)">
+          <div class="rotation " style="transform:rotate({getRotation()}deg)">
             {letter}
           </div>
         </div>

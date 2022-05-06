@@ -1,31 +1,42 @@
 <script>
   import { cvcObject } from "./store.js";
   import { animateCSS } from "./animateCSS.svelte";
+  import ProgressBar from "./components/ProgressBar.svelte";
+
   export let index;
-  let level = Object.keys($cvcObject)[index];
-  let cvcs = Object.keys($cvcObject[level]);
+  let GameLevel = Object.keys($cvcObject)[index];
+  let cvcs = Object.keys($cvcObject[GameLevel]);
   let DOMelements = [];
 </script>
 
 <li class="card container">
-  {#each cvcs as word, index}
-    {#if $cvcObject[level][word].status == "unlocked"}
+  {#each cvcs as currentWord, index}
+    {#if $cvcObject[GameLevel][currentWord].status == "unlocked"}
       <span class="img_Container">
         <img
-          src={$cvcObject[level][word].img}
-          alt={word}
+          src={$cvcObject[GameLevel][currentWord].img}
+          alt={currentWord}
           class="icon"
           bind:this={DOMelements[index]}
           on:click|preventDefault={() => {
             animateCSS(DOMelements[index], "rubberBand");
           }}
         />
+        <ProgressBar
+          {currentWord}
+          {GameLevel}
+          width="15vw"
+          height="1.3vw"
+          inner_border="0px"
+          fill_color="var(--pink)"
+          inner_color="var(--white)"
+        />
       </span>
     {:else}
       <span class="img_Container">
         <img
-          src={$cvcObject[level][word].img}
-          alt={word}
+          src={$cvcObject[GameLevel][currentWord].img}
+          alt={currentWord}
           class="icon locked "
         />
         <img
@@ -105,7 +116,7 @@
 
   .card {
     border-radius: 1rem;
-    background-color: var(--pink);
+    background-color: var(--orange);
     z-index: 50;
     border: 0.25rem solid var(--white);
   }

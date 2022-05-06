@@ -15,10 +15,13 @@
   import WordIcon from "./WordIcon.svelte";
   import Combo from "./Combo.svelte";
   import ProgressBar from "./components/ProgressBar.svelte";
+  import { animateCSS } from "./animateCSS.svelte";
 
   export let GameWords;
   export let GameLevelId;
   export let GameLevel;
+
+  let matchingGame;
 
   console.log($currentLevel);
   let randomWords = [];
@@ -67,7 +70,7 @@
 
   <div id="_Expbar"><Expbar /></div>
   {#key $gameLoaderWordId}
-    <div id="_matchingGame" class={$gameLoaderWordId}>
+    <div bind:this={matchingGame} id="_matchingGame" class={$gameLoaderWordId}>
       <MatchingGame {currentWord} {GameLevelId} {GameLevel} />
     </div>
     <!-- <div id="_WordExp">

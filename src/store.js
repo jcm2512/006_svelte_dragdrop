@@ -4,7 +4,7 @@ import { writable, readable } from "svelte/store";
 export const devMode = readable({
   paused: false,
   wordLimitOverride: null,
-  gameLoaded: true,
+  gameLoaded: false,
 });
 export const wordLimitOverride = readable(1);
 

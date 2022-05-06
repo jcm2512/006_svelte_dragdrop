@@ -25,7 +25,7 @@
       width="20vw"
       height="1.5vw"
       inner_border="0px"
-      fill_color="var(--green)"
+      fill_color="var(--pink)"
     />
   {/key}
 </div>
