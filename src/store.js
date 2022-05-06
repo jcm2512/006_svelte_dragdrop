@@ -16,7 +16,8 @@ export const gameLoaded = writable(false);
 export const gameLoaderWordId = writable(0);
 export const gameWordLimit = writable(30);
 export const exp = writable(0);
-export const expObj = writable({
+export const maxExp = writable(0);
+export const expStore = writable({
   min: 5,
   value: 5,
   increment: 10,
@@ -27,12 +28,9 @@ export const combo = writable(0);
 export const comboTimer = writable(0);
 export const currentWordProgress = writable(0);
 export const expMultiplier = writable(10);
-export const eventTrigger = writable({
-  swipe: 0,
-  save: 0,
-  incorrectLetter: 0,
-  correctLetter: 0,
-});
+export const triggerSave = writable(0);
+export const triggerSwipe = writable(0);
+export const triggerLetter = writable(0);
 export const timerEnd = writable(false);
 
 export const wordExp = writable({ increment: 1, max: 24 });

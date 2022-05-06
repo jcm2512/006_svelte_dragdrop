@@ -1,6 +1,7 @@
 <script>
   import { cvcObject } from "./store.js";
   import { scale } from "svelte/transition";
+  import ProgressBar from "./components/ProgressBar.svelte";
 
   export let currentWord;
   export let GameLevel;
@@ -9,7 +10,7 @@
 <div class="container rounded label">
   {#key currentWord}
     <img
-      class="auto"
+      class="image"
       src={$cvcObject[GameLevel][currentWord].img}
       alt={$cvcObject[GameLevel][currentWord].word}
       in:scale={{
@@ -18,20 +19,31 @@
         opacity: 0.5,
       }}
     />
+    <ProgressBar
+      {currentWord}
+      {GameLevel}
+      width="20vw"
+      height="1.5vw"
+      inner_border="0px"
+      fill_color="var(--green)"
+    />
   {/key}
 </div>
 
 <style>
   .container {
-    /* width: 20vw;
-    height: 20vw; */
+    width: 25vw;
+    height: 25vw;
     padding: 0.3rem;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
   }
 
-  .auto {
-    width: 100%;
-    height: 100%;
-    margin: auto;
+  .image {
+    width: 15vw;
+    height: 15vw;
     text-align: center;
     align-items: center;
     justify-items: center;

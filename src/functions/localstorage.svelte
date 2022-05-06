@@ -6,6 +6,7 @@
       stars: 0,
       currentLevel: 1,
       maxLevel: 2,
+      maxExp: 24,
       gameData: {
         Level_01: {
           cat: {

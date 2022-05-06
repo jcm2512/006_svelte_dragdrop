@@ -5,10 +5,11 @@
     cvcObject,
     currentWordProgress,
     gamePoints,
-    eventTrigger,
     gameStars,
     currentLevel,
     devMode,
+    maxExp,
+    triggerSave,
   } from "./store.js";
   import GameLoader from "./GameLoader.svelte";
   import { gsap } from "gsap";
@@ -18,7 +19,7 @@
   import { animateCSS } from "./animateCSS.svelte";
   gsap.registerPlugin(ScrollToPlugin);
 
-  const version = "v0.4.2";
+  const version = "v0.5.0";
 
   // DEV
   $gameLoaded = $devMode.gameLoaded ? true : false;
@@ -27,13 +28,14 @@
   let sessionStorage = localData;
 
   sessionStorage.load();
+  $maxExp = sessionStorage.get("maxExp").maxExp;
   $cvcObject = sessionStorage.get("gameData").gameData;
   $gamePoints = sessionStorage.get("points");
   $gameStars = sessionStorage.get("stars");
   // TODO: #17 create function to update localStorage with new keys if not present
   $: $gamePoints && sessionStorage.set($gamePoints);
   $: $gameStars && sessionStorage.set($gameStars);
-  $: $eventTrigger.save && sessionStorage.set({ gameData: $cvcObject }),
+  $: $triggerSave && sessionStorage.set({ gameData: $cvcObject }),
     sessionStorage.save();
 
   let stageCards,

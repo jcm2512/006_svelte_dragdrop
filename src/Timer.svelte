@@ -20,8 +20,8 @@
     circleTimer = new CircleTimer({
       rootElement: document.getElementById("circle-timer"),
       units: "vw",
-      thickness: 8,
-      radius: 8,
+      thickness: 7,
+      radius: 7,
       color: "hsl(162, 45%, 62%)",
       timerDuration: tick,
       circleDuration: tick,

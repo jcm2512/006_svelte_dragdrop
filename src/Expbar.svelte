@@ -1,20 +1,20 @@
 <script>
   // TODO: #15 expbar should be right aligned
-  import { expObj, eventTrigger, combo } from "./store.js";
+  import { expStore, triggerLetter, combo } from "./store.js";
   import { onMount } from "svelte";
   import { gsap } from "gsap";
 
   let expBar;
   let options;
 
-  $: $eventTrigger && animate($expObj);
+  $: $triggerLetter && animate($expStore);
 
   const animate = function () {
     // PREPARE ANIMATION PROPERTIES
     let timeline = gsap.timeline();
-    let duration = $expObj.correct ? 0.5 : 1.0;
-    let defaults = { width: `${$expObj.value}vw`, duration: duration };
-    if ($expObj.correct) {
+    let duration = $expStore.correct ? 0.5 : 1.0;
+    let defaults = { width: `${$expStore.value}vw`, duration: duration };
+    if ($expStore.correct) {
       duration = 0.5;
       options = {};
     } else {
@@ -34,8 +34,8 @@
 
   setInterval(() => {
     if ($combo > 1) {
-      $expObj.value -= 0.5;
-      if ($expObj.value == 5) {
+      $expStore.value -= 0.5;
+      if ($expStore.value == 5) {
         $combo = 0;
       }
     }
@@ -47,7 +47,7 @@
   <div
     bind:this={expBar}
     id="exp_bar_fill"
-    style="--maxWidth: {$expObj.max}vw"
+    style="--maxWidth: {$expStore.max}vw"
   />
   <div id="exp_bg" />
   <img src="/assets/ui/electricity.png" alt="BONUS" />

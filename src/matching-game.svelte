@@ -6,13 +6,14 @@
     gameWordLimit,
     currentWordProgress,
     gamePoints,
-    expObj,
-    eventTrigger,
+    expStore,
+    triggerLetter,
     timerEnd,
     wordExp,
     combo,
     comboTimer,
     gameStars,
+    triggerSave,
   } from "./store.js";
 
   import { onMount, afterUpdate } from "svelte";
@@ -125,7 +126,7 @@
     switch (event) {
       case "next":
         $gameLoaderWordId += 1;
-        $eventTrigger.save += 1;
+        $triggerSave += 1;
         break;
       case "back":
         $gameLoaded = false;
@@ -170,15 +171,15 @@
   };
 
   const onCorrectLetter = function () {
-    $expObj.correct = true;
-    $eventTrigger.correctLetter += 1;
+    $expStore.correct = true;
+    $triggerLetter += 1;
     $cvcObject[GameLevel][currentWord].exp += multiplier($wordExp.increment);
     $combo += 1;
     $comboTimer = 0;
     $currentWordProgress += 1;
     $gamePoints.points += 10;
-    if ($expObj.value < $expObj.max) {
-      $expObj.value += $expObj.increment;
+    if ($expStore.value < $expStore.max) {
+      $expStore.value += $expStore.increment;
     }
     if (
       $cvcObject[GameLevel][currentWord].exp >= $wordExp.max &&
@@ -190,13 +191,13 @@
   };
 
   const onIncorrectLetter = function (element) {
-    $expObj.correct = false;
+    $expStore.correct = false;
     gsap.to(element, { y: 0 });
     gsap.to(element.children[0], { transform: `rotate(${getRotation()}deg)` });
-    if ($expObj.value >= 10) {
-      $eventTrigger.incorrectLetter += 1;
+    if ($expStore.value >= 10) {
+      $triggerLetter += 1;
     }
-    $expObj.value = $expObj.min;
+    $expStore.value = $expStore.min;
     $combo = 0;
   };
   afterUpdate(() => {

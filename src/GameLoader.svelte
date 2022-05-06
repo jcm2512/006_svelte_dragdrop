@@ -4,6 +4,8 @@
     gameWordLimit,
     devMode,
     currentLevel,
+    cvcObject,
+    triggerLetter,
   } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
@@ -12,6 +14,7 @@
   import BG from "./BG.svelte";
   import WordIcon from "./WordIcon.svelte";
   import Combo from "./Combo.svelte";
+  import ProgressBar from "./components/ProgressBar.svelte";
 
   export let GameWords;
   export let GameLevelId;
@@ -55,10 +58,9 @@
   $: currentWord = randomWords[$gameLoaderWordId];
 </script>
 
-<div class="full_grid centered">
+<div class="full_grid">
   <div id="_WordIconExp">
     <WordIcon {currentWord} {GameLevel} />
-    <WordExp {currentWord} {GameLevel} />
   </div>
   <div id="_Background"><BG /></div>
   <div id="_Timer"><Timer /></div>
@@ -84,39 +86,52 @@
     z-index: 1;
   }
 
+  #_ProgressBar {
+    grid-row: 1/7;
+    grid-column: 5/8;
+    z-index: 10;
+  }
+
   #_matchingGame {
     grid-row: 1/-1;
     grid-column: 1/-1;
-    z-index: 20;
+    z-index: 5;
   }
 
   #_Expbar {
-    grid-column: 3/-3;
-    grid-row: 15/16;
-    z-index: 30;
+    grid-column: 4/9;
   }
 
   #_Timer {
-    margin: 1rem;
-    grid-row: 1/2;
     grid-column: -3/-1;
-    z-index: 40;
+    margin: 4vw;
+    justify-self: flex-end;
+    /* align-self: flex-end; */
+    background-color: var(--white);
+    border: 1vw solid var(--white);
+    border-radius: 20vw;
   }
 
   #_WordIconExp {
-    grid-row: 1/6;
     grid-column: 1/5;
     z-index: 40;
-    width: 25vw;
-    margin: 5vw;
+    margin: 4vw;
     display: flex;
     flex-direction: column;
   }
 
   #_Combo {
-    grid-column: 1/4;
-    grid-row: 10/12;
-    height: 100%;
+    grid-column: 4/-3;
+    grid-row: 2/5;
     z-index: 100;
+    align-self: center;
+  }
+
+  #_WordIconExp,
+  #_Timer,
+  #_Expbar {
+    grid-row: 1/4;
+    z-index: 30;
+    align-self: center;
   }
 </style>
