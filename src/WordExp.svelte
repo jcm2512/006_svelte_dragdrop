@@ -34,26 +34,20 @@
   });
 </script>
 
-<div class="container">
-  <span class="title">EXP</span>
-
-  <div id="wordExp">
-    <div id="exp_bar_bg" />
-    <div bind:this={wordExp} id="exp_bar_fill" />
-    <div id="exp_bg" />
-  </div>
+<div id="wordExp">
+  <div class="title">EXP</div>
+  <div id="exp_bar_bg" />
+  <div bind:this={wordExp} id="exp_bar_fill" />
+  <div id="exp_bg" />
 </div>
 
 <style>
   .title {
+    grid-row: 1;
     text-align: left;
     padding-left: 0.5rem;
   }
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
+
   #wordExp {
     --height: 1rem;
     --rounded: 0.5rem;
@@ -63,24 +57,25 @@
     position: relative;
     display: grid;
     grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr 1fr;
     align-items: center;
   }
   @media (orientation: landscape) {
     #wordExp {
-      width: 50vw;
+      width: 25vw;
     }
   }
 
   @media (orientation: portrait) {
     #wordExp {
-      width: 50vw;
+      width: 25vw;
     }
   }
 
   #exp_bar_fill {
     position: relative;
     grid-column: 1/-1;
-    grid-row: 1/-1;
+    grid-row: 2;
     background-color: var(--pink);
     border-radius: var(--rounded);
     height: var(--inner);
@@ -94,7 +89,7 @@
   #exp_bg {
     position: relative;
     grid-column: 1/-1;
-    grid-row: 1/-1;
+    grid-row: 2;
     background-color: #d5d5d5;
     border-radius: var(--rounded);
     height: var(--inner);
@@ -106,7 +101,7 @@
   #exp_bar_bg {
     position: relative;
     grid-column: 1/-1;
-    grid-row: 1/-1;
+    grid-row: 2;
     background-color: white;
     border-radius: var(--rounded);
     height: var(--height);

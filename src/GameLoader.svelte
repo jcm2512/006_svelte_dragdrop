@@ -55,9 +55,10 @@
   $: currentWord = randomWords[$gameLoaderWordId];
 </script>
 
-<div class="gameLoader">
-  <div id="_WordIcon">
+<div class="full_grid centered">
+  <div id="_WordIconExp">
     <WordIcon {currentWord} {GameLevel} />
+    <WordExp {currentWord} {GameLevel} />
   </div>
   <div id="_Background"><BG /></div>
   <div id="_Timer"><Timer /></div>
@@ -67,9 +68,9 @@
     <div id="_matchingGame" class={$gameLoaderWordId}>
       <MatchingGame {currentWord} {GameLevelId} {GameLevel} />
     </div>
-    <div id="_WordExp">
+    <!-- <div id="_WordExp">
       <WordExp {currentWord} {GameLevel} />
-    </div>
+    </div> -->
   {/key}
   <div id="_Combo">
     <Combo />
@@ -77,19 +78,10 @@
 </div>
 
 <style>
-  .gameLoader {
-    display: grid;
-    text-align: center;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(12, 1fr);
-    width: 100vw;
-    height: 100vh;
-  }
-
   #_Background {
     grid-row: 1/-1;
     grid-column: 1/-1;
-    z-index: 10;
+    z-index: 1;
   }
 
   #_matchingGame {
@@ -99,32 +91,24 @@
   }
 
   #_Expbar {
-    grid-column: 4/-1;
-    grid-row: 11;
+    grid-column: 3/-3;
+    grid-row: 15/16;
     z-index: 30;
   }
 
   #_Timer {
-    margin-top: 1rem;
-    margin-left: 1rem;
+    margin: 1rem;
     grid-row: 1/2;
-    grid-column: 9/-1;
+    grid-column: -3/-1;
     z-index: 40;
   }
 
-  #_WordExp {
-    grid-column: 4/-4;
-    grid-row: 1;
-    z-index: 30;
-    padding-bottom: 1rem;
-    align-self: end;
-  }
-  #_WordIcon {
-    grid-row: 1;
-    grid-column: 1/4;
+  #_WordIconExp {
+    grid-row: 1/6;
+    grid-column: 1/5;
     z-index: 40;
-    height: 100%;
-    padding: 1rem;
+    width: 25vw;
+    margin: 5vw;
     display: flex;
     flex-direction: column;
   }

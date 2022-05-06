@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredoka&family=Londrina+Outline&family=Londrina+Solid:wght@400&family=Nunito:wght@300;400;600;700&display=swap");
 
 /* TODO: download font */
-* { box-sizing: Border-box }
+* { box-sizing: Border-box ;
+margin:0;}
 :root {
   --main-font: "Londrina Solid";
   --white: hsl(0, 0%, 100%);
@@ -91,4 +92,19 @@ button:not(:disabled):active {
 
 button:focus {
   border-color: #666;
+}
+
+.full_grid {
+  display: grid;
+  grid-template-columns: repeat(10, 10vw);
+  grid-template-rows: repeat(16, 6.25vh);
+  width: 100vw;
+  height: 100vh;
+}
+
+.centered {
+  margin: auto;
+  text-align: center;
+  align-items: center;
+  justify-items: center;
 }

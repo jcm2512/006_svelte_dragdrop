@@ -30,9 +30,17 @@
   let multiplier = function (value) {
     switch (GameLevelId) {
       case 1:
-        return value * 10;
-      case 2:
         return value * 8;
+      case 2:
+        return value * 6;
+      case 3:
+        return value * 4;
+      case 4:
+        return value * 3;
+      case 5:
+        return value * 2;
+      default:
+        return value * 1;
     }
   };
 

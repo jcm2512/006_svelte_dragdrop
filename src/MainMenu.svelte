@@ -8,6 +8,7 @@
     eventTrigger,
     gameStars,
     currentLevel,
+    devMode,
   } from "./store.js";
   import GameLoader from "./GameLoader.svelte";
   import { gsap } from "gsap";
@@ -20,7 +21,7 @@
   const version = "v0.4.2";
 
   // DEV
-  $gameLoaded = false;
+  $gameLoaded = $devMode.gameLoaded ? true : false;
 
   // Load local game data
   let sessionStorage = localData;

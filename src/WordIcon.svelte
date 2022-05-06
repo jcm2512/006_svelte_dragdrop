@@ -6,7 +6,7 @@
   export let GameLevel;
 </script>
 
-<span class="container rounded label">
+<div class="container rounded label">
   {#key currentWord}
     <img
       class="auto"
@@ -19,12 +19,12 @@
       }}
     />
   {/key}
-</span>
+</div>
 
 <style>
   .container {
-    width: 20vw;
-    height: 20vw;
+    /* width: 20vw;
+    height: 20vw; */
     padding: 0.3rem;
   }
 

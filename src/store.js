@@ -1,7 +1,11 @@
 import { writable, readable } from "svelte/store";
 
 // DEV mode
-export const devMode = readable({ paused: false, wordLimitOverride: null });
+export const devMode = readable({
+  paused: false,
+  wordLimitOverride: null,
+  gameLoaded: true,
+});
 export const wordLimitOverride = readable(1);
 
 // NON PERSISTENT
@@ -31,7 +35,7 @@ export const eventTrigger = writable({
 });
 export const timerEnd = writable(false);
 
-export const wordExp = writable({ increment: 1, max: 48 });
+export const wordExp = writable({ increment: 1, max: 24 });
 export const gameState = writable(0);
 
 // UPDATED FROM LOCALSTORAGE
