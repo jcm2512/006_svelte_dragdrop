@@ -10,7 +10,6 @@
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
   import Expbar from "./Expbar.svelte";
-  import WordExp from "./WordExp.svelte";
   import BG from "./BG.svelte";
   import WordIcon from "./WordIcon.svelte";
   import Combo from "./Combo.svelte";
