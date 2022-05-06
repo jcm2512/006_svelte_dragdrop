@@ -10,6 +10,7 @@
     devMode,
     maxExp,
     triggerSave,
+    timerEnd,
   } from "./store.js";
   import GameLoader from "./GameLoader.svelte";
   import { gsap } from "gsap";
@@ -106,6 +107,13 @@
   cvcs.forEach((level) => {
     wordObjects.push(Object.values($cvcObject[level]));
   });
+
+  function endGame() {
+    $gameLoaded = false;
+  }
+  $: if ($timerEnd) {
+    endGame();
+  }
 </script>
 
 <main class="full_grid">
@@ -261,7 +269,7 @@
 
   .button {
     cursor: pointer;
-    background-color: var(--yellow);
+    background-color: var(--pink);
     z-index: 10;
   }
 
@@ -289,13 +297,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 0.25rem solid var(--light-gray);
+    border: var(--border-width) solid var(--light-gray);
+    font-size: 1.5rem;
+    color: var(--white);
   }
 
-  #play_btn span {
-    font-size: 1.5rem;
-    color: var(--outline);
-  }
   #stage_card {
     grid-row: 4/-4;
     grid-column: 1/-1;
@@ -326,7 +332,7 @@
     padding: 0 0 0 1.5rem;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    border: 0.25rem solid var(--light-gray);
+    border: var(--border-width) solid var(--light-gray);
     border-left: 0;
   }
 

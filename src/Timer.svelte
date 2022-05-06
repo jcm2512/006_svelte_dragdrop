@@ -6,6 +6,7 @@
   let circleTimer;
   let tick = $ticks;
   let paused = $devMode.paused ? true : false;
+  $timerEnd = false;
   setInterval(() => {
     if (!paused) {
       tick -= 1;
