@@ -4,7 +4,7 @@
 * { box-sizing: Border-box ;
 margin:0;}
 :root {
-  --border-width: 1.5vw;
+  --border-width: 0.4rem;
 
   --main-font: "Londrina Solid";
   --white: hsl(0, 0%, 100%);

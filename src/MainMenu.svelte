@@ -73,7 +73,11 @@
       case "play":
         div.classList.add("animate__animated", "animate__backOutRight");
         options.play.style.setProperty("--animate-duration", "0.5s");
-        options.play.classList.add("animate__animated", "animate__bounceOut");
+        options.play.classList.add(
+          "animate__animated",
+          "animate__bounceOut",
+          "animate__repeat-1"
+        );
         options.stars.classList.add(
           "animate__animated",
           "animate__backOutLeft"
@@ -84,7 +88,7 @@
           "animate__backOutRight"
         );
 
-        div.addEventListener("animationend", () => {
+        options.play.addEventListener("animationend", () => {
           $gameLoaded = true;
           $gameLoaderWordId = 0; // reset word ID to 0
           $currentWordProgress = 0;
@@ -297,7 +301,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: var(--border-width) solid var(--light-gray);
+    border: var(--border-width) solid var(--white);
     font-size: 1.5rem;
     color: var(--white);
   }
@@ -332,7 +336,7 @@
     padding: 0 0 0 1.5rem;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    border: var(--border-width) solid var(--light-gray);
+    border: var(--border-width) solid var(--orange);
     border-left: 0;
   }
 
