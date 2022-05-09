@@ -5,8 +5,6 @@
     maxExp,
     gameLoaderWordId,
   } from "../store.js";
-  import { gsap } from "gsap";
-  import { onMount } from "svelte";
 
   import { tweened } from "svelte/motion";
   import { quintOut } from "svelte/easing";
@@ -40,10 +38,6 @@
     if (element) {
       progress.set($cvcObject[GameLevel][currentWord].exp);
       fill_options = `--max: ${max}; --value:${$progress}`;
-      // gsap.to(element, {
-      //   "--value": `${$cvcObject[GameLevel][currentWord].exp}`,
-      //   duration: 1.5,
-      // });
     }
   };
 
@@ -51,9 +45,6 @@
     if (element) {
       progress.set($cvcObject[GameLevel][currentWord].exp);
       fill_options = `--max: ${max}; --value:${$progress}`;
-      // gsap.set(element, {
-      //   "--value": `${value}`,
-      // });
     }
   };
   $: $triggerLetter && handleUpdate(PROGRESS_BAR), console.log($progress);
@@ -75,12 +66,9 @@
   if (inner_bg) {
     bg_options = `${bg_options} ${ic}`;
   }
-  // fill_options = `--max: ${max}; --value:${$progress}`;
 </script>
 
 <div id="progress_bar" style={progress_bar_options}>
-  <!-- <div id="title">EXP</div> -->
-  <!-- <div id="exp_bar_border" /> -->
   <div id="exp_bar_bg" style={bg_options}>
     <div id="exp_bar_fill" bind:this={PROGRESS_BAR} style={fill_options} />
   </div>
@@ -94,11 +82,6 @@
     height: var(--height);
     width: var(--width);
     overflow: hidden;
-  }
-  #title {
-    grid-row: 1;
-    text-align: left;
-    padding-left: 0.5rem;
   }
 
   #exp_bar_bg {
