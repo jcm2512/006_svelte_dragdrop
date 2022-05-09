@@ -8,6 +8,9 @@
   import { gsap } from "gsap";
   import { onMount } from "svelte";
 
+  import { tweened } from "svelte/motion";
+  import { quintOut } from "svelte/easing";
+
   // MAIN EXPORTS
   let PROGRESS_BAR;
   export let GameLevel;
@@ -20,32 +23,40 @@
   export let border_color = `var(--white)`;
   export let height = "20px";
   export let rounded = 1.0;
-  export let inner_border = "5px";
+  export let inner_border = "0px";
   export let width = "150px";
   export let inner_bg = true;
   export let max = $maxExp;
   export let value = $cvcObject[GameLevel][currentWord].exp;
-  // export let offset = "0px";
+
+  let fill_options;
+
+  const progress = tweened(value, {
+    duration: 1500,
+    easing: quintOut,
+  });
 
   const handleUpdate = function (element) {
     if (element) {
-      gsap.to(element, {
-        "--value": `${$cvcObject[GameLevel][currentWord].exp}`,
-        duration: 1.5,
-      });
+      progress.set($cvcObject[GameLevel][currentWord].exp);
+      fill_options = `--max: ${max}; --value:${$progress}`;
+      // gsap.to(element, {
+      //   "--value": `${$cvcObject[GameLevel][currentWord].exp}`,
+      //   duration: 1.5,
+      // });
     }
   };
 
   const update = function (element) {
     if (element) {
-      gsap.set(element, {
-        "--value": `${value}`,
-      });
+      progress.set($cvcObject[GameLevel][currentWord].exp);
+      fill_options = `--max: ${max}; --value:${$progress}`;
+      // gsap.set(element, {
+      //   "--value": `${value}`,
+      // });
     }
   };
-  // $: $triggerLetter && console.log("Wooooo");
-  $: $triggerLetter && console.log("correct letter"),
-    handleUpdate(PROGRESS_BAR);
+  $: $triggerLetter && handleUpdate(PROGRESS_BAR), console.log($progress);
   $: $gameLoaderWordId, update(PROGRESS_BAR);
 
   const ic = `--inner-color: ${inner_color};`;
@@ -64,7 +75,7 @@
   if (inner_bg) {
     bg_options = `${bg_options} ${ic}`;
   }
-  let fill_options = `--max: ${max}; --value:${value}`;
+  // fill_options = `--max: ${max}; --value:${$progress}`;
 </script>
 
 <div id="progress_bar" style={progress_bar_options}>
