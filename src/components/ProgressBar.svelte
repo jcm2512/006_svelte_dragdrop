@@ -13,7 +13,6 @@
   let PROGRESS_BAR;
   export let GameLevel;
   export let currentWord;
-  //   export let trigger;
 
   // STYLING
   export let fill_color = "var(--pink)";

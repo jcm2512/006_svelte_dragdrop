@@ -5,28 +5,6 @@
 
   export let currentWord;
   export let GameLevel;
-
-  // import { tweened } from "svelte/motion";
-  // import { cubicOut } from "svelte/easing";
-
-  // // let value = $cvcObject[GameLevel][currentWord].exp
-  // // let max = $maxExp
-  // let value;
-  // const calcValue = function () {
-  //   value = $cvcObject[GameLevel][currentWord].exp / $maxExp;
-  // };
-
-  // $: $gameLoaderWordId, calcValue(), progress.set(value, { duration: 0 });
-
-  // const progress = tweened(value, {
-  //   duration: 400,
-  //   easing: cubicOut,
-  // });
-
-  // const update = function () {
-  //   progress.set($cvcObject[GameLevel][currentWord].exp / $maxExp);
-  // };
-  // $: $cvcObject && update();
 </script>
 
 <div class="container rounded label">
@@ -49,7 +27,6 @@
       inner_border="0px"
       fill_color="var(--pink)"
     />
-    <!-- <progress value={$progress} style="height:3vw; width:20vw" /> -->
   {/key}
 </div>
 
