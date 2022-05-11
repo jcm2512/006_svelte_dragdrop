@@ -73,7 +73,11 @@
       case "play":
         div.classList.add("animate__animated", "animate__backOutRight");
         options.play.style.setProperty("--animate-duration", "0.5s");
-        options.play.classList.add("animate__animated", "animate__bounceOut");
+        options.play.classList.add(
+          "animate__animated",
+          "animate__bounceOut",
+          "animate__repeat-1"
+        );
         options.stars.classList.add(
           "animate__animated",
           "animate__backOutLeft"
@@ -84,7 +88,7 @@
           "animate__backOutRight"
         );
 
-        div.addEventListener("animationend", () => {
+        options.play.addEventListener("animationend", () => {
           $gameLoaded = true;
           $gameLoaderWordId = 0; // reset word ID to 0
           $currentWordProgress = 0;
