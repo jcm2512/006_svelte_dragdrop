@@ -2,6 +2,7 @@
   import { cvcObject } from "./store.js";
   import { animateCSS } from "./animateCSS.svelte";
   import ProgressBar from "./components/ProgressBar.svelte";
+  import Stars from "./Stars.svelte";
 
   export let index;
   let GameLevel = Object.keys($cvcObject)[index];
@@ -30,6 +31,10 @@
           inner_border="0px"
           fill_color="var(--pink)"
           inner_color="var(--white)"
+        />
+        <Stars
+          wordLevel={$cvcObject[GameLevel][currentWord].level}
+          starred={$cvcObject[GameLevel][currentWord].starred}
         />
       </span>
     {:else}

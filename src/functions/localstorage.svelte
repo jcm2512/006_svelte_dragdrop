@@ -4,7 +4,7 @@
     value: {
       points: 0,
       stars: 0,
-      currentLevel: 1,
+      currentlevel: [1],
       maxLevel: 2,
       maxExp: 24,
       gameData: {
@@ -16,6 +16,7 @@
             exp: 0,
             status: "unlocked",
             starred: false,
+            level: [1],
           },
           hat: {
             word: "hat",
@@ -24,6 +25,7 @@
             exp: 0,
             status: "unlocked",
             starred: false,
+            level: [1],
           },
           dog: {
             word: "dog",
@@ -32,6 +34,7 @@
             exp: 0,
             status: "unlocked",
             starred: false,
+            level: [1],
           },
           fox: {
             word: "fox",
@@ -40,6 +43,7 @@
             exp: 0,
             status: "unlocked",
             starred: false,
+            level: [1],
           },
           sun: {
             word: "sun",
@@ -48,6 +52,7 @@
             exp: 0,
             status: "unlocked",
             starred: false,
+            level: [1],
           },
           bed: {
             word: "bed",
@@ -56,6 +61,7 @@
             exp: 0,
             status: "locked",
             starred: false,
+            level: [1],
           },
           jet: {
             word: "jet",
@@ -64,6 +70,7 @@
             exp: 0,
             status: "locked",
             starred: false,
+            level: [1],
           },
           pin: {
             word: "pin",
@@ -72,6 +79,7 @@
             exp: 0,
             status: "locked",
             starred: false,
+            level: [1],
           },
           dig: {
             word: "dig",
@@ -80,6 +88,7 @@
             exp: 0,
             status: "locked",
             starred: false,
+            level: [1],
           },
           nut: {
             word: "nut",
@@ -88,6 +97,7 @@
             exp: 0,
             status: "locked",
             starred: false,
+            level: [1],
           },
           bag: {
             word: "bag",
@@ -96,6 +106,7 @@
             exp: 0,
             status: "locked",
             starred: false,
+            level: [1],
           },
           cup: {
             word: "cup",
@@ -104,6 +115,7 @@
             exp: 0,
             status: "locked",
             starred: false,
+            level: [1],
           },
         },
         Level_02: {
@@ -114,6 +126,7 @@
             exp: 0,
             status: "unlocked",
             starred: false,
+            level: [1],
           },
           dig: {
             word: "dig",
@@ -122,6 +135,7 @@
             exp: 0,
             status: "unlocked",
             starred: false,
+            level: [1],
           },
           nut: {
             word: "nut",
@@ -130,6 +144,7 @@
             exp: 0,
             status: "unlocked",
             starred: false,
+            level: [1],
           },
           bag: {
             word: "bag",
@@ -138,6 +153,7 @@
             exp: 0,
             status: "unlocked",
             starred: false,
+            level: [1],
           },
           cup: {
             word: "cup",
@@ -146,6 +162,7 @@
             exp: 0,
             status: "unlocked",
             starred: false,
+            level: [1],
           },
         },
       },
