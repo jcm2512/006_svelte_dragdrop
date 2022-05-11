@@ -297,7 +297,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: var(--border-width) solid var(--light-gray);
+    border: var(--border-width) solid var(--border-light);
     font-size: 1.5rem;
     color: var(--white);
   }
@@ -332,7 +332,7 @@
     padding: 0 0 0 1.5rem;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    border: var(--border-width) solid var(--light-gray);
+    border: var(--border-width) solid var(--yellow);
     border-left: 0;
   }
 
@@ -340,7 +340,7 @@
     height: 100%;
     width: 6vh;
     height: 6vh;
-    padding: 0.2rem;
+    padding: 0.5rem;
   }
 
   #points {
