@@ -28,7 +28,20 @@
   // Load local game data
   let sessionStorage = localData;
 
+  // Update LocalStorage with newly created key value pairs
+  // Object.keys(sessionStorage.value).forEach((key) => {
+  //   if (
+  //     !Object.keys(
+  //       JSON.parse(localStorage.getItem(sessionStorage.key))
+  //     ).includes(key)
+  //   ) {
+  //     sessionStorage.set({ [key]: "hahaha" });
+  //   }
+  // });
+  // sessionStorage.save();
+
   sessionStorage.load();
+
   $maxExp = sessionStorage.get("maxExp").maxExp;
   $cvcObject = sessionStorage.get("gameData").gameData;
   $gamePoints = sessionStorage.get("points");
