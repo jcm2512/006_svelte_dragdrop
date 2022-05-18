@@ -47,7 +47,8 @@
 
   let gameboard;
   let dropableLetter = [],
-    droppables = []; // store references to DOM elements
+    droppables = [],
+    animatedLetter = []; // store references to DOM elements
   var overlapThreshold = "50%";
 
   function onDrop(draggable, dropzone) {
@@ -109,7 +110,12 @@
     dropableLetter.forEach((div) => {
       Draggable.create(div, {
         bounds: window,
+        onDragStart: function (e) {
+          console.log(e.path[0]);
+          e.path[0].classList.add("animate__heartBeat");
+        },
         onDragEnd: function (e) {
+          e.path[0].classList.remove("animate__heartBeat");
           var i = droppables.length;
           while (--i > -1) {
             if (this.hitTest(droppables[i], overlapThreshold)) {
@@ -244,8 +250,11 @@
           style="margin-right:{getLimit(margin)}rem;"
         >
           {letter}
+
           <div class="rotation " style="transform:rotate({getRotation()}deg)">
-            {letter}
+            <div class="animatedLetter" bind:this={animatedLetter[index]}>
+              {letter}
+            </div>
           </div>
         </div>
       {/each}

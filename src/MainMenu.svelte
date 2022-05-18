@@ -39,7 +39,6 @@
   //   }
   // });
   // sessionStorage.save();
-  sessionStorage.clear();
 
   sessionStorage.load();
 
