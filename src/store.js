@@ -12,6 +12,7 @@ export const wordLimitOverride = readable(1);
 export const ticks = readable(30);
 
 export const currentLevel = writable(0);
+export const gatchaMenu = writable(false);
 export const gameLoaded = writable(false);
 export const gameLoaderWordId = writable(0);
 export const gameWordLimit = writable(30);

@@ -11,8 +11,10 @@
     maxExp,
     triggerSave,
     timerEnd,
+    gatchaMenu,
   } from "./store.js";
   import GameLoader from "./GameLoader.svelte";
+  import GatchaMenu from "./GatchaMenu.svelte";
   import { gsap } from "gsap";
   import { ScrollToPlugin } from "gsap/ScrollToPlugin";
   import { localData } from "./functions/localstorage.svelte";
@@ -131,6 +133,9 @@
   $: if ($timerEnd) {
     endGame();
   }
+  const launchGatcha = function () {
+    $gatchaMenu = true;
+  };
 </script>
 
 <main class="full_grid">
@@ -140,10 +145,17 @@
       GameLevelId={LVL.id + 1}
       GameLevel={Object.keys($cvcObject)[LVL.id]}
     />
+  {:else if $gatchaMenu}
+    <GatchaMenu />
   {:else}
     <div class="clear" on:click={() => sessionStorage.clear()}>clear</div>
     <span id="ruler" />
-    <div bind:this={stars} id="stars" class="auto rounded label">
+    <div
+      bind:this={stars}
+      on:click={launchGatcha}
+      id="stars"
+      class="auto rounded label"
+    >
       <img src="/assets/ui/star.png" alt="stars" />
       <span>{$gameStars.stars}</span>
     </div>
