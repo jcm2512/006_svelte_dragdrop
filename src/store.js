@@ -9,7 +9,7 @@ export const devMode = readable({
 export const wordLimitOverride = readable(1);
 
 // NON PERSISTENT
-export const ticks = readable(60);
+export const ticks = readable(30);
 
 export const currentLevel = writable(0);
 export const gameLoaded = writable(false);

@@ -111,7 +111,6 @@
       Draggable.create(div, {
         bounds: window,
         onDragStart: function (e) {
-          console.log(e.path[0]);
           e.path[0].classList.add("animate__heartBeat");
         },
         onDragEnd: function (e) {
@@ -195,7 +194,6 @@
       $cvcObject[GameLevel][currentWord].starred = true;
     }
     if ($currentWordProgress == currentWord.length) {
-      console.log(gameboard);
       gameboard.classList.add("animate__animated", "animate__tada");
       gameboard.addEventListener("animationend", () => {
         handleClick("next");
@@ -375,7 +373,7 @@
 
   .rotation {
     width: 1em;
-    overflow: hidden;
+    /* overflow: hidden; */
     position: absolute;
     transform-origin: center;
     font-family: var(--main-font);
