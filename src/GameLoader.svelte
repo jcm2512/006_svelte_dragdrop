@@ -1,13 +1,20 @@
 <script>
-  import { gameLoaderWordId, gameWordLimit, devMode } from "./store.js";
+  import {
+    gameLoaderWordId,
+    gameWordLimit,
+    devMode,
+    gameWords,
+    timerEnd,
+  } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
   import Expbar from "./Expbar.svelte";
   import BG from "./BG.svelte";
   import WordIcon from "./WordIcon.svelte";
   import Combo from "./Combo.svelte";
+  import GameResults from "./modules/GameResults.svelte";
 
-  export let GameWords;
+  export let GameWordsAll;
   export let GameLevelId;
   export let GameLevel;
 
@@ -34,7 +41,7 @@
     return array;
   }
 
-  let words = GameWords.filter((t) => t.status == "unlocked") // only show unlocked cvcs
+  let words = GameWordsAll.filter((t) => t.status == "unlocked") // only show unlocked cvcs
     .map((item) => {
       return item.word;
     });
@@ -42,12 +49,16 @@
   // dev mode
   if ($devMode.wordLimitOverride) {
     words = words.slice(0, $devMode.wordLimitOverride);
+  } else {
+    words = words.slice(0, 5);
   }
   // dev mode END
 
   let wordLimit = words.length > 5 ? 5 : words.length;
 
   addRandomWordFrom(words, randomWords, wordLimit);
+
+  $gameWords = words;
   $: currentWord = randomWords[$gameLoaderWordId];
 </script>
 
@@ -63,13 +74,13 @@
     <div bind:this={matchingGame} id="_matchingGame" class={$gameLoaderWordId}>
       <MatchingGame {currentWord} {GameLevelId} {GameLevel} />
     </div>
-    <!-- <div id="_WordExp">
-      <WordExp {currentWord} {GameLevel} />
-    </div> -->
   {/key}
   <div id="_Combo">
     <Combo />
   </div>
+  {#if $timerEnd == true}
+    <GameResults {GameLevel} />
+  {/if}
 </div>
 
 <style>

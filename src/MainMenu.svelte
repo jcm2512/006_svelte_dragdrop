@@ -128,7 +128,7 @@
   });
 
   function endGame() {
-    $gameLoaded = false;
+    // $gameLoaded = false;
   }
   $: if ($timerEnd) {
     endGame();
@@ -141,7 +141,7 @@
 <main class="full_grid">
   {#if $gameLoaded == true}
     <GameLoader
-      GameWords={wordObjects[LVL.id]}
+      GameWordsAll={wordObjects[LVL.id]}
       GameLevelId={LVL.id + 1}
       GameLevel={Object.keys($cvcObject)[LVL.id]}
     />
