@@ -32,7 +32,7 @@
 
   if (viewResults) {
     progress = tweened(value, {
-      duration: 3000,
+      duration: 4000,
       easing: quintOut,
     });
   } else {
@@ -41,6 +41,8 @@
       easing: quintOut,
     });
   }
+
+  console.log("viewResults", viewResults);
 
   const handleUpdate = function (element) {
     if (element) {
@@ -55,7 +57,7 @@
       fill_options = `--max: ${max}; --value:${$progress}`;
     }
   };
-  $: $triggerLetter && handleUpdate(PROGRESS_BAR);
+  $: $triggerLetter && handleUpdate(PROGRESS_BAR), $progress;
   $: $gameLoaderWordId, update(PROGRESS_BAR);
 
   const ic = `--inner-color: ${inner_color};`;
