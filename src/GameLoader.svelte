@@ -88,12 +88,6 @@
     z-index: 1;
   }
 
-  #_ProgressBar {
-    grid-row: 1/7;
-    grid-column: 5/8;
-    z-index: 10;
-  }
-
   #_matchingGame {
     grid-row: 1/-1;
     grid-column: 1/-1;

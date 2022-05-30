@@ -82,7 +82,7 @@
     border: var(--border-width) solid var(--white);
   }
 
-  #stage_card {
+  /* #stage_card {
     grid-row: 4/-4;
     grid-column: 1/-1;
   }
@@ -94,5 +94,5 @@
     grid-template-rows: 1fr 9fr;
     overflow: scroll;
     scroll-snap-type: both mandatory;
-  }
+  } */
 </style>
