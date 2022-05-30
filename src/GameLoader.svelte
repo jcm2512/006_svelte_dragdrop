@@ -5,6 +5,7 @@
     devMode,
     gameWords,
     timerEnd,
+    cvcObject,
   } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
@@ -59,6 +60,11 @@
   addRandomWordFrom(words, randomWords, wordLimit);
 
   $gameWords = words;
+
+  words.forEach((currentWord) => {
+    let word = $cvcObject[GameLevel][currentWord];
+    word.initial_exp = word.exp;
+  });
   $: currentWord = randomWords[$gameLoaderWordId];
 </script>
 

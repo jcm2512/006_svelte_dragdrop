@@ -13,6 +13,7 @@
   let PROGRESS_BAR;
   export let GameLevel;
   export let currentWord;
+  export let viewResults = false;
 
   // STYLING
   export let fill_color = "var(--pink)";
@@ -27,11 +28,19 @@
   export let value = $cvcObject[GameLevel][currentWord].exp;
 
   let fill_options;
+  let progress;
 
-  const progress = tweened(value, {
-    duration: 1500,
-    easing: quintOut,
-  });
+  if (viewResults) {
+    progress = tweened(value, {
+      duration: 3000,
+      easing: quintOut,
+    });
+  } else {
+    progress = tweened(value, {
+      duration: 1500,
+      easing: quintOut,
+    });
+  }
 
   const handleUpdate = function (element) {
     if (element) {
@@ -46,7 +55,7 @@
       fill_options = `--max: ${max}; --value:${$progress}`;
     }
   };
-  $: $triggerLetter && handleUpdate(PROGRESS_BAR), console.log($progress);
+  $: $triggerLetter && handleUpdate(PROGRESS_BAR);
   $: $gameLoaderWordId, update(PROGRESS_BAR);
 
   const ic = `--inner-color: ${inner_color};`;

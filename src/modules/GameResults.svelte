@@ -1,6 +1,7 @@
 <script>
-  import { gameWords, cvcObject } from "../store.js";
+  import { gameWords, cvcObject, gameLoaded } from "../store.js";
   import Button from "../components/Button.svelte";
+  import ProgressBar from "../components/ProgressBar.svelte";
   export let GameLevel;
 </script>
 
@@ -13,13 +14,32 @@
         class="results_img"
       />
     </div>
+    <div class="results_progress_bar">
+      <ProgressBar
+        {currentWord}
+        {GameLevel}
+        width="30vw"
+        height="2rem"
+        inner_border="0px"
+        fill_color="var(--pink)"
+        inner_color="var(--white)"
+        viewResults={true}
+        value={$cvcObject[GameLevel][currentWord].initial_exp}
+        rounded={0.4}
+      />
+    </div>
   {/each}
 </div>
 
 <div class="go_button">
-  <Button label="GO!" bg_color="var(--green)  " />
+  <Button
+    label="GO!"
+    bg_color="var(--green)"
+    button_function={function () {
+      $gameLoaded = false;
+    }}
+  />
 </div>
-<Button label="X" grid_column="9/10" grid_row="5/6" />
 
 <style>
   .go_button {

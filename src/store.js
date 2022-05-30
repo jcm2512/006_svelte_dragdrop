@@ -4,12 +4,12 @@ import { writable, readable } from "svelte/store";
 export const devMode = readable({
   paused: false,
   wordLimitOverride: null,
-  gameLoaded: true,
+  gameLoaded: false,
 });
 export const wordLimitOverride = readable(1);
 
 // NON PERSISTENT
-export const ticks = readable(1);
+export const ticks = readable(5);
 
 export const currentLevel = writable(0);
 export const gatchaMenu = writable(false);
@@ -35,7 +35,7 @@ export const triggerSwipe = writable(0);
 export const triggerLetter = writable(0);
 export const timerEnd = writable(false);
 
-export const wordExp = writable({ increment: 1, max: 24 });
+export const wordExp = writable({ increment: 0.5, max: 24 });
 export const gameState = writable(0);
 
 // UPDATED FROM LOCALSTORAGE
