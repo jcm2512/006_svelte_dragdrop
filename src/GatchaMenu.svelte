@@ -1,5 +1,6 @@
 <script>
   import { gameStars } from "./store.js";
+  import Button from "./components/Button.svelte";
 
   let stageCards,
     handleNav,
@@ -12,6 +13,7 @@
   <span>{$gameStars.stars}</span>
 </div>
 <div class="card container">hello</div>
+<Button />
 
 <style>
   img {
@@ -81,18 +83,4 @@
     z-index: 50;
     border: var(--border-width) solid var(--white);
   }
-
-  /* #stage_card {
-    grid-row: 4/-4;
-    grid-column: 1/-1;
-  }
-
-  .gallery {
-    display: grid;
-    gap: 0 5vw;
-    grid-template-columns: repeat(10, 80vw);
-    grid-template-rows: 1fr 9fr;
-    overflow: scroll;
-    scroll-snap-type: both mandatory;
-  } */
 </style>
