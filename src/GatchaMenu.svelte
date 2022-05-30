@@ -1,11 +1,15 @@
 <script>
-  import { gameStars } from "./store.js";
+  import { gameStars, gatchaMenu } from "./store.js";
   import Button from "./components/Button.svelte";
 
   let stageCards,
     handleNav,
     CARDS = [], //Create empty array to store DOM references
     stars;
+
+  let close = function () {
+    $gatchaMenu = false;
+  };
 </script>
 
 <div bind:this={stars} id="stars" class="auto rounded label">
@@ -13,7 +17,10 @@
   <span>{$gameStars.stars}</span>
 </div>
 <div class="card container">hello</div>
-<Button />
+<div class="go_button">
+  <Button label="GO!" bg_color="var(--green)  " />
+</div>
+<Button label="X" grid_column="9/10" grid_row="5/6" button_function={close} />
 
 <style>
   img {
@@ -80,7 +87,15 @@
   .card {
     border-radius: 1rem;
     background-color: var(--yellow);
-    z-index: 50;
+    z-index: 20;
     border: var(--border-width) solid var(--white);
+  }
+
+  .go_button {
+    grid-column: 4/-4;
+    grid-row: 13/14;
+    height: 100%;
+    z-index: 100;
+    margin-top: 1rem;
   }
 </style>

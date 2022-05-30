@@ -34,6 +34,6 @@
     font-size: 1.5rem;
     color: var(--white);
     cursor: pointer;
-    z-index: 10;
+    z-index: 100;
   }
 </style>
