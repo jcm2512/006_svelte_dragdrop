@@ -9,7 +9,7 @@ export const devMode = readable({
 export const wordLimitOverride = readable(1);
 
 // NON PERSISTENT
-export const ticks = readable(5);
+export const ticks = readable(25);
 
 export const currentLevel = writable(0);
 export const gatchaMenu = writable(false);
