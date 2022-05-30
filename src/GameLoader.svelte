@@ -1,20 +1,11 @@
 <script>
-  import {
-    gameLoaderWordId,
-    gameWordLimit,
-    devMode,
-    currentLevel,
-    cvcObject,
-    triggerLetter,
-  } from "./store.js";
+  import { gameLoaderWordId, gameWordLimit, devMode } from "./store.js";
   import MatchingGame from "./matching-game.svelte";
   import Timer from "./Timer.svelte";
   import Expbar from "./Expbar.svelte";
   import BG from "./BG.svelte";
   import WordIcon from "./WordIcon.svelte";
   import Combo from "./Combo.svelte";
-  import ProgressBar from "./components/ProgressBar.svelte";
-  import { animateCSS } from "./animateCSS.svelte";
 
   export let GameWords;
   export let GameLevelId;
@@ -22,7 +13,6 @@
 
   let matchingGame;
 
-  console.log($currentLevel);
   let randomWords = [];
 
   function addRandomWordFrom(array, toarray, limit) {
@@ -53,8 +43,9 @@
   if ($devMode.wordLimitOverride) {
     words = words.slice(0, $devMode.wordLimitOverride);
   }
-  let wordLimit = words.length > 5 ? 5 : words.length;
   // dev mode END
+
+  let wordLimit = words.length > 5 ? 5 : words.length;
 
   addRandomWordFrom(words, randomWords, wordLimit);
   $: currentWord = randomWords[$gameLoaderWordId];
