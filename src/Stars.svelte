@@ -4,7 +4,7 @@
 
 <div>
   {#each Array(stars) as _}
-    <img src="/assets/ui/star-sm-white.png" alt="Level" />
+    <img src="/assets/ui/star-sm-purple.png" alt="Level" />
   {/each}
 </div>
 

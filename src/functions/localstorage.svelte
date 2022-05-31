@@ -18,6 +18,7 @@
             status: "unlocked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           hat: {
             word: "hat",
@@ -28,6 +29,7 @@
             status: "unlocked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           dog: {
             word: "dog",
@@ -38,6 +40,7 @@
             status: "unlocked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           fox: {
             word: "fox",
@@ -48,6 +51,7 @@
             status: "unlocked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           sun: {
             word: "sun",
@@ -58,6 +62,7 @@
             status: "unlocked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           bed: {
             word: "bed",
@@ -68,6 +73,7 @@
             status: "locked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           jet: {
             word: "jet",
@@ -78,6 +84,7 @@
             status: "locked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           pin: {
             word: "pin",
@@ -88,6 +95,7 @@
             status: "locked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           dig: {
             word: "dig",
@@ -98,6 +106,7 @@
             status: "locked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           nut: {
             word: "nut",
@@ -108,6 +117,7 @@
             status: "locked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           bag: {
             word: "bag",
@@ -118,6 +128,7 @@
             status: "locked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           cup: {
             word: "cup",
@@ -128,6 +139,7 @@
             status: "locked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
         },
         Level_02: {
@@ -140,6 +152,7 @@
             status: "unlocked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           dig: {
             word: "dig",
@@ -150,6 +163,7 @@
             status: "unlocked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           nut: {
             word: "nut",
@@ -160,6 +174,7 @@
             status: "unlocked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           bag: {
             word: "bag",
@@ -170,6 +185,7 @@
             status: "unlocked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
           cup: {
             word: "cup",
@@ -180,6 +196,7 @@
             status: "unlocked",
             stars: 0,
             levelup: false,
+            levelup_showResult: false,
           },
         },
       },
