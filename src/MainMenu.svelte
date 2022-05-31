@@ -20,6 +20,7 @@
   import { localData } from "./functions/localstorage.svelte";
   import Level from "./Level.svelte";
   import { animateCSS } from "./animateCSS.svelte";
+  import DarkenBG from "./DarkenBG.svelte";
   gsap.registerPlugin(ScrollToPlugin);
 
   const version = "v0.5.0";
@@ -139,14 +140,15 @@
 </script>
 
 <main class="full_grid">
+  {#if $gatchaMenu}
+    <DarkenBG />
+  {/if}
   {#if $gameLoaded == true}
     <GameLoader
       GameWordsAll={wordObjects[LVL.id]}
       GameLevelId={LVL.id + 1}
       GameLevel={Object.keys($cvcObject)[LVL.id]}
     />
-  {:else if $gatchaMenu}
-    <GatchaMenu />
   {:else}
     <div class="clear" on:click={() => sessionStorage.clear()}>clear</div>
     <span id="ruler" />
@@ -167,7 +169,11 @@
           LEVEL {index + 1}
         </div>
         <div id="lvl_{index + 1}" bind:this={CARDS[index]} class="_level">
-          <Level {index} />
+          {#if $gatchaMenu}
+            <GatchaMenu {index} />
+          {:else}
+            <Level {index} />
+          {/if}
         </div>
       {/each}
     </ul>
@@ -195,20 +201,30 @@
     >
       »
     </div>
-    <div
-      bind:this={play}
-      id="play_btn"
-      class="auto rounded button animate__animated animate__pulse animate__slow animate__infinite"
-      on:click|preventDefault={() =>
-        handleNav("play", stageCards, LVL, {
-          play: play,
-          stars: stars,
-          prev: prev,
-          next: next,
-        })}
-    >
-      <span>play</span>
-    </div>
+    {#if $gatchaMenu}
+      <div
+        id="btn"
+        class="auto rounded button"
+        on:click|preventDefault={() => ($gatchaMenu = false)}
+      >
+        <span>back</span>
+      </div>
+    {:else}
+      <div
+        bind:this={play}
+        id="btn"
+        class="auto rounded button animate__animated animate__pulse animate__slow animate__infinite"
+        on:click|preventDefault={() =>
+          handleNav("play", stageCards, LVL, {
+            play: play,
+            stars: stars,
+            prev: prev,
+            next: next,
+          })}
+      >
+        <span>play</span>
+      </div>
+    {/if}
   {/if}
 </main>
 
@@ -320,7 +336,7 @@
     font-size: 2rem;
   }
 
-  #play_btn {
+  #btn {
     grid-row: 15/16;
     grid-column: 4/8;
     display: flex;

@@ -1,78 +1,69 @@
 <script>
-  import { gameStars, gatchaMenu } from "./store.js";
-  import Button from "./components/Button.svelte";
+  import { cvcObject } from "./store.js";
+  import { animateCSS } from "./animateCSS.svelte";
+  import ProgressBar from "./components/ProgressBar.svelte";
+  import Stars from "./Stars.svelte";
 
-  let stageCards,
-    handleNav,
-    CARDS = [], //Create empty array to store DOM references
-    stars;
-
-  let close = function () {
-    $gatchaMenu = false;
-  };
+  export let index;
+  let GameLevel = Object.keys($cvcObject)[index];
+  let cvcs = Object.keys($cvcObject[GameLevel]);
+  let DOMelements = [];
 </script>
 
-<div bind:this={stars} id="stars" class="auto rounded label">
-  <img src="/assets/ui/star.png" alt="stars" />
-  <span>{$gameStars.stars}</span>
-</div>
-<div class="card container">hello</div>
-<div class="go_button">
-  <Button label="GO!" bg_color="var(--green)  " />
-</div>
-<Button label="X" grid_column="9/10" grid_row="5/6" button_function={close} />
+<li class="card container">
+  <img src="/assets/ui/gumball.png" class="gatcha" alt="Gatcha" />
+</li>
 
 <style>
-  img {
-    height: 20vw;
-    width: 20vw;
-    max-width: 3.5rem;
-    max-height: 3.5rem;
-  }
-
-  .auto {
-    width: 100%;
-    height: 100%;
-    margin: auto;
-    text-align: center;
+  .img_Container {
+    grid-column: span 2;
+    display: grid;
     align-items: center;
     justify-items: center;
   }
 
-  .rounded {
-    border-radius: 1rem;
-    /* padding: 0.5em; */
+  /* Dealing with 2 orphan items */
+  .img_Container:last-child:nth-child(3n - 1) {
+    grid-column-end: -2;
   }
 
-  .label {
-    background-color: var(--white);
-    z-index: 10;
+  .img_Container:nth-last-child(2):nth-child(3n + 1) {
+    grid-column-end: 4;
   }
 
-  #stars {
-    grid-row: 2/3;
-    grid-column: 1/4;
-    display: flex;
-    align-items: center;
-    font-size: 1.5rem;
-    padding: 0 0 0 1.5rem;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border: var(--border-width) solid var(--yellow);
-    border-left: 0;
+  /* Dealing with single orphan */
+  .img_Container:last-child:nth-child(3n - 2) {
+    grid-column-end: 5;
   }
 
-  #stars img {
-    height: 100%;
-    width: 6vh;
-    height: 6vh;
-    padding: 0.5rem;
+  li {
+    scroll-snap-align: center;
+    display: inline-block; /* remove list bullets*/
+    font-size: 2rem;
+    color: white;
+  }
+
+  img {
+    height: 50vw;
+    width: 50vw;
+    /* max-width: 3.5rem;
+    max-height: 3.5rem; */
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+  }
+
+  .locked {
+    filter: brightness(0.1) opacity(0.35);
+  }
+
+  .lock {
+    z-index: 100;
+    height: 10vw;
+    width: 10vw;
   }
 
   .container {
     display: grid;
-    grid-row: 5/-4;
-    grid-column: 2/-2;
     grid-template-columns: repeat(6, 1fr);
     justify-content: space-evenly;
     align-content: space-evenly;
@@ -87,15 +78,7 @@
   .card {
     border-radius: 1rem;
     background-color: var(--yellow);
-    z-index: 20;
+    z-index: 50;
     border: var(--border-width) solid var(--white);
-  }
-
-  .go_button {
-    grid-column: 4/-4;
-    grid-row: 13/14;
-    height: 100%;
-    z-index: 100;
-    margin-top: 1rem;
   }
 </style>

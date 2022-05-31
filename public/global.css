@@ -23,6 +23,8 @@ margin:0;}
   --medium-gray: hsl(0, 0%, 85%);
   --green: hsl(160, 41%, 55%);
   --light-green: hsl(162, 45%, 62%);
+  --transparent-black:hsla(0, 0%, 0%, 0.6);
+
 
   --border-light:  hsl(0, 0%, 100%);
 }
