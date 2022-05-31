@@ -189,10 +189,12 @@
     }
     if (
       $cvcObject[GameLevel][currentWord].exp >= $wordExp.max &&
-      !$cvcObject[GameLevel][currentWord].starred
+      !$cvcObject[GameLevel][currentWord].stars < 3
     ) {
       $gameStars.stars += 1;
-      $cvcObject[GameLevel][currentWord].starred = true;
+      $cvcObject[GameLevel][currentWord].stars += 1;
+      $cvcObject[GameLevel][currentWord].levelup = true;
+      $cvcObject[GameLevel][currentWord].exp = 0;
     }
     if ($currentWordProgress == currentWord.length) {
       gameboard.classList.add("animate__animated", "animate__tada");

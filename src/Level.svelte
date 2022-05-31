@@ -32,10 +32,7 @@
           fill_color="var(--pink)"
           inner_color="var(--white)"
         />
-        <Stars
-          wordLevel={$cvcObject[GameLevel][currentWord].level}
-          starred={$cvcObject[GameLevel][currentWord].starred}
-        />
+        <Stars stars={$cvcObject[GameLevel][currentWord].stars} />
       </span>
     {:else}
       <span class="img_Container">

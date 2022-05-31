@@ -1,14 +1,11 @@
 <script>
-  export let starred;
-  export let wordLevel;
+  export let stars;
 </script>
 
 <div>
-  {#if starred}
-    {#each wordLevel as index}
-      <img src="/assets/ui/star-sm-white.png" alt="Level" />
-    {/each}
-  {/if}
+  {#each Array(stars) as _}
+    <img src="/assets/ui/star-sm-white.png" alt="Level" />
+  {/each}
 </div>
 
 <style>
