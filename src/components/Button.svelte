@@ -5,8 +5,8 @@
   export let label = "button";
   export let classlist = "";
   export let bg_color = "var(--pink)";
-  export let grid_row = "15/16";
-  export let grid_column = "4/8";
+  export let grid_row = "1";
+  export let grid_column = "1";
 </script>
 
 <div
