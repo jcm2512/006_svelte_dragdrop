@@ -15,11 +15,13 @@
   import Combo from "./Combo.svelte";
   import GameResults from "./modules/GameResults.svelte";
 
-  export let GameWordsAll;
   export let GameLevelId;
   export let GameLevel;
+  export let UnlockedWords;
 
   let matchingGame;
+
+  console.log(GameLevelId, GameLevel);
 
   let randomWords = [];
 
@@ -42,26 +44,21 @@
     return array;
   }
 
-  let words = GameWordsAll.filter((t) => t.status == "unlocked") // only show unlocked cvcs
-    .map((item) => {
-      return item.word;
-    });
-
   // dev mode
   if ($devMode.wordLimitOverride) {
-    words = words.slice(0, $devMode.wordLimitOverride);
+    UnlockedWords = UnlockedWords.slice(0, $devMode.wordLimitOverride);
   } else {
-    words = words.slice(0, 5);
+    UnlockedWords = UnlockedWords.slice(0, 5);
   }
   // dev mode END
 
-  let wordLimit = words.length > 5 ? 5 : words.length;
+  let wordLimit = UnlockedWords.length > 5 ? 5 : UnlockedWords.length;
 
-  addRandomWordFrom(words, randomWords, wordLimit);
+  addRandomWordFrom(UnlockedWords, randomWords, wordLimit);
 
-  $gameWords = words;
+  $gameWords = UnlockedWords;
 
-  words.forEach((currentWord) => {
+  UnlockedWords.forEach((currentWord) => {
     let word = $cvcObject[GameLevel][currentWord];
     word.initial_exp = word.exp;
   });

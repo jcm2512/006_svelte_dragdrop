@@ -122,10 +122,24 @@
     }
   };
 
-  let wordObjects = [];
+  let UnlockedWords = [];
+  let LockedWords = [];
 
   cvcs.forEach((level) => {
-    wordObjects.push(Object.values($cvcObject[level]));
+    UnlockedWords.push(
+      Object.values($cvcObject[level])
+        .filter((t) => t.status == "unlocked")
+        .map((item) => {
+          return item.word;
+        })
+    );
+    LockedWords.push(
+      Object.values($cvcObject[level])
+        .filter((t) => t.status !== "unlocked")
+        .map((item) => {
+          return item.word;
+        })
+    );
   });
 
   function endGame() {
@@ -145,9 +159,9 @@
   {/if}
   {#if $gameLoaded == true}
     <GameLoader
-      GameWordsAll={wordObjects[LVL.id]}
       GameLevelId={LVL.id + 1}
       GameLevel={Object.keys($cvcObject)[LVL.id]}
+      UnlockedWords={UnlockedWords[LVL.id]}
     />
   {:else}
     <div class="clear" on:click={() => sessionStorage.clear()}>clear</div>
@@ -170,7 +184,10 @@
         </div>
         <div id="lvl_{index + 1}" bind:this={CARDS[index]} class="_level">
           {#if $gatchaMenu}
-            <GatchaMenu {index} />
+            <GatchaMenu
+              GameLevel={Object.keys($cvcObject)[LVL.id]}
+              LockedWords={LockedWords[index]}
+            />
           {:else}
             <Level {index} />
           {/if}
